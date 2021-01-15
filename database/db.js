@@ -9,7 +9,7 @@ db.once('open', function() {
 const calendarSchema = new mongoose.Schema({
   id: Number,
   stayId: Number,
-  date: Number,
+  date: Date,
   isAvailable: Boolean,
   nightlyRate: Number,
   cleaningFee: Number,
