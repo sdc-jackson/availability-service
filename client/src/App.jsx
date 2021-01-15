@@ -11,15 +11,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date()
+      dates: new Date()
     }
   }
 
-
-
-  onSelect(date) {
-    this.setState({ date })
-    console.log(this.state.date)
+  onSelect(dates) {
+    this.setState({ dates })
+    console.log(this.state.dates)
   }
 
   render() {
@@ -31,7 +29,7 @@ class App extends React.Component {
             Check-in
           </div>
           <div id = 'check-in-add-date'>
-            Add date
+            {this.state.dates.start ? this.state.dates.start.toString() : 'Add date'}
           </div>
         </div>
         <div id = 'check-out'>
@@ -39,17 +37,18 @@ class App extends React.Component {
             Check-out
           </div>
           <div id = 'check-out-add-date'>
-            Add date
+            {this.state.dates.end ? this.state.dates.end.toString() : 'Add date'}
           </div>
         </div>
 
         <div id = 'calendar'>
-          <DateRangePicker
+          <input type='date'></input>
+          {/* <DateRangePicker
           onSelect={this.onSelect.bind(this)}
           value={this.state.dates}
           numberOfCalendars={2}
           selectionType='range'
-          />
+          /> */}
 
         </div>
       </div>
