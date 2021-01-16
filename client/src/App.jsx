@@ -49,7 +49,7 @@ class App extends React.Component {
         </div>
 
         <div id = 'calendar'>
-          <input type='date'></input>
+          <input type='date' step = '2'></input>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
             <Calendar />
           </div>
