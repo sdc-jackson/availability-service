@@ -15,7 +15,8 @@ class App extends React.Component {
       checkIn: 'notSelected',
       checkOut: 'notSelected',
       showing: false, //is calendar showing
-      currentlySelecting: 'checkIn' //is the next date clicked to be check-in or check-out?
+      currentlySelecting: 'checkIn', //is the next date clicked to be check-in or check-out?
+      activeSelecting: false
     }
   }
 
@@ -27,13 +28,15 @@ class App extends React.Component {
   onClickCheckinShowCalendar() {
     this.setState({
       showing: true,
-      currentlySelecting: 'checkIn'
+      currentlySelecting: 'checkIn',
+      activeSelecting: true
     });
   }
   onClickCheckoutShowCalendar() {
     this.setState({
       showing: true,
-      currentlySelecting: 'checkOut'
+      currentlySelecting: 'checkOut',
+      activeSelecting: true
     })
   }
 
@@ -43,32 +46,67 @@ class App extends React.Component {
       this.setState({
         checkIn: e,
         currentlySelecting: 'checkOut'
+
       })
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
       this.setState({
         checkOut: e,
-        showing: false
+        showing: false,
+        activeSelecting: false
       })
     }
 
   }
 
+  clearDates() {
+    this.setState({
+      activeSelecting: true,
+      currentlySelecting: 'checkIn',
+      checkIn: 'notSelected',
+      checkOut: 'notSelected'
+    })
+  }
+
+  closeCalendar() {
+    this.setState({
+      activeSelecting: false,
+      currentlySelecting: 'checkIn',
+      showing: false
+    })
+  }
+
   render() {
+    var checkInStyle = {
+      'font-weight': 'normal'
+    };
+    var checkOutStyle = {
+      'font-weight': 'normal'
+    };
+    if(this.state.activeSelecting === true && this.state.currentlySelecting === 'checkIn') {
+      var checkInStyle = {
+        'font-weight': 'bold'
+      };
+    }
+    if(this.state.activeSelecting === true && this.state.currentlySelecting === 'checkOut') {
+      var checkOutStyle = {
+        'font-weight': 'bold'
+      };
+    }
     return (
       <div>
-
         <div id = 'check-in'>
-          <div id = "check-in1">
-            Check-in
-          </div>
-          <div id = 'check-in-add-date' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-            {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
+          <div id = "check-in1" style = {checkInStyle}>
+            Check-in:
           </div>
         </div>
+        <div id = 'check-in-add-date' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+            {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
+        </div>
+
         <div id = 'check-out'>
-          <div id = "check-out1">
-            Check-out
+          <div id = "check-out1" style = {checkOutStyle}>
+            Check-out:
           </div>
           <div id = 'check-out-add-date' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
             {this.state.checkOut === 'notSelected' ? 'Add date' : this.state.checkOut.toString()}
@@ -77,17 +115,13 @@ class App extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
-          {/* <DateRangePicker
-          onSelect={this.onSelect.bind(this)}
-          value={this.state.dates}
-          numberOfCalendars={2}
-          selectionType='range'
-          /> */}
+
 
         </div>
       </div>
+
       );
   }
 }
