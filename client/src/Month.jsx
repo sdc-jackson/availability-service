@@ -23,7 +23,7 @@ class Month extends React.Component {
                 </tr>
                 {/* <Week thisWeek = {['blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank']} /> */}
                 {this.props.weeks.map((arr) => {
-                  return <Week hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>
+                  return <Week checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>
                 })}
               </tbody>
             </table>

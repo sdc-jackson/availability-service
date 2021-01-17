@@ -115,7 +115,7 @@ class App extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 

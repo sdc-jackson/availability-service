@@ -8,19 +8,19 @@ class Week extends React.Component {
   render() {
     var checkInOutStyle = {
       backgroundColor:'black',
-      fontColor: 'white'
+      color: 'white'
     }
     var rangeStyle = {
       backgroundColor: 'grey',
-      fontColor: 'black'
+      color: 'black'
     }
     var normalDateStyle = {
       backgroundColor: 'white',
-      fontColor: 'black'
+      color: 'black'
     }
     var hoveredDateStyle = {
       backgroundColor: 'cornflowerBlue',
-      fontColor:'white'
+      color:'white'
     }
     var dateClicked = this.props.dateClicked;
     var changedHoveredDate = this.props.changedHoveredDate;
@@ -31,8 +31,11 @@ class Week extends React.Component {
         // console.log('item:', item.toString().slice(0,17));
         // console.log(item.toString().slice(0,17) === this.props.hoveredDate.toString().slice(0,17));
 
-
-        if(item.toString().slice(0,17) === this.props.hoveredDate.toString().slice(0,17) && item !== 'blank') {
+        if(item.toString().slice(0,17) === this.props.checkInDate.toString().slice(0,17) && item !== 'blank') {
+          return <td class = 'day' style = {checkInOutStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
+        } else if(item.toString().slice(0,17) === this.props.checkOutDate.toString().slice(0,17) && item !== 'blank') {
+          return <td class = 'day' style = {checkInOutStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
+        } else if(item.toString().slice(0,17) === this.props.hoveredDate.toString().slice(0,17) && item !== 'blank') {
           console.log('FOUND MATCH');
           return <td class = 'day' style = {hoveredDateStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
         } else {
