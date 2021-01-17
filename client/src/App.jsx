@@ -14,7 +14,8 @@ class App extends React.Component {
       dates: new Date(),
       checkIn: 'notSelected',
       checkOut: 'notSelected',
-      showing: false //is calendar showing
+      showing: false, //is calendar showing
+      currentlySelecting: 'checkIn' //is the next date clicked to be check-in or check-out?
     }
   }
 
@@ -23,19 +24,31 @@ class App extends React.Component {
     console.log(this.state.dates)
   }
 
-  onClickToggleCalendarShow() {
-    this.setState({showing: !this.state.showing});
+  onClickCheckinShowCalendar() {
+    this.setState({
+      showing: true,
+      currentlySelecting: 'checkIn'
+    });
+  }
+  onClickCheckoutShowCalendar() {
+    this.setState({
+      showing: true,
+      currentlySelecting: 'checkOut'
+    })
   }
 
   dateClicked(e) {
     console.log(e)
-    if(this.state.checkIn === 'notSelected') {
+    if(this.state.currentlySelecting === 'checkIn') {
       this.setState({
-        checkIn: e
+        checkIn: e,
+        currentlySelecting: 'checkOut'
       })
-    } else if (this.state.checkOut === 'notSelected') {
+    } else if (this.state.currentlySelecting === 'checkOut') {
+      //if we selected check-out date, set check-out date and close the calendar
       this.setState({
-        checkOut: e
+        checkOut: e,
+        showing: false
       })
     }
 
@@ -49,7 +62,7 @@ class App extends React.Component {
           <div id = "check-in1">
             Check-in
           </div>
-          <div id = 'check-in-add-date' onClick = {this.onClickToggleCalendarShow.bind(this)}>
+          <div id = 'check-in-add-date' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
             {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
           </div>
         </div>
@@ -57,7 +70,7 @@ class App extends React.Component {
           <div id = "check-out1">
             Check-out
           </div>
-          <div id = 'check-out-add-date' onClick = {this.onClickToggleCalendarShow.bind(this)}>
+          <div id = 'check-out-add-date' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
             {this.state.checkOut === 'notSelected' ? 'Add date' : this.state.checkOut.toString()}
           </div>
         </div>
