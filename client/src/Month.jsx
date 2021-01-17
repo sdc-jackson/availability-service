@@ -24,7 +24,7 @@ class Month extends React.Component {
                 {/* <Week thisWeek = {['blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank']} /> */}
                 {this.props.weeks.map((arr) => {
                   console.log('making a week', arr);
-                  return <Week thisWeek = {arr} />
+                  return <Week thisWeek = {arr} dateClicked = {this.props.dateClicked}/>
                 })}
               </tbody>
             </table>

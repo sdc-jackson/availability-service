@@ -100,8 +100,8 @@ class Calendar extends React.Component {
     return (
       <div>
         <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)}></button>
-        <Month month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
-        <Month month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
+        <Month dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
+        <Month dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
         <button id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)}></button>
       </div>
 

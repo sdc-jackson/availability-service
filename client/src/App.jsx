@@ -27,6 +27,19 @@ class App extends React.Component {
     this.setState({showing: !this.state.showing});
   }
 
+  dateClicked(e) {
+    console.log(e)
+    if(this.state.checkIn === 'notSelected') {
+      this.setState({
+        checkIn: e
+      })
+    } else if (this.state.checkOut === 'notSelected') {
+      this.setState({
+        checkOut: e
+      })
+    }
+
+  }
 
   render() {
     return (
@@ -37,7 +50,7 @@ class App extends React.Component {
             Check-in
           </div>
           <div id = 'check-in-add-date' onClick = {this.onClickToggleCalendarShow.bind(this)}>
-            {this.state.dates.start ? this.state.dates.start.toString() : 'Add date'}
+            {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
           </div>
         </div>
         <div id = 'check-out'>
@@ -45,14 +58,13 @@ class App extends React.Component {
             Check-out
           </div>
           <div id = 'check-out-add-date' onClick = {this.onClickToggleCalendarShow.bind(this)}>
-            {this.state.dates.end ? this.state.dates.end.toString() : 'Add date'}
+            {this.state.checkOut === 'notSelected' ? 'Add date' : this.state.checkOut.toString()}
           </div>
         </div>
 
         <div id = 'calendar'>
-          <input type='date' step = '2'></input>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar />
+            <Calendar dateClicked = {this.dateClicked.bind(this)}/>
           </div>
           {/* <DateRangePicker
           onSelect={this.onSelect.bind(this)}
