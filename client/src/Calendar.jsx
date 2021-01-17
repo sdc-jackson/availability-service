@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import Week from './Week.jsx'
+import Month from './Month.jsx'
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
 
     var today = new Date();
+    var oneMonthFromToday = new Date();
+    oneMonthFromToday.setDate(today.getDate() + 30);
 
     this.state = {
-      month1Date: today
-
+      month1Date: today,
+      month2Date: oneMonthFromToday
     }
 
     this.monthsMap = [
@@ -79,34 +82,30 @@ class Calendar extends React.Component {
   }
 
 
+  goNextMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month2Date),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 30))
+    });
+  }
+
+  goPrevMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 30)),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 30)),
+    });
+  }
+
   render() {
     return (
       <div>
-        <div id = 'month1'>
-          {this.monthsMap[this.state.month1Date.getMonth()]}
-          <table>
-            <tbody>
-              <tr>
-                <td>Su</td>
-                <td>Mo</td>
-                <td>Tu</td>
-                <td>We</td>
-                <td>Th</td>
-                <td>Fr</td>
-                <td>Sa</td>
-              </tr>
-              {/* <Week thisWeek = {['blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank']} /> */}
-              {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear()).map((arr) => {
-                console.log('making a week', arr);
-                return <Week thisWeek = {arr} />
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div id = 'month2'>
-
-        </div>
+        <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)}></button>
+        <Month month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
+        <Month month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
+        <button id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)}></button>
       </div>
+
+
 
     )
   }

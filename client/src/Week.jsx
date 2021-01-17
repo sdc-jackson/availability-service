@@ -10,7 +10,7 @@ class Week extends React.Component {
     return (<tr>
       {this.props.thisWeek.map((item) => {
         console.log('making week in week', item)
-        return <td> {item === 'blank' ? '- ' : item.getDate()} </td>
+        return <td class = 'day'> {item === 'blank' ? '- ' : item.getDate()} </td>
       })}
 
     </tr>)
