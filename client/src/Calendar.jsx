@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import Week from './Week.jsx'
-import Month from './Month.jsx'
+import React, {Component} from 'react';
+import Week from './Week.jsx';
+import Month from './Month.jsx';
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Calendar extends React.Component {
       month1Date: today,
       month2Date: oneMonthFromToday,
       hoveredDate: 'none'
-    }
+    };
 
     this.monthsMap = [
       'January',
@@ -46,9 +46,9 @@ class Calendar extends React.Component {
   getWeekArrays (month, year) {
     let monthStartDate = new Date();
 
-    monthStartDate.setMonth(month)
+    monthStartDate.setMonth(month);
     monthStartDate.setDate(1); //first day of this month
-    monthStartDate.setYear(year)
+    monthStartDate.setYear(year);
     var weeks = [];
     var week1 = [];
     for (var day = 0; day < monthStartDate.getDay(); day++) {
@@ -61,10 +61,10 @@ class Calendar extends React.Component {
     }
     weeks.push(week1);
     var endOfMonth = false;
-    while(endOfMonth === false) {
+    while (endOfMonth === false) {
       var week = [];
       for (var day = 0; day < 7; day++) {
-        if(monthStartDate.getMonth() !== month) {
+        if (monthStartDate.getMonth() !== month) {
           endOfMonth = true;
           week.push('blank');
         } else {
@@ -98,15 +98,15 @@ class Calendar extends React.Component {
     //console.log('hovered date:', date);
     this.setState({
       hoveredDate: date
-    })
+    });
   }
 
   render() {
     return (
       <div>
         <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)}></button>
-        <Month checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate}  hoveredDate = {this.state.hoveredDate} changedHoveredDate = {this.changeHoveredDate.bind(this)} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
-        <Month checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate}  hoveredDate = {this.state.hoveredDate} changedHoveredDate = {this.changeHoveredDate.bind(this)} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
+        <Month checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.state.hoveredDate} changedHoveredDate = {this.changeHoveredDate.bind(this)} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
+        <Month checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.state.hoveredDate} changedHoveredDate = {this.changeHoveredDate.bind(this)} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
         <button id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)}></button>
         <br/>
         <button onClick = {this.props.clearDates}>Clear Dates</button>
@@ -115,7 +115,7 @@ class Calendar extends React.Component {
 
 
 
-    )
+    );
   }
 }
 

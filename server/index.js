@@ -14,7 +14,7 @@ app.get('/:id/minNightlyRate', (req, res) => {
     res.send({minNightlyRate: rate.minRate});
     res.end();
   });
-})
+});
 
 
 

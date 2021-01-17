@@ -4,7 +4,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'airBnB-availability connection error: '));
 db.once('open', function() {
   console.log('database is open');
-})
+});
 
 const calendarSchema = new mongoose.Schema({
   id: Number,
@@ -31,13 +31,13 @@ const Stay = mongoose.model('Stay', staySchema);
 var getMinNightlyRate = (productId, cb) => {
   var query = Stay.where({productId: productId});
   query.findOne( (err, stay) => {
-    if(err) {
+    if (err) {
       console.log('couldnt find it');
     } else {
 
       cb(stay);
     }
   });
-}
+};
 
 module.exports.getMinNightlyRate = getMinNightlyRate;
