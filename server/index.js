@@ -11,6 +11,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.get('/:id/minNightlyRate', (req, res) => {
 
   db.getMinNightlyRate(req.params.id, (rate) => {
+    res.status(200);
     res.send({minNightlyRate: rate.minRate});
     res.end();
   });
@@ -20,3 +21,5 @@ app.get('/:id/minNightlyRate', (req, res) => {
 
 console.log('listening on port 5001');
 app.listen(5001);
+
+module.exports = app;
