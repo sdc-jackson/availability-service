@@ -6,7 +6,7 @@ var db = require('../database/db.js');
 
 
 var app = express();
-app.use(express.static(__dirname + '/../client/dist'));
+app.use('/:id', express.static(__dirname + '/../client/dist'));
 
 app.get('/:id/minNightlyRate', (req, res) => {
 

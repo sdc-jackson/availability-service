@@ -47,7 +47,7 @@ var getAvailableDates = (productId, cb) => {
     }
     var stayId = stay._doc._id;
 
-    Calendar.find({stayId: stayId}, null, {sort: '-date'}, (err, dates) => {
+    Calendar.find({stayId: stayId}, null, {sort: 'date'}, (err, dates) => {
       if (err) {
         console.log(err);
       }

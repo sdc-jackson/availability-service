@@ -2,19 +2,38 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './Calendar.jsx';
+import $ from 'jquery';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dates: new Date(),
+
       checkIn: 'notSelected',
       checkOut: 'notSelected',
       showing: false, //is calendar showing
       currentlySelecting: 'checkIn', //is the next date clicked to be check-in or check-out?
       activeSelecting: false
     };
+  }
+
+  componentDidMount() {
+    var productId = window.location.pathname.split('/')[1];
+    $.ajax({
+      method: 'GET',
+      url: `/${productId}/availableDates`,
+      success: (dates) => {
+        this.setState({
+          dates: dates
+        });
+        console.log('GOT SOME DATES!', dates.length);
+        for (var i = 0; i < dates.length; i++) {
+          console.log(dates[i].date, dates[i].isAvailable);
+
+        }
+      }
+    });
   }
 
   onSelect(dates) {
