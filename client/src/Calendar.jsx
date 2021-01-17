@@ -95,7 +95,7 @@ class Calendar extends React.Component {
   }
 
   changeHoveredDate(date) {
-    console.log('hovered date:', date);
+    //console.log('hovered date:', date);
     this.setState({
       hoveredDate: date
     })

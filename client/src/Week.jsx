@@ -26,7 +26,7 @@ class Week extends React.Component {
     var changedHoveredDate = this.props.changedHoveredDate;
     return (<tr>
       {this.props.thisWeek.map((item) => {
-
+        var itemDate = new Date(item);
         // console.log('prop:', this.props.hoveredDate.toString().slice(0,17));
         // console.log('item:', item.toString().slice(0,17));
         // console.log(item.toString().slice(0,17) === this.props.hoveredDate.toString().slice(0,17));
@@ -36,12 +36,18 @@ class Week extends React.Component {
         } else if(item.toString().slice(0,17) === this.props.checkOutDate.toString().slice(0,17) && item !== 'blank') {
           return <td class = 'day' style = {checkInOutStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
         } else if(item.toString().slice(0,17) === this.props.hoveredDate.toString().slice(0,17) && item !== 'blank') {
-          console.log('FOUND MATCH');
           return <td class = 'day' style = {hoveredDateStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
-        } else {
-          return <td class = 'day' style = {normalDateStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
-
+        } else if(this.props.checkInDate !== 'notSelected') {
+          if(this.props.checkOutDate === 'notSelected' && itemDate < this.props.hoveredDate && itemDate > this.props.checkInDate) {
+            return <td class = 'day' style = {rangeStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
+          } else if(itemDate < this.props.checkOutDate && itemDate > this.props.checkInDate) {
+            return <td class = 'day' style = {rangeStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
+          }
         }
+
+        return <td class = 'day' style = {normalDateStyle} onClick={() => {dateClicked(item);}} onMouseEnter={() => {changedHoveredDate(item);}}> {item === 'blank' ? '- ' : item.getDate()} </td>
+
+
       })}
 
     </tr>)
