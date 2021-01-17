@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      dates: [],
       checkIn: 'notSelected',
       checkOut: 'notSelected',
       showing: false, //is calendar showing
@@ -27,11 +27,11 @@ class App extends React.Component {
         this.setState({
           dates: dates
         });
-        console.log('GOT SOME DATES!', dates.length);
-        for (var i = 0; i < dates.length; i++) {
-          console.log(dates[i].date, dates[i].isAvailable);
+        // console.log('GOT SOME DATES!', dates.length);
+        // for (var i = 0; i < dates.length; i++) {
+        //   console.log(dates[i].date, dates[i].isAvailable);
 
-        }
+        // }
       }
     });
   }
@@ -129,7 +129,7 @@ class App extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 

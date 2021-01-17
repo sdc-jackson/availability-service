@@ -37,8 +37,19 @@ class Week extends React.Component {
         var choosable = true;
 
         var itemDate = new Date(item);
+        var dateIsAvailable = false;
+        for(var i = 0; i < this.props.dates.length; i++) {
+          var cDate = new Date(this.props.dates[i].date);
+          if(cDate.getDate() === itemDate.getDate() &&
+              cDate.getMonth() === itemDate.getMonth() &&
+              cDate.getYear() === itemDate.getYear() &&
+              this.props.dates[i].isAvailable === true) {
+                dateIsAvailable = true;
 
-        if (this.props.checkInDate !== 'notSelected' && itemDate < this.props.checkInDate) {
+          }
+        }
+
+        if ((this.props.checkInDate !== 'notSelected' && itemDate < this.props.checkInDate) || dateIsAvailable === false) {
           chosenStyle = blockedStyle;
           choosable = false;
         } else if (item.toString().slice(0, 17) === this.props.checkInDate.toString().slice(0, 17) && item !== 'blank') {
