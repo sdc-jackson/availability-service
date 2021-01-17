@@ -17,6 +17,15 @@ app.get('/:id/minNightlyRate', (req, res) => {
   });
 });
 
+app.get('/:id/availableDates', (req, res) => {
+
+  db.getAvailableDates(req.params.id, (dates) => {
+    res.status(200);
+    res.send(dates);
+    res.end;
+  });
+});
+
 
 
 console.log('listening on port 5001');

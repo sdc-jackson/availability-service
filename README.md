@@ -1,6 +1,6 @@
 # Availability Calendar
 
-> This repo is a reproduction of the Availability Calendar service from an AirBnb room listing page.
+> This repo is a reproduction of the Availability Calendar service from an AirBnb room listing page. End goal is to be able to phish people. Just kidding.
 
 ## Related Projects
 

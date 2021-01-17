@@ -25,7 +25,7 @@ class Week extends React.Component {
     var blockedStyle = {
       textDecoration: 'line-through',
       color: 'lightGrey'
-    }
+    };
     var dateClicked = this.props.dateClicked;
     var changedHoveredDate = this.props.changedHoveredDate;
 
@@ -59,7 +59,7 @@ class Week extends React.Component {
           chosenStyle = normalDateStyle;
         }
 
-        return <td class = 'day' style = {chosenStyle} onClick={ () => { if(choosable) {dateClicked(item); }}} onMouseEnter={ () => { changedHoveredDate(item); }}> { item === 'blank' ? '  ' : item.getDate() } </td>;
+        return <td class = 'day' style = { chosenStyle } onClick={ () => { if (choosable) { dateClicked(item); } }} onMouseEnter={ () => { changedHoveredDate(item); }}> { item === 'blank' ? '  ' : item.getDate() } </td>;
 
 
       })}
