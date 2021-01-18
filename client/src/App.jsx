@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from './Calendar.jsx';
+import ReservationSummary from './ReservationSummary.jsx';
 import $ from 'jquery';
 
 
@@ -19,7 +20,9 @@ class App extends React.Component {
       selectedCheckoutOnlyDate: 'none',
       hoveredDate: 'none',
       showCheckAvailabilityButton: true,
-      showReserveButton: false
+      showReserveButton: false,
+      priceOfStay: 0,
+      numNights: 0
     };
   }
 
@@ -49,7 +52,8 @@ class App extends React.Component {
     this.setState({
       showing: true,
       currentlySelecting: 'checkIn',
-      activeSelecting: true
+      activeSelecting: true,
+      showReserveButton: false
     });
   }
   onClickCheckoutShowCalendar() {
@@ -76,6 +80,7 @@ class App extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
+      this.getTotalPrice(e);
     } else if (dateIsCheckoutOnly) {
       this.setState({
         checkoutOnlyShowing: true,
@@ -111,6 +116,32 @@ class App extends React.Component {
     this.setState({
       hoveredDate: date
     });
+  }
+
+  getTotalPrice(checkOut) {
+    console.log('inside getTotalPrice');
+    var checkOutDate = new Date(checkOut);
+    var checkInDate = new Date(this.state.checkIn);
+    var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000*60*60*24));
+    console.log(checkOutDate, checkInDate);
+    this.setState({
+      numNights: numNights
+    });
+    for (var i = 0; i < this.state.dates.length; i++) {
+      var thisNight = this.state.dates[i];
+      var thisNightDate = new Date(this.state.dates[i].date);
+      // console.log('thisNightDate:', thisNightDate.toString().slice(0, 15));
+      // console.log('checkInDate', checkInDate);
+      if(thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
+
+        this.setState({
+          priceOfStay: this.state.dates[i].nightlyRate * numNights,
+          cleaningFee: thisNight.cleaningFee * numNights,
+          serviceFee:  thisNight.serviceFee * numNights
+        });
+        return;
+      }
+    }
   }
 
   render() {
@@ -159,8 +190,12 @@ class App extends React.Component {
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
-
-        <button style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>Reserve</button>
+        <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
+          <br/>
+          <br/>
+          <ReservationSummary cleaningFee = {this.state.cleaningFee} serviceFee = {this.state.serviceFee} numNights = {this.state.numNights} priceOfStay = {this.state.priceOfStay}/>
+          <button >Reserve</button>
+        </div>
       </div>
 
 
