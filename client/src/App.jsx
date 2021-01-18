@@ -87,7 +87,10 @@ class App extends React.Component {
       currentlySelecting: 'checkIn',
       checkIn: 'notSelected',
       checkOut: 'notSelected',
-      selectedCheckoutOnlyDate: 'none'
+      selectedCheckoutOnlyDate: 'none',
+      hoveredDate: 'none',
+      checkoutOnlyShowing: false
+
     });
   }
 
