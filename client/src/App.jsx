@@ -17,7 +17,9 @@ class App extends React.Component {
       activeSelecting: false,
       checkoutOnlyShowing: false,
       selectedCheckoutOnlyDate: 'none',
-      hoveredDate: 'none'
+      hoveredDate: 'none',
+      showCheckAvailabilityButton: true,
+      showReserveButton: false
     };
   }
 
@@ -70,7 +72,9 @@ class App extends React.Component {
       this.setState({
         checkOut: e,
         showing: false,
-        activeSelecting: false
+        activeSelecting: false,
+        showCheckAvailabilityButton: false,
+        showReserveButton: true
       });
     } else if (dateIsCheckoutOnly) {
       this.setState({
@@ -154,7 +158,11 @@ class App extends React.Component {
 
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
+        <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
+
+        <button style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>Reserve</button>
       </div>
+
 
     );
   }
