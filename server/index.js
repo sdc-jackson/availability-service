@@ -10,19 +10,27 @@ app.use('/:id', express.static(__dirname + '/../client/dist'));
 
 app.get('/:id/minNightlyRate', (req, res) => {
 
-  db.getMinNightlyRate(req.params.id, (rate) => {
-    res.status(200);
-    res.send({minNightlyRate: rate.minRate});
-    res.end();
+  db.getMinNightlyRate(req.params.id, (err, rate) => {
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      res.status(200);
+      res.send({minNightlyRate: rate.minRate});
+      res.end();
+    }
   });
 });
 
 app.get('/:id/availableDates', (req, res) => {
 
-  db.getAvailableDates(req.params.id, (dates) => {
-    res.status(200);
-    res.send(dates);
-    res.end;
+  db.getAvailableDates(req.params.id, (err, dates) => {
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      res.status(200);
+      res.send(dates);
+      res.end;
+    }
   });
 });
 

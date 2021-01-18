@@ -47,19 +47,19 @@ class Week extends React.Component {
         var dateIsAvailable = false;
         var dateIsCheckoutOnly = false; //previous date available but this date is not
 
-        for(var i = 0; i < this.props.dates.length; i++) {
+        for (var i = 0; i < this.props.dates.length; i++) {
           var cDate = new Date(this.props.dates[i].date);
-          if(cDate.getDate() === itemDate.getDate() &&
-              cDate.getMonth() === itemDate.getMonth() &&
-              cDate.getYear() === itemDate.getYear()) {
-                if(this.props.dates[i].isAvailable === true) {
-                  dateIsAvailable = true;
-                } else if (i > 0) {
-                  if(this.props.dates[i - 1].isAvailable === true) {
-                    dateIsCheckoutOnly = true;
-                  }
-                }
+          if (cDate.getDate() === itemDate.getDate() &&
+            cDate.getMonth() === itemDate.getMonth() &&
+            cDate.getYear() === itemDate.getYear()) {
+            if (this.props.dates[i].isAvailable === true) {
+              dateIsAvailable = true;
+            } else if (i > 0) {
+              if (this.props.dates[i - 1].isAvailable === true) {
+                dateIsCheckoutOnly = true;
               }
+            }
+          }
         }
 
         if ((this.props.checkInDate !== 'notSelected' && itemDate < this.props.checkInDate) || dateIsAvailable === false) {
@@ -91,20 +91,20 @@ class Week extends React.Component {
         }
 
         return <td class = 'day'
-                style = { chosenStyle }
-                onClick={ () => {
-                  if (choosable) {
-                    dateClicked(item, dateIsCheckoutOnly);
-                  }
-                }}
-                onMouseEnter={ () => {
-                  changedHoveredDate(item);
-                }}
-                onMouseLeave={ () => {
-                  changedHoveredDate('none');
-                }}>
-                { item === 'blank' ? '  ' : item.getDate() }
-              </td>;
+          style = { chosenStyle }
+          onClick={ () => {
+            if (choosable) {
+              dateClicked(item, dateIsCheckoutOnly);
+            }
+          }}
+          onMouseEnter={ () => {
+            changedHoveredDate(item);
+          }}
+          onMouseLeave={ () => {
+            changedHoveredDate('none');
+          }}>
+          { item === 'blank' ? '  ' : item.getDate() }
+        </td>;
 
 
 

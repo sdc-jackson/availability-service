@@ -100,11 +100,11 @@ class Calendar extends React.Component {
     var month1dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
       return adate.getMonth() === this.state.month1Date.getMonth();
-    })
+    });
     var month2dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
       return adate.getMonth() === this.state.month2Date.getMonth();
-    })
+    });
     return (
       <div>
         <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<<'} </button>

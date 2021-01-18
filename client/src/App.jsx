@@ -35,11 +35,6 @@ class App extends React.Component {
         this.setState({
           dates: dates
         });
-        // console.log('GOT SOME DATES!', dates.length);
-        // for (var i = 0; i < dates.length; i++) {
-        //   console.log(dates[i].date, dates[i].isAvailable);
-
-        // }
       }
     });
   }
@@ -112,7 +107,6 @@ class App extends React.Component {
   }
 
   changeHoveredDate(date) {
-    //console.log('hovered date:', date);
     this.setState({
       hoveredDate: date
     });
@@ -122,7 +116,7 @@ class App extends React.Component {
     console.log('inside getTotalPrice');
     var checkOutDate = new Date(checkOut);
     var checkInDate = new Date(this.state.checkIn);
-    var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000*60*60*24));
+    var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     console.log(checkOutDate, checkInDate);
     this.setState({
       numNights: numNights
@@ -130,14 +124,12 @@ class App extends React.Component {
     for (var i = 0; i < this.state.dates.length; i++) {
       var thisNight = this.state.dates[i];
       var thisNightDate = new Date(this.state.dates[i].date);
-      // console.log('thisNightDate:', thisNightDate.toString().slice(0, 15));
-      // console.log('checkInDate', checkInDate);
-      if(thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
+      if (thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
 
         this.setState({
           priceOfStay: this.state.dates[i].nightlyRate * numNights,
           cleaningFee: thisNight.cleaningFee * numNights,
-          serviceFee:  thisNight.serviceFee * numNights
+          serviceFee: thisNight.serviceFee * numNights
         });
         return;
       }
