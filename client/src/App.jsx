@@ -14,7 +14,10 @@ class App extends React.Component {
       checkOut: 'notSelected',
       showing: false, //is calendar showing
       currentlySelecting: 'checkIn', //is the next date clicked to be check-in or check-out?
-      activeSelecting: false
+      activeSelecting: false,
+      checkoutOnlyShowing: false,
+      selectedCheckoutOnlyDate: 'none',
+      hoveredDate: 'none'
     };
   }
 
@@ -55,8 +58,8 @@ class App extends React.Component {
     });
   }
 
-  dateClicked(e) {
-    if (this.state.currentlySelecting === 'checkIn') {
+  dateClicked(e, dateIsCheckoutOnly) {
+    if (this.state.currentlySelecting === 'checkIn' && dateIsCheckoutOnly === false) {
       this.setState({
         checkIn: e,
         currentlySelecting: 'checkOut'
@@ -69,6 +72,11 @@ class App extends React.Component {
         showing: false,
         activeSelecting: false
       });
+    } else if (dateIsCheckoutOnly) {
+      this.setState({
+        checkoutOnlyShowing: true,
+        selectedCheckoutOnlyDate: e
+      });
     }
 
   }
@@ -78,7 +86,8 @@ class App extends React.Component {
       activeSelecting: true,
       currentlySelecting: 'checkIn',
       checkIn: 'notSelected',
-      checkOut: 'notSelected'
+      checkOut: 'notSelected',
+      selectedCheckoutOnlyDate: 'none'
     });
   }
 
@@ -87,6 +96,13 @@ class App extends React.Component {
       activeSelecting: false,
       currentlySelecting: 'checkIn',
       showing: false
+    });
+  }
+
+  changeHoveredDate(date) {
+    //console.log('hovered date:', date);
+    this.setState({
+      hoveredDate: date
     });
   }
 
@@ -129,11 +145,12 @@ class App extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 
         </div>
+        <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
       </div>
 
     );

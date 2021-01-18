@@ -26,6 +26,13 @@ class Week extends React.Component {
       textDecoration: 'line-through',
       color: 'lightGrey'
     };
+    var checkOutOnlyStyle = {
+      color: 'grey'
+    };
+    var checkOutOnlyHoverStyle = {
+      backgroundColor: 'lightGrey',
+      color: 'grey'
+    };
     var dateClicked = this.props.dateClicked;
     var changedHoveredDate = this.props.changedHoveredDate;
 
@@ -38,20 +45,33 @@ class Week extends React.Component {
 
         var itemDate = new Date(item);
         var dateIsAvailable = false;
+        var dateIsCheckoutOnly = false; //previous date available but this date is not
+
         for(var i = 0; i < this.props.dates.length; i++) {
           var cDate = new Date(this.props.dates[i].date);
           if(cDate.getDate() === itemDate.getDate() &&
               cDate.getMonth() === itemDate.getMonth() &&
-              cDate.getYear() === itemDate.getYear() &&
-              this.props.dates[i].isAvailable === true) {
-                dateIsAvailable = true;
-
-          }
+              cDate.getYear() === itemDate.getYear()) {
+                if(this.props.dates[i].isAvailable === true) {
+                  dateIsAvailable = true;
+                } else if (i > 0) {
+                  if(this.props.dates[i - 1].isAvailable === true) {
+                    dateIsCheckoutOnly = true;
+                  }
+                }
+              }
         }
 
         if ((this.props.checkInDate !== 'notSelected' && itemDate < this.props.checkInDate) || dateIsAvailable === false) {
           chosenStyle = blockedStyle;
           choosable = false;
+          if (dateIsCheckoutOnly === true) {
+            chosenStyle = checkOutOnlyStyle;
+            choosable = true;
+            if (item.toString().slice(0, 17) === this.props.hoveredDate.toString().slice(0, 17) && item !== 'blank') {
+              chosenStyle = checkOutOnlyHoverStyle;
+            }
+          }
         } else if (item.toString().slice(0, 17) === this.props.checkInDate.toString().slice(0, 17) && item !== 'blank') {
           chosenStyle = checkInOutStyle;
         } else if (item.toString().slice(0, 17) === this.props.checkOutDate.toString().slice(0, 17) && item !== 'blank') {
@@ -70,7 +90,22 @@ class Week extends React.Component {
           chosenStyle = normalDateStyle;
         }
 
-        return <td class = 'day' style = { chosenStyle } onClick={ () => { if (choosable) { dateClicked(item); } }} onMouseEnter={ () => { changedHoveredDate(item); }}> { item === 'blank' ? '  ' : item.getDate() } </td>;
+        return <td class = 'day'
+                style = { chosenStyle }
+                onClick={ () => {
+                  if (choosable) {
+                    dateClicked(item, dateIsCheckoutOnly);
+                  }
+                }}
+                onMouseEnter={ () => {
+                  changedHoveredDate(item);
+                }}
+                onMouseLeave={ () => {
+                  changedHoveredDate('none');
+                }}>
+                { item === 'blank' ? '  ' : item.getDate() }
+              </td>;
+
 
 
       })}
