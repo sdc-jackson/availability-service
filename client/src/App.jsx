@@ -13,6 +13,7 @@ class App extends React.Component {
       dates: [],
       checkIn: 'notSelected',
       checkOut: 'notSelected',
+      maxSelectableDate: 'notSelected', //the last available date after the selected check-in date
       showing: false, //is calendar showing
       currentlySelecting: 'checkIn', //is the next date clicked to be check-in or check-out?
       activeSelecting: false,
@@ -61,25 +62,46 @@ class App extends React.Component {
 
   dateClicked(e, dateIsCheckoutOnly) {
     if (this.state.currentlySelecting === 'checkIn' && dateIsCheckoutOnly === false) {
-      this.setState({
-        checkIn: e,
-        currentlySelecting: 'checkOut'
-
-      });
+      //go through dates and find the maxSelectableDate
+      var checkInDate = new Date(e);
+      checkInDate.setHours(0, 0, 0);
+      var hitCheckInDate = false;
+      for (var i = 0; i < this.state.dates.length; i++) {
+        var curDate = new Date(this.state.dates[i].date);
+        curDate.setHours(0, 0, 0);
+        if (!hitCheckInDate) {
+          if (curDate.toString() === checkInDate.toString()) {
+            hitCheckInDate = true;
+          }
+        } else {
+          if (this.state.dates[i].isAvailable === false) {
+            this.setState({
+              checkIn: checkInDate.toString(),
+              currentlySelecting: 'checkOut',
+              maxSelectableDate: this.state.dates[i].date
+            });
+            return;
+          }
+        }
+      }
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
+      var checkOutDate = new Date(e);
+      checkOutDate.setHours(0, 0, 0);
       this.setState({
-        checkOut: e,
+        checkOut: checkOutDate.toString(),
         showing: false,
         activeSelecting: false,
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      this.getTotalPrice(e);
+      this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
+      var checkOutOnlyDate = new Date(e);
+      checkOutOnlyDate.setHours(0, 0, 0);
       this.setState({
         checkoutOnlyShowing: true,
-        selectedCheckoutOnlyDate: e
+        selectedCheckoutOnlyDate: checkOutOnlyDate.toString()
       });
     }
 
@@ -107,8 +129,10 @@ class App extends React.Component {
   }
 
   changeHoveredDate(date) {
+    var hDate = new Date(date);
+    hDate.setHours(0, 0, 0);
     this.setState({
-      hoveredDate: date
+      hoveredDate: hDate.toString()
     });
   }
 
@@ -175,7 +199,7 @@ class App extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 
