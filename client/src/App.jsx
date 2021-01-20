@@ -115,8 +115,10 @@ class App extends React.Component {
       checkOut: 'notSelected',
       selectedCheckoutOnlyDate: 'none',
       hoveredDate: 'none',
-      checkoutOnlyShowing: false
-
+      checkoutOnlyShowing: false,
+      howCheckAvailabilityButton: true,
+      showReserveButton: false,
+      maxSelectableDate: 'notSelected'
     });
   }
 
