@@ -12,6 +12,7 @@ app.get('/:id/minNightlyRate', (req, res) => {
 
   db.getMinNightlyRate(req.params.id, (err, rate) => {
     if (err) {
+      //console.log(err);
       res.sendStatus(404);
     } else {
       res.status(200);

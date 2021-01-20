@@ -31,11 +31,12 @@ const Stay = mongoose.model('Stay', staySchema);
 var getMinNightlyRate = (productId, cb) => {
   var query = Stay.where({productId: productId});
   query.findOne( (err, stay) => {
-    if (err) {
-      console.log('couldnt find it');
+    if (err || stay === null || stay === undefined) {
+      //console.log('couldnt find it');
+      cb(new Error('could not find a stay with that ID'));
     } else {
 
-      cb(stay);
+      cb(null, stay);
     }
   });
 };
@@ -43,14 +44,14 @@ var getMinNightlyRate = (productId, cb) => {
 var getAvailableDates = (productId, cb) => {
   Stay.findOne({productId: productId}, (err, stay) => {
     if (err || stay === undefined || stay === null) {
-      console.log(err);
+      //console.log(err);
       cb(new Error('Could not find stay in database'));
     } else {
       var stayId = stay._doc._id;
 
       Calendar.find({stayId: stayId}, null, {sort: 'date'}, (err, dates) => {
         if (err || dates === undefined || dates === null) {
-          console.log(err);
+          //console.log(err);
           cb(new Error('Couldnot find dates in database for stay'));
 
         } else {
