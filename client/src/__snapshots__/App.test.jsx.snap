@@ -17,6 +17,7 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
+    data-testId="checkInDate"
     id="check-in-add-date"
     onClick={[Function]}
   >
@@ -36,6 +37,7 @@ exports[`renders correctly 1`] = `
       Check-out:
     </div>
     <div
+      data-testId="checkOutDate"
       id="check-out-add-date"
       onClick={[Function]}
     >

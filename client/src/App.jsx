@@ -25,6 +25,32 @@ class App extends React.Component {
       priceOfStay: 0,
       numNights: 0
     };
+
+    this.monthsMap = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+
+    this.daysMap = [
+      'Sun',
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat'
+    ];
   }
 
   componentDidMount() {
@@ -150,7 +176,6 @@ class App extends React.Component {
   }
 
   getTotalPrice(checkOut) {
-    console.log('inside getTotalPrice');
     var checkOutDate = new Date(checkOut);
     var checkInDate = new Date(this.state.checkIn);
     var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -171,6 +196,14 @@ class App extends React.Component {
         return;
       }
     }
+  }
+
+  getCheckIn() {
+    return new Date(this.state.checkIn);
+  }
+
+  getCheckOut() {
+    return new Date(this.state.checkOut);
   }
 
   render() {
@@ -197,16 +230,16 @@ class App extends React.Component {
             Check-in:
           </div>
         </div>
-        <div id = 'check-in-add-date' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-          {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
+        <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+          {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
         </div>
 
         <div id = 'check-out'>
           <div id = "check-out1" style = {checkOutStyle}>
             Check-out:
           </div>
-          <div id = 'check-out-add-date' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-            {this.state.checkOut === 'notSelected' ? 'Add date' : this.state.checkOut.toString()}
+          <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+            {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
           </div>
         </div>
 

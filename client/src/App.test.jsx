@@ -68,17 +68,59 @@ test('Hovering over an available date changes its formatting to \'hovered date\'
 
 })
 
-test('Selecting a check-in date updates the listed check-in date', async() => {
+test('Selecting a check-in date updates the listed check-in date and changes the date style', async() => {
   render(<App />)
 
 
   fireEvent.click(screen.getByText('Check Availability'));
   const normalDates = await screen.findAllByTestId('normal');
+  fireEvent.click(normalDates[0]);
 
-  fireEvent.mouseOver(normalDates[0]);
+  const blockedDates = await screen.findAllByTestId('checkInDate');
+  //const checkInDate = await screen.findAllBy
+  expect(blockedDates[0].innerHTML).toEqual('Mon Jan 18 2021');
+  const checkInDate = await screen.findAllByTestId('checkInOut');
+  expect(checkInDate[0]).toBeInTheDocument();
 
-  const blockedDates = await screen.findAllByTestId('hoveredDate');
-  expect(blockedDates[0]).toBeInTheDocument();
+
+})
+
+
+
+test('Selecting a check-out date updates the listed check-out date and pulls up the reservation summary', async() => {
+  render(<App />)
+
+
+  fireEvent.click(screen.getByText('Check Availability'));
+
+  //select a check-in date
+  const normalDates = await screen.findAllByTestId('normal');
+  fireEvent.click(normalDates[0]);
+
+  //select a check-out date & check that the form at the top appears this way
+  const nextCheckOut = await screen.findAllByText('19');
+  fireEvent.click(nextCheckOut[0]);
+
+  const checkOutDate = await screen.findAllByTestId('checkOutDate');
+  expect(checkOutDate[0].innerHTML).toEqual('Tue Jan 19 2021');
+
+  //check that the date formatting on the calendar changed
+  const nextCheckOutClicked = await screen.findAllByTestId('checkInOut');
+  expect(nextCheckOutClicked).toHaveLength(1);
+
+  //check that the reservation form pops up
+  const nightlyTotal = await screen.findAllByText('$253 per night x 1 nights = $253');
+  const cleaningFee = await screen.findAllByText('Cleaning Fee: $10');
+  const serviceFee = await screen.findAllByText('Service Fee: $2');
+  const total = await screen.findAllByText('Total: $265');
+  const reserveButton = await screen.findAllByText('Reserve');
+
+  expect(nightlyTotal[0]).toBeInTheDocument();
+  expect(cleaningFee[0]).toBeInTheDocument();
+  expect(serviceFee[0]).toBeInTheDocument();
+  expect(total[0]).toBeInTheDocument();
+  expect(reserveButton[0]).toBeInTheDocument();
+
 
 
 })

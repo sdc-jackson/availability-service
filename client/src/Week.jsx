@@ -75,7 +75,6 @@ class Week extends React.Component {
             maxDate.setHours(0, 0, 0);
             if (cDate.toString() === itemDate.toString()) {
               if (cDate > maxDate) {
-                console.log('past max date');
                 dateIsAvailable = false;
               } else if (this.props.dates[i].isAvailable === true) {
                 dateIsAvailable = true;
