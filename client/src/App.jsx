@@ -221,5 +221,4 @@ class App extends React.Component {
   }
 }
 
-var domContainer = document.getElementById('availabilityApp');
-ReactDOM.render(<App />, domContainer);
+export default App;
