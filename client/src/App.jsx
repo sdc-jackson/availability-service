@@ -38,7 +38,7 @@ class App extends React.Component {
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-        console.log('GOT SOME DATA')
+        //console.log('GOT SOME DATA', dates)
         this.setState({
           dates: dates
         });

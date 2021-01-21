@@ -34,7 +34,7 @@ test('Scroll to next month button', async() => {
 const server = setupServer(
   rest.get('/109/availableDates', (req, res, ctx) => {
 
-    return res(exampleData)
+    return res(ctx.json(exampleData))
   })
 )
 beforeAll(() => server.listen())
@@ -47,7 +47,7 @@ test('Calendar shows up when user clicks add date under check-in', async() => {
 
   fireEvent.click(screen.getByText('Check Availability'));
 
-  const janAfter = await screen.findAllByText('color: black; background-color: white');
+  const janAfter = await screen.findAllByText('color: black; background-color: white;');
   expect(janAfter).toHaveLength(1);
 
 })
