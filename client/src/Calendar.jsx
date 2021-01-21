@@ -100,16 +100,16 @@ class Calendar extends React.Component {
     var month1dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
       return adate.getMonth() === this.state.month1Date.getMonth();
-    })
+    });
     var month2dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
       return adate.getMonth() === this.state.month2Date.getMonth();
-    })
+    });
     return (
       <div>
         <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<<'} </button>
-        <Month selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month1dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
-        <Month selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month2dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
+        <Month maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month1dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
+        <Month maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month2dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
         <button id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>>'} </button>
         <br/>
         <br/>

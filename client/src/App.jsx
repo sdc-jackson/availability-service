@@ -13,6 +13,7 @@ class App extends React.Component {
       dates: [],
       checkIn: 'notSelected',
       checkOut: 'notSelected',
+      maxSelectableDate: 'notSelected', //the last available date after the selected check-in date
       showing: false, //is calendar showing
       currentlySelecting: 'checkIn', //is the next date clicked to be check-in or check-out?
       activeSelecting: false,
@@ -24,23 +25,55 @@ class App extends React.Component {
       priceOfStay: 0,
       numNights: 0
     };
+
+    this.monthsMap = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+
+    this.daysMap = [
+      'Sun',
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat'
+    ];
   }
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
+    //console.log('PRODUCT ID:', typeof productId);
+    if (productId === null || productId === undefined || productId.length === 0){
+      productId = '109';
+    }
+    //console.log('HELLO HELLO')
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
+        //console.log('GOT SOME DATA', dates)
         this.setState({
           dates: dates
         });
-        // console.log('GOT SOME DATES!', dates.length);
-        // for (var i = 0; i < dates.length; i++) {
-        //   console.log(dates[i].date, dates[i].isAvailable);
 
-        // }
+      },
+      error: (err) => {
+        console.log('GOT AN ERROR', err);
       }
+
     });
   }
 
@@ -66,25 +99,46 @@ class App extends React.Component {
 
   dateClicked(e, dateIsCheckoutOnly) {
     if (this.state.currentlySelecting === 'checkIn' && dateIsCheckoutOnly === false) {
-      this.setState({
-        checkIn: e,
-        currentlySelecting: 'checkOut'
-
-      });
+      //go through dates and find the maxSelectableDate
+      var checkInDate = new Date(e);
+      checkInDate.setHours(0, 0, 0);
+      var hitCheckInDate = false;
+      for (var i = 0; i < this.state.dates.length; i++) {
+        var curDate = new Date(this.state.dates[i].date);
+        curDate.setHours(0, 0, 0);
+        if (!hitCheckInDate) {
+          if (curDate.toString() === checkInDate.toString()) {
+            hitCheckInDate = true;
+          }
+        } else {
+          if (this.state.dates[i].isAvailable === false) {
+            this.setState({
+              checkIn: checkInDate.toString(),
+              currentlySelecting: 'checkOut',
+              maxSelectableDate: this.state.dates[i].date
+            });
+            return;
+          }
+        }
+      }
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
+      var checkOutDate = new Date(e);
+      checkOutDate.setHours(0, 0, 0);
       this.setState({
-        checkOut: e,
+        checkOut: checkOutDate.toString(),
         showing: false,
         activeSelecting: false,
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      this.getTotalPrice(e);
+      this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
+      var checkOutOnlyDate = new Date(e);
+      checkOutOnlyDate.setHours(0, 0, 0);
       this.setState({
         checkoutOnlyShowing: true,
-        selectedCheckoutOnlyDate: e
+        selectedCheckoutOnlyDate: checkOutOnlyDate.toString()
       });
     }
 
@@ -98,8 +152,10 @@ class App extends React.Component {
       checkOut: 'notSelected',
       selectedCheckoutOnlyDate: 'none',
       hoveredDate: 'none',
-      checkoutOnlyShowing: false
-
+      checkoutOnlyShowing: false,
+      howCheckAvailabilityButton: true,
+      showReserveButton: false,
+      maxSelectableDate: 'notSelected'
     });
   }
 
@@ -112,17 +168,17 @@ class App extends React.Component {
   }
 
   changeHoveredDate(date) {
-    //console.log('hovered date:', date);
+    var hDate = new Date(date);
+    hDate.setHours(0, 0, 0);
     this.setState({
-      hoveredDate: date
+      hoveredDate: hDate.toString()
     });
   }
 
   getTotalPrice(checkOut) {
-    console.log('inside getTotalPrice');
     var checkOutDate = new Date(checkOut);
     var checkInDate = new Date(this.state.checkIn);
-    var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000*60*60*24));
+    var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     console.log(checkOutDate, checkInDate);
     this.setState({
       numNights: numNights
@@ -130,18 +186,24 @@ class App extends React.Component {
     for (var i = 0; i < this.state.dates.length; i++) {
       var thisNight = this.state.dates[i];
       var thisNightDate = new Date(this.state.dates[i].date);
-      // console.log('thisNightDate:', thisNightDate.toString().slice(0, 15));
-      // console.log('checkInDate', checkInDate);
-      if(thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
+      if (thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
 
         this.setState({
           priceOfStay: this.state.dates[i].nightlyRate * numNights,
           cleaningFee: thisNight.cleaningFee * numNights,
-          serviceFee:  thisNight.serviceFee * numNights
+          serviceFee: thisNight.serviceFee * numNights
         });
         return;
       }
     }
+  }
+
+  getCheckIn() {
+    return new Date(this.state.checkIn);
+  }
+
+  getCheckOut() {
+    return new Date(this.state.checkOut);
   }
 
   render() {
@@ -168,22 +230,22 @@ class App extends React.Component {
             Check-in:
           </div>
         </div>
-        <div id = 'check-in-add-date' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-          {this.state.checkIn === 'notSelected' ? 'Add date' : this.state.checkIn.toString()}
+        <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+          {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
         </div>
 
         <div id = 'check-out'>
           <div id = "check-out1" style = {checkOutStyle}>
             Check-out:
           </div>
-          <div id = 'check-out-add-date' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-            {this.state.checkOut === 'notSelected' ? 'Add date' : this.state.checkOut.toString()}
+          <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+            {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
           </div>
         </div>
 
         <div id = 'calendar'>
-          <div id = 'calendar-table' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+          <div id = 'calendar-table' data-testId = 'calendar' style={{display: this.state.showing ? 'block' : 'none' }}>
+            <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 
@@ -203,5 +265,4 @@ class App extends React.Component {
   }
 }
 
-var domContainer = document.getElementById('availabilityApp');
-ReactDOM.render(<App />, domContainer);
+export default App;

@@ -31,45 +31,53 @@ const Stay = mongoose.model('Stay', staySchema);
 var getMinNightlyRate = (productId, cb) => {
   var query = Stay.where({productId: productId});
   query.findOne( (err, stay) => {
-    if (err) {
-      console.log('couldnt find it');
+    if (err || stay === null || stay === undefined) {
+      //console.log('couldnt find it');
+      cb(new Error('could not find a stay with that ID'));
     } else {
 
-      cb(stay);
+      cb(null, stay);
     }
   });
 };
 
 var getAvailableDates = (productId, cb) => {
   Stay.findOne({productId: productId}, (err, stay) => {
-    if (err) {
-      console.log(err);
-    }
-    var stayId = stay._doc._id;
+    if (err || stay === undefined || stay === null) {
+      //console.log(err);
+      cb(new Error('Could not find stay in database'));
+    } else {
+      var stayId = stay._doc._id;
 
-    Calendar.find({stayId: stayId}, null, {sort: 'date'}, (err, dates) => {
-      if (err) {
-        console.log(err);
-      }
-      var results = [];
-      dates.map((date) => {
-        var result = {
-          occupancyTaxes: date._doc.occupancyTaxes,
-          serviceFee: date._doc.serviceFee,
-          cleaningFee: date._doc.cleaningFee,
-          nightlyRate: date._doc.nightlyRate,
-          isAvailable: date._doc.isAvailable,
-          date: date._doc.date,
-          stayId: date._doc.stayId,
-          id: date._doc._id
-        };
-        results.push(result);
+      Calendar.find({stayId: stayId}, null, {sort: 'date'}, (err, dates) => {
+        if (err || dates === undefined || dates === null) {
+          //console.log(err);
+          cb(new Error('Couldnot find dates in database for stay'));
+
+        } else {
+          var results = [];
+          dates.map((date) => {
+            var result = {
+              occupancyTaxes: date._doc.occupancyTaxes,
+              serviceFee: date._doc.serviceFee,
+              cleaningFee: date._doc.cleaningFee,
+              nightlyRate: date._doc.nightlyRate,
+              isAvailable: date._doc.isAvailable,
+              date: date._doc.date,
+              stayId: date._doc.stayId,
+              id: date._doc._id
+            };
+            results.push(result);
+          });
+          cb(null, results);
+        }
       });
-      console.log(results);
-      cb(results);
-    });
 
+
+    }
   });
+
+
 
 };
 

@@ -1,0 +1,1461 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <div
+    id="check-in"
+  >
+    <div
+      id="check-in1"
+      style={
+        Object {
+          "fontWeight": "normal",
+        }
+      }
+    >
+      Check-in:
+    </div>
+  </div>
+  <div
+    data-testId="checkInDate"
+    id="check-in-add-date"
+    onClick={[Function]}
+  >
+    Add date
+  </div>
+  <div
+    id="check-out"
+  >
+    <div
+      id="check-out1"
+      style={
+        Object {
+          "fontWeight": "normal",
+        }
+      }
+    >
+      Check-out:
+    </div>
+    <div
+      data-testId="checkOutDate"
+      id="check-out-add-date"
+      onClick={[Function]}
+    >
+      Add date
+    </div>
+  </div>
+  <div
+    id="calendar"
+  >
+    <div
+      data-testId="calendar"
+      id="calendar-table"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div>
+        <button
+          id="prevMonthButton"
+          onClick={[Function]}
+        >
+           
+          &lt;&lt;
+           
+        </button>
+        <div
+          id="month1"
+        >
+          January
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  Su
+                </td>
+                <td>
+                  Mo
+                </td>
+                <td>
+                  Tu
+                </td>
+                <td>
+                  We
+                </td>
+                <td>
+                  Th
+                </td>
+                <td>
+                  Fr
+                </td>
+                <td>
+                  Sa
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  1
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  2
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  3
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  4
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  5
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  6
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  7
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  8
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  9
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  10
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  11
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  12
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  13
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  14
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  15
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  16
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  17
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  18
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  19
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  20
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  21
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  22
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  23
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  24
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  25
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  26
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  27
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  28
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  29
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  30
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  31
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          id="month1"
+        >
+          February
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  Su
+                </td>
+                <td>
+                  Mo
+                </td>
+                <td>
+                  Tu
+                </td>
+                <td>
+                  We
+                </td>
+                <td>
+                  Th
+                </td>
+                <td>
+                  Fr
+                </td>
+                <td>
+                  Sa
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  1
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  2
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  3
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  4
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  5
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  6
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  7
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  8
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  9
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  10
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  11
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  12
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  13
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  14
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  15
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  16
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  17
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  18
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  19
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  20
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  21
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  22
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  23
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  24
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  25
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  26
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  27
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                  28
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+                <td
+                  class="day"
+                  data-testId="blocked"
+                  onClick={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "lightGrey",
+                      "testId": "blocked",
+                      "textDecoration": "line-through",
+                    }
+                  }
+                >
+                    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          id="nextMonthButton"
+          onClick={[Function]}
+        >
+           
+          &gt;&gt;
+           
+        </button>
+        <br />
+        <br />
+        <button
+          onClick={[Function]}
+        >
+          Clear Dates
+        </button>
+        <button
+          onClick={[Function]}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    id="dateIsCheckoutOnly"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+     This date is check-out only. 
+  </div>
+  <button
+    onClick={[Function]}
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+     Check Availability 
+  </button>
+  <div
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <br />
+    <br />
+    <div>
+      <div>
+         
+        $NaN per night x 0 nights = $0
+      </div>
+      <div>
+         Cleaning Fee:  $
+      </div>
+      <div>
+         Service Fee: $
+      </div>
+      <br />
+      <div>
+         Total: $
+        NaN
+      </div>
+      <br />
+    </div>
+    <button>
+      Reserve
+    </button>
+  </div>
+</div>
+`;

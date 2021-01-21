@@ -45,7 +45,6 @@ for(var stayId = 0; stayId < 10; stayId++) {
         date.setDate(date.getDate() + 1);
         var thisDate = new Date(date);
 
-        //ate.setDate(date.getDate() + 1); //increments day by 1
         var isAvailable = Math.floor(Math.random() * 4) === 1 ? false : true;
 
         if([4, 5, 6].includes(thisDate.getDay())) {

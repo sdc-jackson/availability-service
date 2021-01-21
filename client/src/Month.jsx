@@ -21,9 +21,8 @@ class Month extends React.Component {
               <td>Fr</td>
               <td>Sa</td>
             </tr>
-            {/* <Week thisWeek = {['blank', 'blank', 'blank', 'blank', 'blank', 'blank', 'blank']} /> */}
             {this.props.weeks.map((arr) => {
-              return (<Week selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {this.props.dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>);
+              return (<Week maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {this.props.dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>);
             })}
           </tbody>
         </table>
