@@ -53,4 +53,32 @@ test('Calendar has different formatting for available vs unavailable dates', asy
 
 })
 
+test('Hovering over an available date changes its formatting to \'hovered date\'', async() => {
+  render(<App />)
 
+
+  fireEvent.click(screen.getByText('Check Availability'));
+  const normalDates = await screen.findAllByTestId('normal');
+
+  fireEvent.mouseOver(normalDates[0]);
+
+  const blockedDates = await screen.findAllByTestId('hoveredDate');
+  expect(blockedDates[0]).toBeInTheDocument();
+
+
+})
+
+test('Selecting a check-in date updates the listed check-in date', async() => {
+  render(<App />)
+
+
+  fireEvent.click(screen.getByText('Check Availability'));
+  const normalDates = await screen.findAllByTestId('normal');
+
+  fireEvent.mouseOver(normalDates[0]);
+
+  const blockedDates = await screen.findAllByTestId('hoveredDate');
+  expect(blockedDates[0]).toBeInTheDocument();
+
+
+})
