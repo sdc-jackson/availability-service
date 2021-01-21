@@ -29,14 +29,25 @@ class App extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
+    //console.log('PRODUCT ID:', typeof productId);
+    if (productId === null || productId === undefined || productId.length === 0){
+      productId = '109';
+    }
+    //console.log('HELLO HELLO')
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
+        console.log('GOT SOME DATA')
         this.setState({
           dates: dates
         });
+
+      },
+      error: (err) => {
+        console.log('GOT AN ERROR', err);
       }
+
     });
   }
 
