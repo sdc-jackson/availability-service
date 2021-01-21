@@ -40,7 +40,7 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('Calendar has different formatting for available vs unavailable dates', async() => {
+test('Calendar has different formatting for available, unavailable, and checkOutOnly dates', async() => {
   render(<App />)
 
 
@@ -48,8 +48,10 @@ test('Calendar has different formatting for available vs unavailable dates', asy
 
   const blockedDates = await screen.findAllByTestId('blocked');
   const normalDates = await screen.findAllByTestId('normal');
+  const checkOutOnly = await screen.findAllByTestId('checkOutOnly');
   expect(blockedDates[0]).toBeInTheDocument();
   expect(normalDates[0]).toBeInTheDocument();
+  expect(checkOutOnly[0]).toBeInTheDocument();
 
 })
 
@@ -120,6 +122,41 @@ test('Selecting a check-out date updates the listed check-out date and pulls up 
   expect(serviceFee[0]).toBeInTheDocument();
   expect(total[0]).toBeInTheDocument();
   expect(reserveButton[0]).toBeInTheDocument();
+
+
+
+})
+
+test('Selecting the selected check-in or check-out date should pull up the calendar, whether in the initial form or reservation summary', async() => {
+  render(<App />)
+
+  const calendarInit = await screen.findAllByTestId('calendar');
+  expect(calendarInit[0].style._values.display).toEqual('none');
+
+  const addDate = screen.getAllByText('Add date')
+  fireEvent.click(addDate[0]);
+
+  const calendar2 = await screen.findAllByTestId('calendar');
+  expect(calendar2[0].style._values.display).toEqual('block');
+
+  //select a check-in date
+  const normalDates = await screen.findAllByTestId('normal');
+  fireEvent.click(normalDates[0]);
+
+  //select a check-out date & check that the form at the top appears this way
+  const nextCheckOut = await screen.findAllByText('19');
+  fireEvent.click(nextCheckOut[0]);
+
+  const checkOutDate = await screen.findAllByTestId('checkOutDate');
+  expect(checkOutDate[0].innerHTML).toEqual('Tue Jan 19 2021');
+
+  //check that the date formatting on the calendar changed
+  const nextCheckOutClicked = await screen.findAllByTestId('checkInOut');
+  expect(nextCheckOutClicked).toHaveLength(1);
+
+  fireEvent.click(checkOutDate[0]);
+  const calendar = await screen.findAllByTestId('calendar');
+  expect(calendar[0].style._values.display).toEqual('block');
 
 
 
