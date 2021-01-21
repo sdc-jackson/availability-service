@@ -6,6 +6,7 @@ import { TestWatcher } from 'jest';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import exampleData from './exampleData.js';
+import '@testing-library/jest-dom/extend-expect';
 
 it('renders correctly', () => {
   const tree = renderer
@@ -23,11 +24,9 @@ test('Scroll to next month button', async() => {
   fireEvent.click(screen.getByText('>>'));
 
   const marchMonthsAfter = await screen.findAllByText('March');
-  //console.log(marchMonthsAfter)
 
 
   expect(marchMonthsAfter).toHaveLength(1);
-  //expect(items).toHaveLength(1)
 })
 
 
@@ -41,14 +40,16 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('Calendar shows up when user clicks add date under check-in', async() => {
+test('Calendar has different formatting for available vs unavailable dates', async() => {
   render(<App />)
 
 
   fireEvent.click(screen.getByText('Check Availability'));
 
-  const janAfter = await screen.findAllByText('color: black; background-color: white;');
-  expect(janAfter).toHaveLength(1);
+  const blockedDates = await screen.findAllByTestId('blocked');
+  const normalDates = await screen.findAllByTestId('normal');
+  expect(blockedDates[0]).toBeInTheDocument();
+  expect(normalDates[0]).toBeInTheDocument();
 
 })
 

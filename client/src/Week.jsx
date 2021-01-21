@@ -8,31 +8,40 @@ class Week extends React.Component {
   render() {
     var checkInOutStyle = {
       backgroundColor: 'black',
-      color: 'white'
+      color: 'white',
+      testId: 'checkInOut'
     };
+    //var checkInOutTestId = 'checkInOut'
     var rangeStyle = {
       backgroundColor: 'grey',
-      color: 'black'
+      color: 'black',
+      testId: 'range'
     };
     var normalDateStyle = {
       backgroundColor: 'white',
-      color: 'black'
+      color: 'black',
+      testId: 'normal'
     };
     var hoveredDateStyle = {
       backgroundColor: 'cornflowerBlue',
-      color: 'white'
+      color: 'white',
+      testId: 'hoveredDate'
     };
     var blockedStyle = {
       textDecoration: 'line-through',
-      color: 'lightGrey'
+      color: 'lightGrey',
+      testId: 'blocked'
     };
     var checkOutOnlyStyle = {
-      color: 'grey'
+      color: 'grey',
+      testId: 'checkOutOnly'
     };
     var checkOutOnlyHoverStyle = {
       backgroundColor: 'lightGrey',
-      color: 'grey'
+      color: 'grey',
+      testId: 'checkOutOnlyHover'
     };
+
     var dateClicked = this.props.dateClicked;
     var changedHoveredDate = this.props.changedHoveredDate;
 
@@ -111,6 +120,7 @@ class Week extends React.Component {
 
           return <td class = 'day'
             style = { chosenStyle }
+            data-testId = {chosenStyle.testId}
             onClick={ () => {
               if (choosable) {
                 dateClicked(item, dateIsCheckoutOnly);

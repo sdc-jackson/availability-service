@@ -94,12 +94,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -108,12 +110,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -122,12 +126,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -136,12 +142,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -150,12 +158,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -164,12 +174,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -178,12 +190,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -194,12 +208,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -208,12 +224,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -222,12 +240,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -236,12 +256,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -250,12 +272,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -264,12 +288,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -278,12 +304,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -294,12 +322,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -308,12 +338,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -322,12 +354,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -336,12 +370,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -350,12 +386,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -364,12 +402,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -378,12 +418,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -394,12 +436,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -408,12 +452,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -422,12 +468,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -436,12 +484,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -450,12 +500,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -464,12 +516,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -478,12 +532,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -494,12 +550,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -508,12 +566,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -522,12 +582,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -536,12 +598,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -550,12 +614,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -564,12 +630,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -578,12 +646,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -594,12 +664,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -608,12 +680,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -622,12 +696,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -636,12 +712,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -650,12 +728,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -664,12 +744,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -678,12 +760,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -726,12 +810,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -740,12 +826,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -754,12 +842,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -768,12 +858,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -782,12 +874,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -796,12 +890,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -810,12 +906,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -826,12 +924,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -840,12 +940,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -854,12 +956,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -868,12 +972,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -882,12 +988,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -896,12 +1004,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -910,12 +1020,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -926,12 +1038,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -940,12 +1054,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -954,12 +1070,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -968,12 +1086,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -982,12 +1102,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -996,12 +1118,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1010,12 +1134,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1026,12 +1152,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1040,12 +1168,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1054,12 +1184,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1068,12 +1200,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1082,12 +1216,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1096,12 +1232,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1110,12 +1248,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1126,12 +1266,14 @@ exports[`renders correctly 1`] = `
               <tr>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1140,12 +1282,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1154,12 +1298,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1168,12 +1314,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1182,12 +1330,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1196,12 +1346,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
@@ -1210,12 +1362,14 @@ exports[`renders correctly 1`] = `
                 </td>
                 <td
                   class="day"
+                  data-testId="blocked"
                   onClick={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                   style={
                     Object {
                       "color": "lightGrey",
+                      "testId": "blocked",
                       "textDecoration": "line-through",
                     }
                   }
