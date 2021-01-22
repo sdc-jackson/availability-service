@@ -154,6 +154,7 @@ class App extends React.Component {
         showReserveButton: true
       });
       history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      window.history.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
       var checkOutOnlyDate = new Date(e);
@@ -179,6 +180,9 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
+    console.log('clear dates');
+    history.replace('?', {foo: 'clear_dates'});
+
   }
 
   closeCalendar() {
