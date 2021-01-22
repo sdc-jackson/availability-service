@@ -23,7 +23,8 @@ class App extends React.Component {
       showCheckAvailabilityButton: true,
       showReserveButton: false,
       priceOfStay: 0,
-      numNights: 0
+      numNights: 0,
+      minNightlyRate: 'none'
     };
 
     this.monthsMap = [
@@ -55,19 +56,27 @@ class App extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
-    //console.log('PRODUCT ID:', typeof productId);
     if (productId === null || productId === undefined || productId.length === 0){
       productId = '109';
     }
-    //console.log('HELLO HELLO')
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-        //console.log('GOT SOME DATA', dates)
         this.setState({
           dates: dates
         });
+
+        $.ajax({
+          method: 'GET',
+          url: `/${productId}/minNightlyRate`,
+          success: ({minNightlyRate}) => {
+            this.setState({
+              minNightlyRate: minNightlyRate
+            })
+          }
+
+        })
 
       },
       error: (err) => {
@@ -225,6 +234,10 @@ class App extends React.Component {
     }
     return (
       <div>
+        <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
+          {`$${this.state.minNightlyRate} per night`}
+        </div>
+        <br/>
         <div id = 'check-in'>
           <div id = "check-in1" style = {checkInStyle}>
             Check-in:
@@ -251,6 +264,7 @@ class App extends React.Component {
 
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
+        <br/>
         <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
