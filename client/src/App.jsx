@@ -192,6 +192,7 @@ class App extends React.Component {
       currentlySelecting: 'checkIn',
       showing: false
     });
+    window.location.hash = '';
   }
 
   changeHoveredDate(date) {

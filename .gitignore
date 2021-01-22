@@ -1,4 +1,4 @@
 node_modules
 ./package-lock.json
-./client/dist/bundle.js
+client/dist/bundle.js
 babel.config 2.js
