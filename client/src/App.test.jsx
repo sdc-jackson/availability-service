@@ -33,12 +33,17 @@ test('Scroll to next month button', async() => {
 const server = setupServer(
   rest.get('/109/availableDates', (req, res, ctx) => {
 
-    return res(ctx.json(exampleData))
+    return res(ctx.json(exampleData));
+  }),
+  rest.get('/109/minNightlyRate', (req, res, ctx) => {
+    return res(ctx.json({minNightlyRate: 253}))
   })
 )
+
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
+
 
 test('Calendar has different formatting for available, unavailable, and checkOutOnly dates', async() => {
   render(<App />)

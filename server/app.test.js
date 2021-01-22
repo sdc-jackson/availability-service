@@ -6,7 +6,7 @@ test('gets minNightlyRate for a valid stay ID', async done => {
   const response = await request.get('/109/minNightlyRate')
 
   expect(response.status).toBe(200);
-  expect(response.body.minNightlyRate).toBe(253);
+  expect(response.body.minNightlyRate).toBe(426);
   done()
 });
 
