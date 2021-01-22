@@ -4,7 +4,10 @@ import ReactDOM from 'react-dom';
 import Calendar from './Calendar.jsx';
 import ReservationSummary from './ReservationSummary.jsx';
 import $ from 'jquery';
+import {createBrowserHistory} from 'history';
+import urlHelpers from './urlHelpers.js'
 
+const history = createBrowserHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -59,6 +62,13 @@ class App extends React.Component {
     if (productId === null || productId === undefined || productId.length === 0){
       productId = '109';
     }
+
+    history.listen((location, action) => {
+      console.log(`calendar is ${window.location.hash === '#availability-calendar' ? 'open' : 'closed'}`);
+      console.log(`check-in date is ${urlHelpers.getCheckInOrOutDateFromUrl(window.location.search)}`);
+      console.log(`The last navigation action was ${action}`)
+    })
+
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
@@ -91,6 +101,7 @@ class App extends React.Component {
   }
 
   onClickCheckinShowCalendar() {
+    window.location.hash = '#availability-calendar';
     this.setState({
       showing: true,
       currentlySelecting: 'checkIn',
@@ -126,6 +137,7 @@ class App extends React.Component {
               currentlySelecting: 'checkOut',
               maxSelectableDate: this.state.dates[i].date
             });
+            history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
             return;
           }
         }
@@ -141,6 +153,7 @@ class App extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
+      history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
       var checkOutOnlyDate = new Date(e);
