@@ -235,7 +235,7 @@ class App extends React.Component {
     return (
       <div>
         <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
-          {`$${this.state.minNightlyRate} per night`}
+          { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
         <div id = 'check-in'>

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/airBnB-availability4');
+mongoose.connect('mongodb://localhost/airBnB-availability6');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'airBnB-availability connection error: '));
 db.once('open', function() {
