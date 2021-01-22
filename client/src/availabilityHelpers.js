@@ -23,8 +23,36 @@ var getDateObjFromStr = (dateStr) => {
   return result;
 }
 
+var monthsMap = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
+
+var daysMap = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+];
+
+
 module.exports = {
   getMaxSelectableDate,
-  getDateObjFromStr
+  getDateObjFromStr,
+  monthsMap,
+  daysMap
 
 }

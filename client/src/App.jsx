@@ -31,36 +31,51 @@ class App extends React.Component {
       minNightlyRate: 'none'
     };
 
-    this.monthsMap = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
-
-
-    this.daysMap = [
-      'Sun',
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat'
-    ];
+    this.monthsMap = availabilityHelpers.monthsMap;
+    this.daysMap = availabilityHelpers.daysMap;
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
 
+    var newState = {};
 
+    newState.dates = dates;
+
+    //should the calendar be showing?
+    if (hash === '#availability-calendar') {
+      newState.showing = true;
+      newState.activeSelecting = true;
+    }
+
+    //what dates do we have?
+    var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
+    var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
+
+    if (checkInDate === null) {
+      //this means we don't have a check-in or check-out date (UI forces this)
+      newState.checkIn = 'notSelected';
+      newState.checkOut = 'notSelected';
+    } else {
+      newState.checkIn = checkInDate.toString();
+      if (checkOutDate === null) {
+        //we have a check-in but not a check-out
+        newState.checkOut = 'notSelected';
+        newState.maxSelectableDate = availabilityHelpers.getMaxSelectableDate(checkInDate, dates);
+        newState.currentlySelecting = 'checkOut';
+        if (newState.showing) {
+          newState.checkAvailability = false;
+        }
+      } else {
+        //we have both check-in and check-out
+        newState.checkOut = checkOutDate.toString();
+        newState.currentlySelecting = 'checkIn';
+        newState.showReserveButton = true;
+        newState.showCheckAvailabilityButton = false;
+        newState.showReserveButton = true;
+        this.getTotalPrice(checkOutDate, checkInDate, dates);
+      }
+    }
+    return newState;
   }
 
   componentDidMount() {
@@ -71,18 +86,21 @@ class App extends React.Component {
 
     history.listen();
 
+    var urlStateInfo;
+
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-        this.setState({
-          dates: dates
-        });
+
+        urlStateInfo = this.getStateObjFromUrl(window.location.search, window.location.hash, dates);
+        this.setState(urlStateInfo);
 
         $.ajax({
           method: 'GET',
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
+
             this.setState({ minNightlyRate })
           }
         })
@@ -108,6 +126,7 @@ class App extends React.Component {
     });
   }
   onClickCheckoutShowCalendar() {
+    window.location.hash = '#availability-calendar';
     this.setState({
       showing: true,
       currentlySelecting: 'checkOut',
@@ -139,7 +158,7 @@ class App extends React.Component {
         showReserveButton: true
       });
       history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
-      window.history.hash = '';
+      window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
       var checkOutOnlyDate = availabilityHelpers.getDateObjFromStr(e);
@@ -184,20 +203,27 @@ class App extends React.Component {
     });
   }
 
-  getTotalPrice(checkOut) {
+  getTotalPrice(checkOut, checkIn, dates) {
     var checkOutDate = new Date(checkOut);
-    var checkInDate = new Date(this.state.checkIn);
+    if(checkIn === undefined) {
+      var checkInDate = availabilityHelpers.getDateObjFromStr(this.state.checkIn);
+    } else {
+      var checkInDate = availabilityHelpers.getDateObjFromStr(checkIn);
+    }
+    if (dates === undefined) {
+      dates = this.state.dates;
+    }
+
     var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     this.setState({
       numNights: numNights
     });
-    for (var i = 0; i < this.state.dates.length; i++) {
-      var thisNight = this.state.dates[i];
-      var thisNightDate = new Date(this.state.dates[i].date);
-      if (thisNightDate.toString().slice(0, 15) === checkInDate.toString().slice(0, 15)) {
-
+    for (var i = 0; i < dates.length; i++) {
+      var thisNight = dates[i];
+      var thisNightDate = availabilityHelpers.getDateObjFromStr(dates[i].date);
+      if (thisNightDate.toString() === checkInDate.toString()) {
         this.setState({
-          priceOfStay: this.state.dates[i].nightlyRate * numNights,
+          priceOfStay: dates[i].nightlyRate * numNights,
           cleaningFee: thisNight.cleaningFee * numNights,
           serviceFee: thisNight.serviceFee * numNights
         });
