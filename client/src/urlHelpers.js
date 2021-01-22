@@ -1,12 +1,15 @@
-
-
-var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
-  //lookFor should either be 'checkIn' or 'checkOut' depending on which date you want
+var urlParser = (searchPath) => {
   var searchParams = {};
   var searches = searchPath.split(/[=?&]/);
   for (var i = 1; i < searches.length; i = i + 2) {
     searchParams[searches[i]] = searches[i + 1];
   }
+  return searchParams;
+}
+
+var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
+  //lookFor should either be 'checkIn' or 'checkOut' depending on which date you want
+  var searchParams = urlParser(searchPath);
   if (searchParams[lookFor === 'checkIn' ? 'check_in' : 'check_out'] === undefined) {
     return null;
   } else {
@@ -22,7 +25,6 @@ var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
 }
 
 var makeUrlStyleDate = (dateString) => {
-  console.log(dateString)
   var date = new Date(dateString);
   return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }

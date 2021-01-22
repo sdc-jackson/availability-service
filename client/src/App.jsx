@@ -63,11 +63,7 @@ class App extends React.Component {
       productId = '109';
     }
 
-    history.listen((location, action) => {
-      console.log(`calendar is ${window.location.hash === '#availability-calendar' ? 'open' : 'closed'}`);
-      console.log(`check-in date is ${urlHelpers.getCheckInOrOutDateFromUrl(window.location.search)}`);
-      console.log(`The last navigation action was ${action}`)
-    })
+    history.listen();
 
     $.ajax({
       method: 'GET',
@@ -81,9 +77,7 @@ class App extends React.Component {
           method: 'GET',
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
-            this.setState({
-              minNightlyRate: minNightlyRate
-            })
+            this.setState({ minNightlyRate })
           }
 
         })
@@ -181,7 +175,6 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    console.log('clear dates');
     history.replace('?', {foo: 'clear_dates'});
 
   }
@@ -207,7 +200,6 @@ class App extends React.Component {
     var checkOutDate = new Date(checkOut);
     var checkInDate = new Date(this.state.checkIn);
     var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
-    console.log(checkOutDate, checkInDate);
     this.setState({
       numNights: numNights
     });
