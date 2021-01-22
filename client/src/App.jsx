@@ -5,7 +5,8 @@ import Calendar from './Calendar.jsx';
 import ReservationSummary from './ReservationSummary.jsx';
 import $ from 'jquery';
 import {createBrowserHistory} from 'history';
-import urlHelpers from './urlHelpers.js'
+import urlHelpers from './urlHelpers.js';
+import availabilityHelpers from './availabilityHelpers';
 
 const history = createBrowserHistory();
 
@@ -117,26 +118,14 @@ class App extends React.Component {
       //go through dates and find the maxSelectableDate
       var checkInDate = new Date(e);
       checkInDate.setHours(0, 0, 0);
-      var hitCheckInDate = false;
-      for (var i = 0; i < this.state.dates.length; i++) {
-        var curDate = new Date(this.state.dates[i].date);
-        curDate.setHours(0, 0, 0);
-        if (!hitCheckInDate) {
-          if (curDate.toString() === checkInDate.toString()) {
-            hitCheckInDate = true;
-          }
-        } else {
-          if (this.state.dates[i].isAvailable === false) {
-            this.setState({
-              checkIn: checkInDate.toString(),
-              currentlySelecting: 'checkOut',
-              maxSelectableDate: this.state.dates[i].date
-            });
-            history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
-            return;
-          }
-        }
-      }
+
+      this.setState({
+        checkIn: checkInDate.toString(),
+        currentlySelecting: 'checkOut',
+        maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
+      });
+      history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
+
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
       var checkOutDate = new Date(e);
