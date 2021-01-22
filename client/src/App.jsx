@@ -113,7 +113,8 @@ class App extends React.Component {
     this.setState({
       showing: true,
       currentlySelecting: 'checkOut',
-      activeSelecting: true
+      activeSelecting: true,
+      showReserveButton: false
     });
   }
 
