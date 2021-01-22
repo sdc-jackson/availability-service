@@ -58,6 +58,11 @@ class App extends React.Component {
     ];
   }
 
+  getStateObjFromUrl(searchStr, hash, dates) {
+
+
+  }
+
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
     if (productId === null || productId === undefined || productId.length === 0){
@@ -80,9 +85,7 @@ class App extends React.Component {
           success: ({minNightlyRate}) => {
             this.setState({ minNightlyRate })
           }
-
         })
-
       },
       error: (err) => {
         console.log('GOT AN ERROR', err);
@@ -116,8 +119,7 @@ class App extends React.Component {
   dateClicked(e, dateIsCheckoutOnly) {
     if (this.state.currentlySelecting === 'checkIn' && dateIsCheckoutOnly === false) {
       //go through dates and find the maxSelectableDate
-      var checkInDate = new Date(e);
-      checkInDate.setHours(0, 0, 0);
+      var checkInDate = availabilityHelpers.getDateObjFromStr(e);
 
       this.setState({
         checkIn: checkInDate.toString(),
@@ -128,8 +130,7 @@ class App extends React.Component {
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
-      var checkOutDate = new Date(e);
-      checkOutDate.setHours(0, 0, 0);
+      var checkOutDate = availabilityHelpers.getDateObjFromStr(e);
       this.setState({
         checkOut: checkOutDate.toString(),
         showing: false,
@@ -141,8 +142,7 @@ class App extends React.Component {
       window.history.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
-      var checkOutOnlyDate = new Date(e);
-      checkOutOnlyDate.setHours(0, 0, 0);
+      var checkOutOnlyDate = availabilityHelpers.getDateObjFromStr(e);
       this.setState({
         checkoutOnlyShowing: true,
         selectedCheckoutOnlyDate: checkOutOnlyDate.toString()
@@ -178,8 +178,7 @@ class App extends React.Component {
   }
 
   changeHoveredDate(date) {
-    var hDate = new Date(date);
-    hDate.setHours(0, 0, 0);
+    var hDate = availabilityHelpers.getDateObjFromStr(date);
     this.setState({
       hoveredDate: hDate.toString()
     });

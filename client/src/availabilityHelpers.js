@@ -17,8 +17,14 @@ var getMaxSelectableDate = (checkIn, dates) => {
   }
 }
 
+var getDateObjFromStr = (dateStr) => {
+  var result = new Date(dateStr);
+  result.setHours(0, 0, 0);
+  return result;
+}
 
 module.exports = {
   getMaxSelectableDate,
+  getDateObjFromStr
 
 }
