@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/airBnB-availability4');
+mongoose.connect('mongodb://localhost/airBnB-availability6');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'airBnB-availability connection error: '));
 db.once('open', function() {
@@ -38,7 +38,7 @@ for(var stayId = 0; stayId < 10; stayId++) {
     if(err) return console.log(err);
     else {
       thisStayId = q._doc._id;
-      var weekendRate = Math.floor(Math.random() * 20) + minRate;
+      var weekendRate = Math.floor(Math.random() * 20) + q._doc.minRate;
       //also want to create calendar dates for each stay
       var date = new Date();
       for(var dayCount = 0; dayCount < 365; dayCount++) {
@@ -51,7 +51,7 @@ for(var stayId = 0; stayId < 10; stayId++) {
           var nightlyRate = weekendRate;
 
         } else {
-          var nightlyRate = minRate;
+          var nightlyRate = q._doc.minRate;
         }
         var cleaningFee = 10;
         var serviceFee = 2;

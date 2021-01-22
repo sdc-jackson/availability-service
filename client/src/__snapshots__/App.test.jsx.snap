@@ -3,6 +3,17 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
+    id="minNightlyRate"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+     $none per night
+  </div>
+  <br />
+  <div
     id="check-in"
   >
     <div
@@ -1416,6 +1427,7 @@ exports[`renders correctly 1`] = `
   >
      This date is check-out only. 
   </div>
+  <br />
   <button
     onClick={[Function]}
     style={
