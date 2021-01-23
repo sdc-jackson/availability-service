@@ -6,7 +6,12 @@ import { TestWatcher } from 'jest';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import exampleData from './exampleData.js';
+
 import '@testing-library/jest-dom/extend-expect';
+import userEvent from '@testing-library/user-event'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
+
 
 it('renders correctly', () => {
   const tree = renderer
@@ -36,7 +41,7 @@ const server = setupServer(
     return res(ctx.json(exampleData));
   }),
   rest.get('/109/minNightlyRate', (req, res, ctx) => {
-    return res(ctx.json({minNightlyRate: 253}))
+    return res(ctx.json({minNightlyRate: 888}))
   })
 )
 
@@ -113,7 +118,7 @@ test('Selecting a check-out date updates the listed check-out date and pulls up 
 
   //check that the date formatting on the calendar changed
   const nextCheckOutClicked = await screen.findAllByTestId('checkInOut');
-  expect(nextCheckOutClicked).toHaveLength(1);
+  expect(nextCheckOutClicked).toHaveLength(2);
 
   //check that the reservation form pops up
   const nightlyTotal = await screen.findAllByText('$253 per night x 1 nights = $253');
@@ -127,8 +132,6 @@ test('Selecting a check-out date updates the listed check-out date and pulls up 
   expect(serviceFee[0]).toBeInTheDocument();
   expect(total[0]).toBeInTheDocument();
   expect(reserveButton[0]).toBeInTheDocument();
-
-
 
 })
 
@@ -166,3 +169,16 @@ test('Selecting the selected check-in or check-out date should pull up the calen
 
 
 })
+
+// test('Shows calendar if URL has appropriate hash', async () => {
+//   const history = createMemoryHistory()
+//   history.push('#availability-calendar')
+//   render(
+//     <Router history={history}>
+//       <App />
+//     </Router>
+//   )
+//   const calendar = await screen.findAllByTestId('calendar');
+//   expect(calendar[0].style._values.display).toEqual('block');
+
+// })

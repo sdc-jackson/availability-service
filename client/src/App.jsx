@@ -92,7 +92,7 @@ class App extends React.Component {
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-
+        //console.log('GOT DATA', dates);
         urlStateInfo = this.getStateObjFromUrl(window.location.search, window.location.hash, dates);
         this.setState(urlStateInfo);
 
