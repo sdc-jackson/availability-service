@@ -177,7 +177,7 @@ test('Selecting the selected check-in or check-out date should pull up the calen
 //   var history = createMemoryHistory()
 
 //   history.push('#availability-calendar')
-//   render(<Router history={history}><App /></Router>)
+//   render(<Router history={history} ><App /></Router>)
 //   const calendar = await screen.findAllByTestId('calendar');
 //   expect(calendar[0].style._values.display).toEqual('block');
 

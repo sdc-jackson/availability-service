@@ -88,14 +88,11 @@ class App extends React.Component {
     var windowLocationHash = window.location.hash;
 
     var urlStateInfo;
-
     $.ajax({
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-
         $.ajax({
           method: 'GET',
           url: `/${productId}/minNightlyRate`,
