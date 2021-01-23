@@ -10,10 +10,11 @@ var urlParser = (searchPath) => {
 var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
   //lookFor should either be 'checkIn' or 'checkOut' depending on which date you want
   var searchParams = urlParser(searchPath);
-  if (searchParams[lookFor === 'checkIn' ? 'check_in' : 'check_out'] === undefined) {
+  lookFor = (lookFor === 'checkIn' ) ? 'check_in' : 'check_out'
+  if (searchParams[lookFor] === undefined) {
     return null;
   } else {
-    var cidStr = searchParams['check_in'];
+    var cidStr = searchParams[lookFor];
     var cidArr = cidStr.split('-');
     var cid = new Date();
     cid.setFullYear(cidArr[0]);
