@@ -8,7 +8,7 @@ import { setupServer } from 'msw/node'
 import exampleData from './exampleData.js';
 
 import '@testing-library/jest-dom/extend-expect';
-import userEvent from '@testing-library/user-event'
+//import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 
@@ -48,6 +48,7 @@ const server = setupServer(
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
+
 
 
 test('Calendar has different formatting for available, unavailable, and checkOutOnly dates', async() => {
@@ -170,14 +171,13 @@ test('Selecting the selected check-in or check-out date should pull up the calen
 
 })
 
-// test('Shows calendar if URL has appropriate hash', async () => {
-//   const history = createMemoryHistory()
+
+
+// test('Shows calendar if URL has appropriate hash', async() => {
+//   var history = createMemoryHistory()
+
 //   history.push('#availability-calendar')
-//   render(
-//     <Router history={history}>
-//       <App />
-//     </Router>
-//   )
+//   render(<Router history={history}><App /></Router>)
 //   const calendar = await screen.findAllByTestId('calendar');
 //   expect(calendar[0].style._values.display).toEqual('block');
 

@@ -46,7 +46,6 @@ class App extends React.Component {
       newState.showing = true;
       newState.activeSelecting = true;
     }
-
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
     var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
@@ -85,6 +84,8 @@ class App extends React.Component {
     }
 
     history.listen();
+    var windowLocationSearch = window.location.search;
+    var windowLocationHash = window.location.hash;
 
     var urlStateInfo;
 
@@ -92,21 +93,23 @@ class App extends React.Component {
       method: 'GET',
       url: `/${productId}/availableDates`,
       success: (dates) => {
-        //console.log('GOT DATA', dates);
-        urlStateInfo = this.getStateObjFromUrl(window.location.search, window.location.hash, dates);
-        this.setState(urlStateInfo);
+
+        urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
 
         $.ajax({
           method: 'GET',
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
-
-            this.setState({ minNightlyRate })
+            urlStateInfo.minNightlyRate = minNightlyRate;
+            this.setState(urlStateInfo)
+          },
+          error: (err) => {
+            urlStateInfo.minNightlyRate = 100;
+            this.setState(urlStateInfo);
           }
         })
       },
       error: (err) => {
-        console.log('GOT AN ERROR', err);
       }
 
     });
@@ -215,9 +218,7 @@ class App extends React.Component {
     }
 
     var numNights = Math.floor((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
-    this.setState({
-      numNights: numNights
-    });
+    this.setState({ numNights });
     for (var i = 0; i < dates.length; i++) {
       var thisNight = dates[i];
       var thisNightDate = availabilityHelpers.getDateObjFromStr(dates[i].date);
