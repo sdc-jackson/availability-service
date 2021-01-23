@@ -39,14 +39,12 @@ class App extends React.Component {
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
-    console.log('in getStateObjFromUrl', this.props.id, searchStr, hash);
     var newState = {};
 
     newState.dates = dates;
 
     //should the calendar be showing?
     if (hash.slice(0,22) === '#availability-calendar') {
-      console.log('calendar showing, calendar #', this.props.id);
       newState.showing = true;
       newState.activeSelecting = true;
     } else {
@@ -93,10 +91,8 @@ class App extends React.Component {
     }
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
-    console.log(`calendar ${this.props.id} mounted, setting up listener`);
 
     this.history.listen(() => {
-      //console.log(`calendar #${this.props.id} detected a change in history`)
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
     });
 
@@ -159,7 +155,7 @@ class App extends React.Component {
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
       this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
-      window.location.hash = '#availability-calendars'
+      window.location.hash = '#availability-calendar'
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar

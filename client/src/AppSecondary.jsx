@@ -39,22 +39,14 @@ class AppSecondary extends React.Component {
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
-    console.log('in getStateObjFromUrl', this.props.id, searchStr, hash);
     var newState = {};
 
     newState.dates = dates;
 
-    //should the calendar be showing?
-    // if (hash === '#availability-calendar') {
-    //   console.log('calendar showing, calendar #', this.props.id);
-    //   newState.showing = true;
-    //   newState.activeSelecting = true;
-    // } else {
-    //   newState.showing = false;
-    //   newState.activeSelecting = false;
-    // }
+    //secondary calendar should always be showing
     newState.showing = true;
     newState.activeSelecting = true;
+
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
     var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
@@ -94,9 +86,7 @@ class AppSecondary extends React.Component {
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
-    console.log(`calendar ${this.props.id} mounted, setting up listener`);
     this.history.listen(() => {
-      console.log(`calendar #${this.props.id} detected a change in history`)
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
     });
 
@@ -273,33 +263,11 @@ class AppSecondary extends React.Component {
         <div id = 'stateIndicator'>
           <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
         </div>
-        {/* <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
-          { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
-        </div>
-        <br/>
-         <div id = 'check-in'>
-          <div id = "check-in1" style = {checkInStyle}>
-            Check-in:
-          </div>
-        </div>
-        <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-          {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
-        </div>
-
-        <div id = 'check-out'>
-          <div id = "check-out1" style = {checkOutStyle}>
-            Check-out:
-          </div>
-          <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-            {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
-          </div>
-        </div> */}
 
         <div id = 'calendar'>
           <div id = 'calendar-table' data-testId = 'calendar' >
             <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
-
 
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
