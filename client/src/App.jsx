@@ -8,7 +8,7 @@ import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 
-const history = createBrowserHistory();
+//const history = createBrowserHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +35,7 @@ class App extends React.Component {
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
+    this.history = this.props.history;
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
@@ -60,7 +61,9 @@ class App extends React.Component {
       //this means we don't have a check-in or check-out date (UI forces this)
       newState.checkIn = 'notSelected';
       newState.checkOut = 'notSelected';
+      newState.showReserveButton = false;
     } else {
+      newState.showReserveButton = false;
       newState.checkIn = checkInDate.toString();
       if (checkOutDate === null) {
         //we have a check-in but not a check-out
@@ -92,7 +95,7 @@ class App extends React.Component {
     var windowLocationHash = window.location.hash;
     console.log(`calendar ${this.props.id} mounted, setting up listener`);
 
-    history.listen(() => {
+    this.history.listen(() => {
       //console.log(`calendar #${this.props.id} detected a change in history`)
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
     });
@@ -155,7 +158,7 @@ class App extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
+      this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
       window.location.hash = '#availability-calendars'
 
     } else if (this.state.currentlySelecting === 'checkOut') {
@@ -168,7 +171,7 @@ class App extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      this.history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
@@ -194,7 +197,7 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    history.replace('?', {foo: 'clear_dates'});
+    this.history.replace('?', {foo: 'clear_dates'});
 
   }
 

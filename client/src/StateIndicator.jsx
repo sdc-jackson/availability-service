@@ -18,8 +18,8 @@ class StateIndicator extends React.Component {
     //returns [MonthString, DateString, YearString];
     var thisDate = availabilityHelpers.getDateObjFromStr(date);
     return {
-      da: availabilityHelpers.monthsMap[thisDate.getMonth()],
-      mo: thisDate.getDate().toString(),
+      mo: availabilityHelpers.monthsMap[thisDate.getMonth()],
+      da: thisDate.getDate().toString(),
       yr: thisDate.getFullYear().toString()
     }
   }

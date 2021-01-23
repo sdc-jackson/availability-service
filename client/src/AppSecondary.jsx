@@ -35,7 +35,7 @@ class AppSecondary extends React.Component {
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
-    this.history = createBrowserHistory();
+    this.history = this.props.history;
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
@@ -273,7 +273,7 @@ class AppSecondary extends React.Component {
         <div id = 'stateIndicator'>
           <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
         </div>
-        <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
+        {/* <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
           { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
@@ -293,7 +293,7 @@ class AppSecondary extends React.Component {
           <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
             {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
           </div>
-        </div>
+        </div> */}
 
         <div id = 'calendar'>
           <div id = 'calendar-table' data-testId = 'calendar' >
