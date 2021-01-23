@@ -2,5 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';
 
-var domContainer = document.getElementById('availabilityApp');
-ReactDOM.render(<App />, domContainer);
+var domContainer1 = document.getElementById('availabilityApp1');
+var domContainer2 = document.getElementById('availabilityApp2');
+ReactDOM.render(<App />, domContainer1);
+ReactDOM.render(<App />, domContainer2);

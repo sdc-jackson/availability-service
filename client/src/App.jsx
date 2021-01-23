@@ -86,7 +86,7 @@ class App extends React.Component {
     history.listen();
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
-    console.log('asdflkj')
+
     var urlStateInfo;
     $.ajax({
       method: 'GET',
