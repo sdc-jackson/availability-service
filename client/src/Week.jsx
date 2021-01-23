@@ -11,7 +11,6 @@ class Week extends React.Component {
       color: 'white',
       testId: 'checkInOut'
     };
-    //var checkInOutTestId = 'checkInOut'
     var rangeStyle = {
       backgroundColor: 'grey',
       color: 'black',
