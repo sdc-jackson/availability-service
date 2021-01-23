@@ -36,15 +36,19 @@ class App extends React.Component {
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
-
+    console.log('in getStateObjFromUrl', this.props.id, searchStr, hash);
     var newState = {};
 
     newState.dates = dates;
 
     //should the calendar be showing?
     if (hash === '#availability-calendar') {
+      console.log('calendar showing, calendar #', this.props.id);
       newState.showing = true;
       newState.activeSelecting = true;
+    } else {
+      newState.showing = false;
+      newState.activeSelecting = false;
     }
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
@@ -82,10 +86,13 @@ class App extends React.Component {
     if (productId === null || productId === undefined || productId.length === 0){
       productId = '109';
     }
-
-    history.listen();
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
+
+    history.listen(() => {
+      //console.log(`calendar #${this.props.id} detected a change in history`)
+      this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+    });
 
     var urlStateInfo;
     $.ajax({

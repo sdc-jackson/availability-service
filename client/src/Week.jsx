@@ -52,7 +52,7 @@ class Week extends React.Component {
       {
 
 
-        this.props.thisWeek.map((item) => {
+        this.props.thisWeek.map((item, index) => {
           var checkInDate = new Date(this.props.checkInDate);
           checkInDate.setHours(0, 0, 0);
           var checkOutDate = new Date(this.props.checkOutDate);
@@ -117,7 +117,7 @@ class Week extends React.Component {
             chosenStyle = normalDateStyle;
           }
 
-          return <td class = 'day'
+          return <td className = 'day' key={index}
             style = { chosenStyle }
             data-testId = {chosenStyle.testId}
             onClick={ () => {

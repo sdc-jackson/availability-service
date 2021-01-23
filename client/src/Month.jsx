@@ -8,7 +8,7 @@ class Month extends React.Component {
 
   render() {
     return (
-      <div id = 'month1'>
+      <div id = 'month1' key={this.props.kee}>
         {this.props.month}
         <table>
           <tbody>
@@ -21,8 +21,8 @@ class Month extends React.Component {
               <td>Fr</td>
               <td>Sa</td>
             </tr>
-            {this.props.weeks.map((arr) => {
-              return (<Week maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {this.props.dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>);
+            {this.props.weeks.map((arr, index) => {
+              return (<Week key={index} maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {this.props.dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>);
             })}
           </tbody>
         </table>
