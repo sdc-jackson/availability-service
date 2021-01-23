@@ -7,10 +7,11 @@ import $ from 'jquery';
 import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
+import StateIndicator from './StateIndicator.jsx';
 
-const history = createBrowserHistory();
+//const history = createBrowserHistory();
 
-class App extends React.Component {
+class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,11 +31,11 @@ class App extends React.Component {
       numNights: 0,
       minNightlyRate: 'none',
       nameOfStay: 'Big Bear Lake' //fix me later!
-
     };
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
+    this.history = createBrowserHistory();
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
@@ -44,14 +45,16 @@ class App extends React.Component {
     newState.dates = dates;
 
     //should the calendar be showing?
-    if (hash.slice(0,22) === '#availability-calendar') {
-      console.log('calendar showing, calendar #', this.props.id);
-      newState.showing = true;
-      newState.activeSelecting = true;
-    } else {
-      newState.showing = false;
-      newState.activeSelecting = false;
-    }
+    // if (hash === '#availability-calendar') {
+    //   console.log('calendar showing, calendar #', this.props.id);
+    //   newState.showing = true;
+    //   newState.activeSelecting = true;
+    // } else {
+    //   newState.showing = false;
+    //   newState.activeSelecting = false;
+    // }
+    newState.showing = true;
+    newState.activeSelecting = true;
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
     var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
@@ -90,10 +93,10 @@ class App extends React.Component {
     }
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
-    console.log(`calendar ${this.props.id} mounted, setting up listener`);
 
-    history.listen(() => {
-      //console.log(`calendar #${this.props.id} detected a change in history`)
+    console.log(`calendar ${this.props.id} mounted, setting up listener`);
+    this.history.listen(() => {
+      console.log(`calendar #${this.props.id} detected a change in history`)
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
     });
 
@@ -155,8 +158,7 @@ class App extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
-      window.location.hash = '#availability-calendars'
+      this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
@@ -168,7 +170,7 @@ class App extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      this.history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
@@ -194,7 +196,7 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    history.replace('?', {foo: 'clear_dates'});
+    this.history.replace('?', {foo: 'clear_dates'});
 
   }
 
@@ -268,11 +270,14 @@ class App extends React.Component {
     }
     return (
       <div>
+        <div id = 'stateIndicator'>
+          <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
+        </div>
         <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
           { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
-        <div id = 'check-in'>
+         <div id = 'check-in'>
           <div id = "check-in1" style = {checkInStyle}>
             Check-in:
           </div>
@@ -291,7 +296,7 @@ class App extends React.Component {
         </div>
 
         <div id = 'calendar'>
-          <div id = 'calendar-table' data-testId = 'calendar' style={{display: this.state.showing ? 'block' : 'none' }}>
+          <div id = 'calendar-table' data-testId = 'calendar' >
             <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
@@ -300,12 +305,7 @@ class App extends React.Component {
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <br/>
         <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
-        <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
-          <br/>
-          <br/>
-          <ReservationSummary cleaningFee = {this.state.cleaningFee} serviceFee = {this.state.serviceFee} numNights = {this.state.numNights} priceOfStay = {this.state.priceOfStay}/>
-          <button >Reserve</button>
-        </div>
+
       </div>
 
 
@@ -313,4 +313,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default AppSecondary;
