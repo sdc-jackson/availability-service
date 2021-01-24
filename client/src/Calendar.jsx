@@ -107,7 +107,7 @@ class Calendar extends React.Component {
     });
     return (
       <div>
-        <div className='flex-container'>
+        <div className='flex-calendar-container'>
           <button className='flex-scroll-button-child' id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<'} </button>
           <div className='flex-calendar-child'>
             <Month
