@@ -1,3 +1,19 @@
 h1 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Montserrate', 'Arial Narrow', Arial, sans-serif;
 }
+
+.flex-container {
+  align-content: center;
+  display: flex;
+}
+
+.flex-calendar-child {
+  flex: 4;
+  margin: 40px;
+}
+
+.flex-scroll-button-child {
+
+  margin: auto;
+}
+
