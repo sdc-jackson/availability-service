@@ -7,6 +7,7 @@ import $ from 'jquery';
 import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
+import Guests from './Guests.jsx';
 
 //const history = createBrowserHistory();
 
@@ -29,7 +30,14 @@ class App extends React.Component {
       priceOfStay: 0,
       numNights: 0,
       minNightlyRate: 'none',
-      nameOfStay: 'Big Bear Lake' //fix me later!
+      nameOfStay: 'Big Bear Lake', //fix me later!
+      guests: {
+        numAdults: 1,
+        numChildren: 0,
+        numInfants: 0
+      }
+
+
 
     };
 
@@ -290,6 +298,10 @@ class App extends React.Component {
           <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
             {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
           </div>
+        </div>
+
+        <div id='guests'>
+          <Guests guests={this.state.guests}/>
         </div>
 
         <div id = 'calendar' >

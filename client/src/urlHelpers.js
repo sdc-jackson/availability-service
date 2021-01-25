@@ -25,6 +25,15 @@ var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
   }
 }
 
+var getNumGuestsFromUrl = (searchPath) => {
+  var searchParams = urlParser(searchPath);
+  return {
+    adults: searchParams.adults,
+    children: searchParams.children,
+    infants: searchParams.infants
+  }
+}
+
 var makeUrlStyleDate = (dateString) => {
   var date = new Date(dateString);
   return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
@@ -43,7 +52,10 @@ var checkCalendarHash = (hash) => {
   else return false;
 }
 
-module.exports.checkCalendarHash = checkCalendarHash;
-module.exports.getCheckInOrOutDateFromUrl = getCheckInOrOutDateFromUrl;
-module.exports.makeUrlStyleDate = makeUrlStyleDate;
-module.exports.makeQueryString = makeQueryString;
+module.exports = {
+  checkCalendarHash,
+  getCheckInOrOutDateFromUrl,
+  makeUrlStyleDate,
+  makeQueryString,
+  getNumGuestsFromUrl
+}
