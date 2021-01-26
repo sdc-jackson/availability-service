@@ -22,8 +22,11 @@ class Guests extends React.Component {
   render() {
     return(<div>
       <div className='guest-title'>GUESTS</div>
-      <div className='number-of-guests'> {`${this.sumGuests()} guests`}</div>
-      <button className='guest-dropdown-button'>v</button>
+      <div className='number-of-guests'> {`${this.sumGuests()} ${this.sumGuests() > 1 ? 'guests' : 'guest'}`}</div>
+      <button className='guest-dropdown-button'  onClick={this.props.showGuestPicker}> {this.props.guestPickerShowing ? '^' : 'v' }</button>
+      <div style={{display: this.props.guestPickerShowing ? 'block' : 'none' }}>
+        <GuestAdder guests = {this.props.guests} updateGuests={this.props.updateGuests}/>
+      </div>
     </div>)
   }
 }

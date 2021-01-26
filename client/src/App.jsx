@@ -35,7 +35,8 @@ class App extends React.Component {
         numAdults: 1,
         numChildren: 0,
         numInfants: 0
-      }
+      },
+      guestPickerShowing: false
 
 
 
@@ -259,6 +260,33 @@ class App extends React.Component {
     return new Date(this.state.checkOut);
   }
 
+  showGuestPicker() {
+    console.log('show guest picker');
+    this.setState({
+      guestPickerShowing: !this.state.guestPickerShowing
+    })
+  }
+
+  closeGuestPicker() {
+    this.setState({
+      guestPickerShowing: false
+    })
+  }
+
+  updateGuests(updateObj) {
+    var stateUpdateObj = {
+      numAdults: this.state.guests.numAdults,
+      numChildren: this.state.guests.numChildren,
+      numInfants: this.state.guests.numInfants
+    };
+    for (var guestType in updateObj) {
+      stateUpdateObj[guestType] = updateObj[guestType];
+    }
+    this.setState({
+      guests: stateUpdateObj
+    })
+  }
+
   render() {
     var checkInStyle = {
       fontWeight: 'normal'
@@ -300,24 +328,48 @@ class App extends React.Component {
           </div>
         </div>
 
-        <div id='guests'>
-          <Guests guests={this.state.guests}/>
+        <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+          <Guests
+            guestPickerShowing = {this.state.guestPickerShowing}
+            guests={this.state.guests}
+            showGuestPicker={this.showGuestPicker.bind(this)}
+            closeGuestPicker={this.closeGuestPicker.bind(this)}
+            updateGuests={this.updateGuests.bind(this)}/>
         </div>
 
         <div id = 'calendar' >
           <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar id = {1} maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar id = {1}
+              maxSelectableDate = {this.state.maxSelectableDate}
+              hoveredDate = {this.state.hoveredDate}
+              changeHoveredDate = {this.changeHoveredDate.bind(this)}
+              selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate}
+              dates = {this.state.dates}
+              checkInDate = {this.state.checkIn}
+              checkOutDate = {this.state.checkOut}
+              clearDates = {this.clearDates.bind(this)}
+              closeCalendar = {this.closeCalendar.bind(this)}
+              dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <br/>
-        <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
+        <button
+          onClick={this.onClickCheckinShowCalendar.bind(this)}
+          style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
+          Check Availability
+          </button>
+
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
           <br/>
-          <ReservationSummary cleaningFee = {this.state.cleaningFee} serviceFee = {this.state.serviceFee} numNights = {this.state.numNights} priceOfStay = {this.state.priceOfStay}/>
+          <ReservationSummary
+            cleaningFee = {this.state.cleaningFee}
+            serviceFee = {this.state.serviceFee}
+            numNights = {this.state.numNights}
+            priceOfStay = {this.state.priceOfStay}/>
           <button >Reserve</button>
         </div>
       </div>
