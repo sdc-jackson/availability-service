@@ -166,7 +166,10 @@ class App extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
+      console.log(checkInDate);
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: checkInDate.toString(),
+        guests: this.state.guests}), {foo: 'check_in'});
       window.location.hash = '#availability-calendar'
 
     } else if (this.state.currentlySelecting === 'checkOut') {
@@ -179,7 +182,10 @@ class App extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      this.history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: this.state.checkIn.toString(),
+        check_out: checkOutDate.toString(),
+        guests: this.state.guests}), {foo: 'check_out'});
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
@@ -285,6 +291,8 @@ class App extends React.Component {
     this.setState({
       guests: stateUpdateObj
     })
+    this.history.push(urlHelpers.makeQueryString(window.location.search, {
+      guests: stateUpdateObj}), {foo: 'check_out'});
   }
 
   render() {
