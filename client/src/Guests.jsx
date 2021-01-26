@@ -5,10 +5,6 @@ import urlHelpers from './urlHelpers.js';
 class Guests extends React.Component {
   constructor(props) {
     super(props);
-    //props:
-      //numAdults
-      //numInfants
-      //numChildren
   }
 
   sumGuests() {
@@ -16,14 +12,14 @@ class Guests extends React.Component {
   }
 
   render() {
-    return(<div>
+    return (<div>
       <div className='guest-title'>GUESTS</div>
       <div className='number-of-guests'> {`${this.sumGuests()} ${this.sumGuests() > 1 ? 'guests' : 'guest'}`}</div>
-      <button className='guest-dropdown-button'  onClick={this.props.showGuestPicker}> {this.props.guestPickerShowing ? '^' : 'v' }</button>
+      <button className='guest-dropdown-button' onClick={this.props.showGuestPicker}> {this.props.guestPickerShowing ? '^' : 'v' }</button>
       <div style={{display: this.props.guestPickerShowing ? 'block' : 'none' }}>
         <GuestAdder guests = {this.props.guests} updateGuests={this.props.updateGuests}/>
       </div>
-    </div>)
+    </div>);
   }
 }
 

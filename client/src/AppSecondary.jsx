@@ -81,7 +81,7 @@ class AppSecondary extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
-    if (productId === null || productId === undefined || productId.length === 0){
+    if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
     var windowLocationSearch = window.location.search;
@@ -102,13 +102,13 @@ class AppSecondary extends React.Component {
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
-            this.setState(urlStateInfo)
+            this.setState(urlStateInfo);
           },
           error: (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
-        })
+        });
       },
       error: (err) => {
       }
@@ -212,7 +212,7 @@ class AppSecondary extends React.Component {
 
   getTotalPrice(checkOut, checkIn, dates) {
     var checkOutDate = new Date(checkOut);
-    if(checkIn === undefined) {
+    if (checkIn === undefined) {
       var checkInDate = availabilityHelpers.getDateObjFromStr(this.state.checkIn);
     } else {
       var checkInDate = availabilityHelpers.getDateObjFromStr(checkIn);

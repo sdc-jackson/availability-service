@@ -53,7 +53,7 @@ class App extends React.Component {
     newState.dates = dates;
 
     //should the calendar be showing?
-    if (hash.slice(0,22) === '#availability-calendar') {
+    if (hash.slice(0, 22) === '#availability-calendar') {
       newState.showing = true;
       newState.activeSelecting = true;
     } else {
@@ -100,7 +100,7 @@ class App extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
-    if (productId === null || productId === undefined || productId.length === 0){
+    if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
     var windowLocationSearch = window.location.search;
@@ -121,13 +121,13 @@ class App extends React.Component {
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
-            this.setState(urlStateInfo)
+            this.setState(urlStateInfo);
           },
           error: (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
-        })
+        });
       },
       error: (err) => {
       }
@@ -173,7 +173,7 @@ class App extends React.Component {
       this.history.push(urlHelpers.makeQueryString(window.location.search, {
         check_in: checkInDate.toString(),
         guests: this.state.guests}), {foo: 'check_in'});
-      window.location.hash = '#availability-calendar'
+      window.location.hash = '#availability-calendar';
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
@@ -237,7 +237,7 @@ class App extends React.Component {
 
   getTotalPrice(checkOut, checkIn, dates) {
     var checkOutDate = new Date(checkOut);
-    if(checkIn === undefined) {
+    if (checkIn === undefined) {
       var checkInDate = availabilityHelpers.getDateObjFromStr(this.state.checkIn);
     } else {
       var checkInDate = availabilityHelpers.getDateObjFromStr(checkIn);
@@ -273,13 +273,13 @@ class App extends React.Component {
   showGuestPicker() {
     this.setState({
       guestPickerShowing: !this.state.guestPickerShowing
-    })
+    });
   }
 
   closeGuestPicker() {
     this.setState({
       guestPickerShowing: false
-    })
+    });
   }
 
   updateGuests(updateObj) {
@@ -293,7 +293,7 @@ class App extends React.Component {
     }
     this.setState({
       guests: stateUpdateObj
-    })
+    });
     this.history.push(urlHelpers.makeQueryString(window.location.search, {
       guests: stateUpdateObj}), {foo: 'check_out'});
   }
@@ -371,7 +371,7 @@ class App extends React.Component {
           onClick={this.onClickCheckinShowCalendar.bind(this)}
           style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
           Check Availability
-          </button>
+        </button>
 
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
