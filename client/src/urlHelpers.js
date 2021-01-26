@@ -27,10 +27,11 @@ var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
 
 var getNumGuestsFromUrl = (searchPath) => {
   var searchParams = urlParser(searchPath);
+  var returnObj = {};
   return {
-    adults: searchParams.adults,
-    children: searchParams.children,
-    infants: searchParams.infants
+    numAdults: searchParams.adults === undefined ? parseInt(1) : parseInt(searchParams.adults),
+    numChildren: searchParams.children === undefined ? parseInt(0) : parseInt(searchParams.children),
+    numInfants: searchParams.infants === undefined ? parseInt(0) : parseInt(searchParams.infants)
   }
 }
 
@@ -75,6 +76,8 @@ var makeQueryString = (curSearchStr, params) => {
   }
 
 
+
+
   console.log(params);
   var queryStr = '?';
   for (var param in params) {
@@ -102,6 +105,22 @@ var makeQueryString = (curSearchStr, params) => {
   return queryStr;
 }
 
+var removeDatesFromQueryString = (curSearchStr) => {
+  console.log(curSearchStr);
+  var curSearchParams = urlParser(curSearchStr);
+  console.log(curSearchParams);
+  curSearchParams['check_in'] = undefined;
+  curSearchParams['check_out'] = undefined;
+  var queryStr = '?';
+  for (var param in curSearchParams) {
+    if (curSearchParams[param] !== undefined) {
+      queryStr += `${param}=${curSearchParams[param]}&`
+    }
+  }
+  queryStr = queryStr.slice(0, queryStr.length - 1); //remove the last '&' automatically included from the loop above
+  return queryStr;
+}
+
 var checkCalendarHash = (hash) => {
   if (hash === '#availability-calendar') return true;
   else return false;
@@ -112,5 +131,6 @@ module.exports = {
   getCheckInOrOutDateFromUrl,
   makeUrlStyleDate,
   makeQueryString,
-  getNumGuestsFromUrl
+  getNumGuestsFromUrl,
+  removeDatesFromQueryString
 }

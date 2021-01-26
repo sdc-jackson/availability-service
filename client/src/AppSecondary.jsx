@@ -190,7 +190,7 @@ class AppSecondary extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    this.history.replace('?', {foo: 'clear_dates'});
+    this.history.push(urlHelpers.removeDatesFromQueryString(window.location.search), {foo: 'clear_dates'});
 
   }
 

@@ -60,6 +60,11 @@ class App extends React.Component {
       newState.showing = false;
       newState.activeSelecting = false;
     }
+
+    //guests?
+    newState.guests = urlHelpers.getNumGuestsFromUrl(searchStr);
+
+
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
     var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
