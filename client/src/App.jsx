@@ -151,9 +151,11 @@ class App extends React.Component {
   }
   onClickCheckoutShowCalendar() {
     window.location.hash = '#availability-calendar';
+    var currentlySelecting = (this.state.checkIn === 'notSelected') ?  'checkIn' : 'checkOut';
+
     this.setState({
       showing: true,
-      currentlySelecting: 'checkOut',
+      currentlySelecting: currentlySelecting,
       activeSelecting: true,
       showReserveButton: false,
       showCheckAvailabilityButton: false
@@ -215,7 +217,7 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    this.history.replace('?', {foo: 'clear_dates'});
+    this.history.push(urlHelpers.removeDatesFromQueryString(window.location.search), {foo: 'clear_dates'});
 
   }
 
