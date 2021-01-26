@@ -142,7 +142,7 @@ class Calendar extends React.Component {
         <br/>
         <br/>
         <button onClick = {this.props.clearDates}>Clear Dates</button>
-        <button onClick = {this.props.closeCalendar}>Close</button>
+        <button style={{display: this.props.id === 1 ? 'block' : 'none' }} onClick = {this.props.closeCalendar}>Close</button>
       </div>
 
 
