@@ -90,9 +90,9 @@ class App extends React.Component {
         //we have both check-in and check-out
         newState.checkOut = checkOutDate.toString();
         newState.currentlySelecting = 'checkIn';
-        newState.showReserveButton = true;
         newState.showCheckAvailabilityButton = false;
         newState.showReserveButton = true;
+        newState.showGuestPicker = false;
         this.getTotalPrice(checkOutDate, checkInDate, dates);
       }
     }
@@ -185,7 +185,8 @@ class App extends React.Component {
         showing: false,
         activeSelecting: false,
         showCheckAvailabilityButton: false,
-        showReserveButton: true
+        showReserveButton: true,
+        showGuestPicker: false
       });
       this.history.push(urlHelpers.makeQueryString(window.location.search, {
         check_in: this.state.checkIn.toString(),
