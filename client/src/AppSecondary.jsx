@@ -81,7 +81,7 @@ class AppSecondary extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
-    if (productId === null || productId === undefined || productId.length === 0){
+    if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
     var windowLocationSearch = window.location.search;
@@ -102,13 +102,13 @@ class AppSecondary extends React.Component {
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
-            this.setState(urlStateInfo)
+            this.setState(urlStateInfo);
           },
           error: (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
-        })
+        });
       },
       error: (err) => {
       }
@@ -149,7 +149,8 @@ class AppSecondary extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: checkInDate.toString()}), {foo: 'check_in'});
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
@@ -161,7 +162,9 @@ class AppSecondary extends React.Component {
         showCheckAvailabilityButton: false,
         showReserveButton: true
       });
-      this.history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: this.state.checkIn.toString(),
+        check_out: checkOutDate.toString()}), {foo: 'check_out'});
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
@@ -187,7 +190,7 @@ class AppSecondary extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    this.history.replace('?', {foo: 'clear_dates'});
+    this.history.push(urlHelpers.removeDatesFromQueryString(window.location.search), {foo: 'clear_dates'});
 
   }
 
@@ -209,7 +212,7 @@ class AppSecondary extends React.Component {
 
   getTotalPrice(checkOut, checkIn, dates) {
     var checkOutDate = new Date(checkOut);
-    if(checkIn === undefined) {
+    if (checkIn === undefined) {
       var checkInDate = availabilityHelpers.getDateObjFromStr(this.state.checkIn);
     } else {
       var checkInDate = availabilityHelpers.getDateObjFromStr(checkIn);
@@ -267,7 +270,7 @@ class AppSecondary extends React.Component {
 
         <div id = 'calendar'>
           <div id = 'calendar-table' data-testId = 'calendar' >
-            <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar id={2} maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
         </div>

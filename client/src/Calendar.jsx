@@ -120,8 +120,8 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month1Date.getMonth()]}
-              weeks = {this.getWeekArrays(this.state.month1Date.getMonth(),
-              this.state.month1Date.getFullYear())}/>
+              weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}
+            />
           </div>
           <div className='flex-calendar-child'>
             <Month
@@ -134,15 +134,15 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month2Date.getMonth()]}
-              weeks = {this.getWeekArrays(this.state.month2Date.getMonth(),
-              this.state.month2Date.getFullYear())}/>
+              weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}
+            />
           </div>
           <button className='flex-scroll-button-child' id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>'} </button>
         </div>
         <br/>
         <br/>
         <button onClick = {this.props.clearDates}>Clear Dates</button>
-        <button onClick = {this.props.closeCalendar}>Close</button>
+        <button style={{display: this.props.id === 1 ? 'block' : 'none' }} onClick = {this.props.closeCalendar}>Close</button>
       </div>
 
 

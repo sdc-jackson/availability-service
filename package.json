@@ -8,7 +8,7 @@
     "server-dev": "nodemon server/index.js",
     "test": "jest",
     "testQuietly": "jest --silent",
-    "lint": "eslint client/src/* database/db.js server/index.js"
+    "lint": "eslint client/src/*.jsx database/db.js server/index.js"
   },
   "author": "Becky Gagnon",
   "license": "",

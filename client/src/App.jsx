@@ -7,6 +7,7 @@ import $ from 'jquery';
 import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
+import Guests from './Guests.jsx';
 
 //const history = createBrowserHistory();
 
@@ -29,7 +30,15 @@ class App extends React.Component {
       priceOfStay: 0,
       numNights: 0,
       minNightlyRate: 'none',
-      nameOfStay: 'Big Bear Lake' //fix me later!
+      nameOfStay: 'Big Bear Lake', //fix me later!
+      guests: {
+        numAdults: 1,
+        numChildren: 0,
+        numInfants: 0
+      },
+      guestPickerShowing: false
+
+
 
     };
 
@@ -44,13 +53,18 @@ class App extends React.Component {
     newState.dates = dates;
 
     //should the calendar be showing?
-    if (hash.slice(0,22) === '#availability-calendar') {
+    if (hash.slice(0, 22) === '#availability-calendar') {
       newState.showing = true;
       newState.activeSelecting = true;
     } else {
       newState.showing = false;
       newState.activeSelecting = false;
     }
+
+    //guests?
+    newState.guests = urlHelpers.getNumGuestsFromUrl(searchStr);
+
+
     //what dates do we have?
     var checkInDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkIn');
     var checkOutDate = urlHelpers.getCheckInOrOutDateFromUrl(searchStr, 'checkOut');
@@ -76,7 +90,6 @@ class App extends React.Component {
         //we have both check-in and check-out
         newState.checkOut = checkOutDate.toString();
         newState.currentlySelecting = 'checkIn';
-        newState.showReserveButton = true;
         newState.showCheckAvailabilityButton = false;
         newState.showReserveButton = true;
         this.getTotalPrice(checkOutDate, checkInDate, dates);
@@ -87,7 +100,7 @@ class App extends React.Component {
 
   componentDidMount() {
     var productId = window.location.pathname.split('/')[1];
-    if (productId === null || productId === undefined || productId.length === 0){
+    if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
     var windowLocationSearch = window.location.search;
@@ -108,13 +121,13 @@ class App extends React.Component {
           url: `/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
-            this.setState(urlStateInfo)
+            this.setState(urlStateInfo);
           },
           error: (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
-        })
+        });
       },
       error: (err) => {
       }
@@ -138,9 +151,11 @@ class App extends React.Component {
   }
   onClickCheckoutShowCalendar() {
     window.location.hash = '#availability-calendar';
+    var currentlySelecting = (this.state.checkIn === 'notSelected') ?  'checkIn' : 'checkOut';
+
     this.setState({
       showing: true,
-      currentlySelecting: 'checkOut',
+      currentlySelecting: currentlySelecting,
       activeSelecting: true,
       showReserveButton: false,
       showCheckAvailabilityButton: false
@@ -157,8 +172,10 @@ class App extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      this.history.push(urlHelpers.makeQueryString(checkInDate.toString()), {foo: 'check_in'});
-      window.location.hash = '#availability-calendar'
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: checkInDate.toString(),
+        guests: this.state.guests}), {foo: 'check_in'});
+      window.location.hash = '#availability-calendar';
 
     } else if (this.state.currentlySelecting === 'checkOut') {
       //if we selected check-out date, set check-out date and close the calendar
@@ -168,9 +185,13 @@ class App extends React.Component {
         showing: false,
         activeSelecting: false,
         showCheckAvailabilityButton: false,
-        showReserveButton: true
+        showReserveButton: true,
+        guestPickerShowing: false
       });
-      this.history.push(urlHelpers.makeQueryString(this.state.checkIn.toString(), checkOutDate.toString()), {foo: 'check_out'});
+      this.history.push(urlHelpers.makeQueryString(window.location.search, {
+        check_in: this.state.checkIn.toString(),
+        check_out: checkOutDate.toString(),
+        guests: this.state.guests}), {foo: 'check_out'});
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
@@ -196,7 +217,7 @@ class App extends React.Component {
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
-    this.history.replace('?', {foo: 'clear_dates'});
+    this.history.push(urlHelpers.removeDatesFromQueryString(window.location.search), {foo: 'clear_dates'});
 
   }
 
@@ -218,7 +239,7 @@ class App extends React.Component {
 
   getTotalPrice(checkOut, checkIn, dates) {
     var checkOutDate = new Date(checkOut);
-    if(checkIn === undefined) {
+    if (checkIn === undefined) {
       var checkInDate = availabilityHelpers.getDateObjFromStr(this.state.checkIn);
     } else {
       var checkInDate = availabilityHelpers.getDateObjFromStr(checkIn);
@@ -249,6 +270,34 @@ class App extends React.Component {
 
   getCheckOut() {
     return new Date(this.state.checkOut);
+  }
+
+  showGuestPicker() {
+    this.setState({
+      guestPickerShowing: !this.state.guestPickerShowing
+    });
+  }
+
+  closeGuestPicker() {
+    this.setState({
+      guestPickerShowing: false
+    });
+  }
+
+  updateGuests(updateObj) {
+    var stateUpdateObj = {
+      numAdults: this.state.guests.numAdults,
+      numChildren: this.state.guests.numChildren,
+      numInfants: this.state.guests.numInfants
+    };
+    for (var guestType in updateObj) {
+      stateUpdateObj[guestType] = updateObj[guestType];
+    }
+    this.setState({
+      guests: stateUpdateObj
+    });
+    this.history.push(urlHelpers.makeQueryString(window.location.search, {
+      guests: stateUpdateObj}), {foo: 'check_out'});
   }
 
   render() {
@@ -292,20 +341,48 @@ class App extends React.Component {
           </div>
         </div>
 
+        <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+          <Guests
+            guestPickerShowing = {this.state.guestPickerShowing}
+            guests={this.state.guests}
+            showGuestPicker={this.showGuestPicker.bind(this)}
+            closeGuestPicker={this.closeGuestPicker.bind(this)}
+            updateGuests={this.updateGuests.bind(this)}/>
+        </div>
+
         <div id = 'calendar' >
           <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
-            <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar id = {1}
+              maxSelectableDate = {this.state.maxSelectableDate}
+              hoveredDate = {this.state.hoveredDate}
+              changeHoveredDate = {this.changeHoveredDate.bind(this)}
+              selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate}
+              dates = {this.state.dates}
+              checkInDate = {this.state.checkIn}
+              checkOutDate = {this.state.checkOut}
+              clearDates = {this.clearDates.bind(this)}
+              closeCalendar = {this.closeCalendar.bind(this)}
+              dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
 
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <br/>
-        <button onClick={this.onClickCheckinShowCalendar.bind(this)} style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}> Check Availability </button>
+        <button
+          onClick={this.onClickCheckinShowCalendar.bind(this)}
+          style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
+          Check Availability
+        </button>
+
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
           <br/>
-          <ReservationSummary cleaningFee = {this.state.cleaningFee} serviceFee = {this.state.serviceFee} numNights = {this.state.numNights} priceOfStay = {this.state.priceOfStay}/>
+          <ReservationSummary
+            cleaningFee = {this.state.cleaningFee}
+            serviceFee = {this.state.serviceFee}
+            numNights = {this.state.numNights}
+            priceOfStay = {this.state.priceOfStay}/>
           <button >Reserve</button>
         </div>
       </div>
