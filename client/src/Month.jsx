@@ -8,7 +8,7 @@ class Month extends React.Component {
 
   render() {
     return (
-      <div id = 'month1' key={this.props.kee}>
+      <div id = 'month1' >
         {this.props.month}
         <table>
           <tbody>

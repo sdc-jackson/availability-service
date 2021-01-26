@@ -1,3 +1,47 @@
 h1 {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Montserrate', 'Arial Narrow', Arial, sans-serif;
+}
+
+.flex-calendar-container {
+  align-content: center;
+  display: flex;
+}
+
+.flex-calendar-child {
+  flex: 4;
+  margin: 40px;
+}
+
+.flex-scroll-button-child {
+  margin: auto;
+}
+
+.flex-dates-form {
+  display: flex;
+}
+
+.flex-date-select {
+  flex: 1;
+
+}
+
+.flex-nightly-rate {
+  flex: 1;
+}
+
+div.sticky {
+  position: sticky;
+  top: 100px;
+  background-color: white;
+  border: 2px solid lightgrey;
+  width: 300px;
+  float:right;
+}
+div.pop-out-calendar-sticky {
+  position: sticky;
+  top: 170px;
+  background-color: white;
+  border: 2px solid lightgrey;
+  width: 600px;
+  float:right;
 }

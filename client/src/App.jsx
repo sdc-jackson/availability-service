@@ -59,6 +59,7 @@ class App extends React.Component {
       //this means we don't have a check-in or check-out date (UI forces this)
       newState.checkIn = 'notSelected';
       newState.checkOut = 'notSelected';
+      newState.maxSelectableDate = 'notSelected';
       newState.showReserveButton = false;
     } else {
       newState.showReserveButton = false;
@@ -131,7 +132,8 @@ class App extends React.Component {
       showing: true,
       currentlySelecting: 'checkIn',
       activeSelecting: true,
-      showReserveButton: false
+      showReserveButton: false,
+      showCheckAvailabilityButton: false
     });
   }
   onClickCheckoutShowCalendar() {
@@ -140,7 +142,8 @@ class App extends React.Component {
       showing: true,
       currentlySelecting: 'checkOut',
       activeSelecting: true,
-      showReserveButton: false
+      showReserveButton: false,
+      showCheckAvailabilityButton: false
     });
   }
 
@@ -266,7 +269,7 @@ class App extends React.Component {
       };
     }
     return (
-      <div>
+      <div className='sticky'>
         <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
           { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
@@ -289,8 +292,8 @@ class App extends React.Component {
           </div>
         </div>
 
-        <div id = 'calendar'>
-          <div id = 'calendar-table' data-testId = 'calendar' style={{display: this.state.showing ? 'block' : 'none' }}>
+        <div id = 'calendar' >
+          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
             <Calendar maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 

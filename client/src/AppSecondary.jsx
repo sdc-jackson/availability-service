@@ -55,6 +55,7 @@ class AppSecondary extends React.Component {
       //this means we don't have a check-in or check-out date (UI forces this)
       newState.checkIn = 'notSelected';
       newState.checkOut = 'notSelected';
+      newState.maxSelectableDate = 'notSelected';
     } else {
       newState.checkIn = checkInDate.toString();
       if (checkOutDate === null) {

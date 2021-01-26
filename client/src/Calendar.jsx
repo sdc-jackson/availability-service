@@ -107,10 +107,38 @@ class Calendar extends React.Component {
     });
     return (
       <div>
-        <button id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<<'} </button>
-        <Month kee={1} maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month1dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month1Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}/>
-        <Month kee={2} maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {month2dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changeHoveredDate} dateClicked = {this.props.dateClicked} month = {this.monthsMap[this.state.month2Date.getMonth()]} weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}/>
-        <button id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>>'} </button>
+        <div className='flex-calendar-container'>
+          <button className='flex-scroll-button-child' id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<'} </button>
+          <div className='flex-calendar-child'>
+            <Month
+              maxSelectableDate = {this.props.maxSelectableDate}
+              selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
+              dates = {month1dates}
+              checkInDate = {this.props.checkInDate}
+              checkOutDate = {this.props.checkOutDate}
+              hoveredDate = {this.props.hoveredDate}
+              changedHoveredDate = {this.props.changeHoveredDate}
+              dateClicked = {this.props.dateClicked}
+              month = {this.monthsMap[this.state.month1Date.getMonth()]}
+              weeks = {this.getWeekArrays(this.state.month1Date.getMonth(),
+              this.state.month1Date.getFullYear())}/>
+          </div>
+          <div className='flex-calendar-child'>
+            <Month
+              maxSelectableDate = {this.props.maxSelectableDate}
+              selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
+              dates = {month2dates}
+              checkInDate = {this.props.checkInDate}
+              checkOutDate = {this.props.checkOutDate}
+              hoveredDate = {this.props.hoveredDate}
+              changedHoveredDate = {this.props.changeHoveredDate}
+              dateClicked = {this.props.dateClicked}
+              month = {this.monthsMap[this.state.month2Date.getMonth()]}
+              weeks = {this.getWeekArrays(this.state.month2Date.getMonth(),
+              this.state.month2Date.getFullYear())}/>
+          </div>
+          <button className='flex-scroll-button-child' id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>'} </button>
+        </div>
         <br/>
         <br/>
         <button onClick = {this.props.clearDates}>Clear Dates</button>
