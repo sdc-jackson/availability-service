@@ -74,15 +74,9 @@ var makeQueryString = (curSearchStr, params) => {
 
     }
   }
-
-
-
-
-  console.log(params);
   var queryStr = '?';
   for (var param in params) {
     if (param === 'check_in' || param === 'check_out') {
-      console.log(param, params[param])
       queryStr += `${(param==='check_out' || queryStr.length > 3) ? '&' : ''}${param}=${params[param]}`;
     } else {
       if (param === 'guests') {
@@ -106,9 +100,7 @@ var makeQueryString = (curSearchStr, params) => {
 }
 
 var removeDatesFromQueryString = (curSearchStr) => {
-  console.log(curSearchStr);
   var curSearchParams = urlParser(curSearchStr);
-  console.log(curSearchParams);
   curSearchParams['check_in'] = undefined;
   curSearchParams['check_out'] = undefined;
   var queryStr = '?';

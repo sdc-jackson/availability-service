@@ -15,10 +15,6 @@ class Guests extends React.Component {
     return this.props.guests.numAdults + this.props.guests.numChildren + this.props.guests.numInfants;
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
     return(<div>
       <div className='guest-title'>GUESTS</div>

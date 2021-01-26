@@ -92,7 +92,6 @@ class App extends React.Component {
         newState.currentlySelecting = 'checkIn';
         newState.showCheckAvailabilityButton = false;
         newState.showReserveButton = true;
-        newState.showGuestPicker = false;
         this.getTotalPrice(checkOutDate, checkInDate, dates);
       }
     }
@@ -171,7 +170,6 @@ class App extends React.Component {
         currentlySelecting: 'checkOut',
         maxSelectableDate: availabilityHelpers.getMaxSelectableDate(checkInDate, this.state.dates)
       });
-      console.log(checkInDate);
       this.history.push(urlHelpers.makeQueryString(window.location.search, {
         check_in: checkInDate.toString(),
         guests: this.state.guests}), {foo: 'check_in'});
@@ -186,7 +184,7 @@ class App extends React.Component {
         activeSelecting: false,
         showCheckAvailabilityButton: false,
         showReserveButton: true,
-        showGuestPicker: false
+        guestPickerShowing: false
       });
       this.history.push(urlHelpers.makeQueryString(window.location.search, {
         check_in: this.state.checkIn.toString(),
@@ -273,7 +271,6 @@ class App extends React.Component {
   }
 
   showGuestPicker() {
-    console.log('show guest picker');
     this.setState({
       guestPickerShowing: !this.state.guestPickerShowing
     })
