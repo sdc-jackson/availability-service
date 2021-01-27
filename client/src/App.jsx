@@ -10,9 +10,13 @@ import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
 import AppStyles from './AppStyles.js';
 import "@fontsource/roboto/700.css"
+import styled from 'styled-components';
 
 
-//const history = createBrowserHistory();
+
+const DatesGuestsTablePicker = styled.table`
+  width: 250px;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -303,21 +307,27 @@ class App extends React.Component {
       guests: stateUpdateObj}), {foo: 'check_out'});
   }
 
+
+
   render() {
     var checkInStyle = {
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      fontSize: 'x-small'
     };
     var checkOutStyle = {
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      fontSize: 'x-small'
     };
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkIn') {
       var checkInStyle = {
-        fontWeight: 700
+        fontWeight: 700,
+        fontSize: 'x-small'
       };
     }
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkOut') {
       var checkOutStyle = {
-        fontWeight: 700
+        fontWeight: 700,
+        fontSize: 'x-small'
       };
     }
     return (
@@ -326,32 +336,45 @@ class App extends React.Component {
           { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
-        <div id = 'check-in'>
-          <div id = "check-in1" style = {checkInStyle}>
-            Check-in:
-          </div>
-        </div>
-        <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-          {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
-        </div>
+        <DatesGuestsTablePicker>
+          <tbody>
+            <tr>
+              <td>
+                <div id = 'check-in'>
+                  <div id = "check-in1" style = {checkInStyle}>
+                    CHECK-IN
+                  </div>
+                </div>
+                <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+                  {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
+                </div>
+              </td>
+              <td>
+                <div id = 'check-out'>
+                  <div id = "check-out1" style = {checkOutStyle}>
+                    CHECKOUT
+                  </div>
+                  <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+                    {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr colspan="2">
+              <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+                <Guests
+                  guestPickerShowing = {this.state.guestPickerShowing}
+                  guests={this.state.guests}
+                  showGuestPicker={this.showGuestPicker.bind(this)}
+                  closeGuestPicker={this.closeGuestPicker.bind(this)}
+                  updateGuests={this.updateGuests.bind(this)}/>
+              </div>
 
-        <div id = 'check-out'>
-          <div id = "check-out1" style = {checkOutStyle}>
-            Check-out:
-          </div>
-          <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-            {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
-          </div>
-        </div>
+            </tr>
+          </tbody>
+          </DatesGuestsTablePicker>
 
-        <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
-          <Guests
-            guestPickerShowing = {this.state.guestPickerShowing}
-            guests={this.state.guests}
-            showGuestPicker={this.showGuestPicker.bind(this)}
-            closeGuestPicker={this.closeGuestPicker.bind(this)}
-            updateGuests={this.updateGuests.bind(this)}/>
-        </div>
+
 
         <div id = 'calendar' >
           <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
