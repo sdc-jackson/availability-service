@@ -3,6 +3,7 @@ import {createBrowserHistory} from 'history';
 import App from './App.jsx';
 import AppSecondary from './AppSecondary.jsx';
 import SamplePage from './samplePage.js';
+import "@fontsource/roboto"
 
 
 class AppsRoot extends Component {

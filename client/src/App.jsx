@@ -8,6 +8,8 @@ import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
+import AppStyles from './AppStyles.js';
+
 
 //const history = createBrowserHistory();
 
