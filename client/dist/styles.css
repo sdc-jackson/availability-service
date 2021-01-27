@@ -49,3 +49,6 @@ div.pop-out-calendar-sticky {
 body {
   font-family: 'Roboto';
 }
+b, strong {
+  font-weight: 700;
+}
