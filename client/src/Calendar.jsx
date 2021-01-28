@@ -10,6 +10,36 @@ const MonthScrollSVG = styled.svg`
   width: 12px;
 `;
 
+const ClearCloseButtonsFlex = styled.div`
+  display: flex;
+  justify-content: ${props => props.id === 1 ? 'flex-end' : 'flex-start'};
+
+
+`;
+
+const ClearDatesButton = styled.div`
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  font-weight: 700;
+  width: 115px;
+  height: 35px;
+  align-self: flex-start;
+
+`;
+
+const CloseCalendarButton = styled.div`
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  font-weight: 700;
+  display: ${props => props.id === 1 ? 'block' : 'none'};
+  align-self: flex-end;
+  height: 35px;
+  width: 70px;
+`;
 
 
 class Calendar extends React.Component {
@@ -158,8 +188,10 @@ class Calendar extends React.Component {
         </div>
         <br/>
         <br/>
-        <button onClick = {this.props.clearDates}>Clear Dates</button>
-        <button style={{display: this.props.id === 1 ? 'block' : 'none' }} onClick = {this.props.closeCalendar}>Close</button>
+        <ClearCloseButtonsFlex id={this.props.id}>
+          <ClearDatesButton onClick = {this.props.clearDates}>CLEAR DATES</ClearDatesButton>
+          <CloseCalendarButton id={this.props.id} onClick = {this.props.closeCalendar}>CLOSE</CloseCalendarButton>
+        </ClearCloseButtonsFlex>
       </div>
 
 
