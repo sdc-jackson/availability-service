@@ -8,6 +8,8 @@ import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
+import "@fontsource/roboto/700.css"
+
 
 //const history = createBrowserHistory();
 
@@ -309,12 +311,12 @@ class App extends React.Component {
     };
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkIn') {
       var checkInStyle = {
-        fontWeight: 'bold'
+        fontWeight: 700
       };
     }
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkOut') {
       var checkOutStyle = {
-        fontWeight: 'bold'
+        fontWeight: 700
       };
     }
     return (

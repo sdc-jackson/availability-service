@@ -2,3 +2,4 @@ node_modules
 ./package-lock.json
 client/dist/bundle.js
 babel.config 2.js
+client/dist/fonts/

@@ -45,3 +45,10 @@ div.pop-out-calendar-sticky {
   width: 600px;
   float:right;
 }
+
+body {
+  font-family: 'Roboto';
+}
+b, strong {
+  font-weight: 700;
+}
