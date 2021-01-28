@@ -27,6 +27,7 @@ const ClearDatesButton = styled.div`
   height: 35px;
   align-self: flex-start;
   text-align: center;
+  line-height: 35px;
 
 `;
 
@@ -41,6 +42,7 @@ const CloseCalendarButton = styled.div`
   height: 35px;
   width: 70px;
   text-align: center;
+  line-height: 35px;
 `;
 
 

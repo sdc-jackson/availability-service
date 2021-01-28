@@ -7,7 +7,7 @@ const ReservationSummaryTable = styled.table`
     border-collapse: collapse;
     position:fixed;
     background-color: white;
-    top:250px;
+    top:300px;
     float:right;
     right: 35px;
 
@@ -22,7 +22,7 @@ const TotalTable = styled.table`
     border-collapse: collapse;
     font-weight: 700;
     float:right;
-    top: 350px;
+    top: 400px;
     right: 35px;
 
 `;

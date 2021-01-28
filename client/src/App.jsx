@@ -9,15 +9,29 @@ import Guests from './Guests.jsx';
 import "@fontsource/roboto/700.css"
 import styled from 'styled-components';
 import GuestAdder from './GuestAdder.jsx';
+import {StarOutlined, StarTwoTone, StarFilled} from '@ant-design/icons';
 
+const StickyReservationDiv = styled.div`
 
+  border-radius: 10px;
+  position: sticky;
+  top: 100px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  width: 300px;
+  height: ${props => props.height};
+  float:right;
+  white-space: nowrap;
+`;
 
 const DatesGuestsTablePicker = styled.table`
     width: 250px;
     border: 1px solid lightgrey;
     border-radius: 10px;
-    margin: 0 auto;
     border-collapse: collapse;
+    position: fixed;
+    top: 160px;
+    right: 35px;
 `;
 
 const DatesGuestsTablePickerRow = styled.tr`
@@ -45,7 +59,7 @@ const ReserveButton = styled.button`
   position: fixed;
   float: right;
   right: 35px;
-  top: 380px;
+  top: 450px;
   border-radius: 10px;
   border: 1px solid white;
   background: linear-gradient(120DEG, #fd5c63, #c30b03);
@@ -55,26 +69,63 @@ const ReserveButton = styled.button`
   width: 250px;
   height: 35px;
   text-align: center;
+  line-height: 35px;
 `;
 
 
 const CheckAvailabilityButton = styled.div`
   position: fixed;
   float: right;
-  top: 250px;
+  top: 300px;
   right: 35px;
   border-radius: 10px;
   border: 1px solid white;
   background: linear-gradient(120DEG, #fd5c63, #c30b03);
   color: white;
-  font-weight: 700;
   font-size: medium;
   width: 250px;
   height: 35px;
   text-align: center;
   z-index:98;
+  line-height: 35px;
 
 `;
+
+const RateReviewsDiv = styled.div`
+  width: 250px;
+  right: 35px;
+  top: 130px;
+  display:flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: fixed;
+
+`;
+
+const RateDiv = styled.div`
+  order: 1;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const RateNumberDiv = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+  order: 1;
+`;
+
+const PerNightDiv = styled.div`
+  font-weight: 500;
+  font-size: small;
+  order: 2;
+`;
+
+const ReviewsDiv = styled.div`
+  float:right;
+  order: 2;
+`;
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -391,9 +442,23 @@ class App extends React.Component {
       };
     }
     return (
-      <div className='sticky'>
+      <StickyReservationDiv height={this.state.showReserveButton ? '450px' : '330px'}>
+
+        <RateReviewsDiv>
+          <RateDiv>
+            <RateNumberDiv>
+              { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)}`}
+            </RateNumberDiv>
+            <PerNightDiv>
+              / night
+            </PerNightDiv>
+          </RateDiv>
+          <ReviewsDiv>
+            <StarFilled twoToneColor="#fd5c63" style={{color:'#c30b03'}} /> <b>4.78</b> (103)
+          </ReviewsDiv>
+        </RateReviewsDiv>
+
         <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
-          { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
         <DatesGuestsTablePicker>
@@ -462,7 +527,7 @@ class App extends React.Component {
         <CheckAvailabilityButton
           onClick={this.onClickCheckinShowCalendar.bind(this)}
           style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
-          Check Availability
+          Check availability
         </CheckAvailabilityButton>
 
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
@@ -475,7 +540,7 @@ class App extends React.Component {
             priceOfStay = {this.state.priceOfStay}/>
           <ReserveButton >Reserve</ReserveButton>
         </div>
-      </div>
+      </StickyReservationDiv>
 
 
     );
