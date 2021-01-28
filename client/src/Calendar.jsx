@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
 import Week from './Week.jsx';
 import Month from './Month.jsx';
+import styled from 'styled-components';
+
+
+const MonthScrollSVG = styled.svg`
+
+  height: 12px;
+  width: 12px;
+`;
+
+
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -108,9 +118,12 @@ class Calendar extends React.Component {
     return (
       <div>
         <div className='flex-calendar-container'>
-          <button className='flex-scroll-button-child' id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<'} </button>
           <div className='flex-calendar-child'>
+
             <Month
+              first = {true}  //first month of the 2-month calendar
+              goPrevMonth = {this.goPrevMonth.bind(this)}
+              goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month1dates}
@@ -120,11 +133,15 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month1Date.getMonth()]}
+              year = {this.state.month1Date.getFullYear()}
               weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}
             />
           </div>
           <div className='flex-calendar-child'>
             <Month
+              first = {false}
+              goPrevMonth = {this.goPrevMonth.bind(this)}
+              goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month2dates}
@@ -134,10 +151,10 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month2Date.getMonth()]}
+              year = {this.state.month1Date.getFullYear()}
               weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}
             />
           </div>
-          <button className='flex-scroll-button-child' id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>'} </button>
         </div>
         <br/>
         <br/>
