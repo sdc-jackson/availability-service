@@ -21,11 +21,12 @@ const ClearDatesButton = styled.div`
   border: 2px solid #484848;
   background-color: white;
   color: #484848;
-  border-radius: 3px;
+  border-radius: 10px;
   font-weight: 700;
   width: 115px;
   height: 35px;
   align-self: flex-start;
+  text-align: center;
 
 `;
 
@@ -33,12 +34,13 @@ const CloseCalendarButton = styled.div`
   border: 2px solid #484848;
   background-color: white;
   color: #484848;
-  border-radius: 3px;
+  border-radius: 10px;
   font-weight: 700;
   display: ${props => props.id === 1 ? 'block' : 'none'};
   align-self: flex-end;
   height: 35px;
   width: 70px;
+  text-align: center;
 `;
 
 

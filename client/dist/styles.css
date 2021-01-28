@@ -42,6 +42,7 @@
 }
 
 div.sticky {
+  border-radius: 10px;
   position: sticky;
   top: 100px;
   background-color: white;

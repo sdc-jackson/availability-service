@@ -15,6 +15,7 @@ import GuestAdder from './GuestAdder.jsx';
 const DatesGuestsTablePicker = styled.table`
     width: 250px;
     border: 1px solid lightgrey;
+    border-radius: 10px;
     margin: 0 auto;
     border-collapse: collapse;
 `;
@@ -22,14 +23,17 @@ const DatesGuestsTablePicker = styled.table`
 const DatesGuestsTablePickerRow = styled.tr`
     border: 1px solid lightgrey;
     border-collapse: collapse;
+    line-height: 25px;
 `;
 const DatesGuestsTablePickerTd = styled.td`
     border: 1px solid lightgrey;
     border-collapse: collapse;
+
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
     border: 1px solid lightgrey;
     border-collapse: collapse;
+    line-height: 25px;
 `;
 const DatesGuestsTablePickerGuestTd = styled.td`
     border: 1px solid lightgrey;
@@ -42,7 +46,7 @@ const ReserveButton = styled.button`
   float: right;
   right: 35px;
   top: 380px;
-  border-radius: 3px;
+  border-radius: 10px;
   border: 1px solid white;
   background-color: #FF5A5F;
   color: white;
@@ -58,7 +62,7 @@ const CheckAvailabilityButton = styled.div`
   float: right;
   top: 250px;
   right: 35px;
-  border-radius: 3px;
+  border-radius: 10px;
   border: 1px solid white;
   background-color: #FF5A5F;
   color: white;
@@ -134,6 +138,7 @@ class App extends React.Component {
       newState.checkOut = 'notSelected';
       newState.maxSelectableDate = 'notSelected';
       newState.showReserveButton = false;
+      newState.showCheckAvailabilityButton = true;
     } else {
       newState.showReserveButton = false;
       newState.checkIn = checkInDate.toString();
@@ -273,7 +278,7 @@ class App extends React.Component {
       selectedCheckoutOnlyDate: 'none',
       hoveredDate: 'none',
       checkoutOnlyShowing: false,
-      howCheckAvailabilityButton: true,
+      showCheckAvailabilityButton: true,
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
@@ -285,7 +290,7 @@ class App extends React.Component {
     this.setState({
       activeSelecting: false,
       currentlySelecting: 'checkIn',
-      showing: false
+      showing: false,
     });
     window.location.hash = '';
   }
