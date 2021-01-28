@@ -47,6 +47,7 @@ div.sticky {
   background-color: white;
   border: 2px solid lightgrey;
   width: 300px;
+  height: 330px;
   float:right;
   white-space: nowrap;
 }
@@ -60,11 +61,13 @@ div.pop-out-calendar-sticky {
 }
 
 div.pop-out-guests-sticky {
-  position: sticky;
-  top: 200px;
+  z-index:99;
+  position: absolute;
+  top: 106px;
   background-color: white;
   border: 2px solid lightgrey;
   width: 250px;
+  right: 25px;
   float:right;
 }
 

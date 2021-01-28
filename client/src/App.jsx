@@ -1,14 +1,11 @@
 
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Calendar from './Calendar.jsx';
 import ReservationSummary from './ReservationSummary.jsx';
 import $ from 'jquery';
-import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
-import AppStyles from './AppStyles.js';
 import "@fontsource/roboto/700.css"
 import styled from 'styled-components';
 import GuestAdder from './GuestAdder.jsx';
@@ -38,6 +35,20 @@ const DatesGuestsTablePickerGuestTd = styled.td`
     border: 1px solid lightgrey;
     border-collapse: collapse;
     colspan: "2";
+`;
+
+const ReserveButton = styled.button`
+  position: fixed;
+  float: right;
+  right: 140px;
+  top: 400px;
+`;
+
+const CheckAvailabilityButton = styled.button`
+  position: fixed;
+  flight: right;
+  right: 130px;
+  top: 250px;
 `;
 
 class App extends React.Component {
@@ -422,11 +433,11 @@ class App extends React.Component {
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <br/>
-        <button
+        <CheckAvailabilityButton
           onClick={this.onClickCheckinShowCalendar.bind(this)}
           style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
           Check Availability
-        </button>
+        </CheckAvailabilityButton>
 
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
@@ -436,7 +447,7 @@ class App extends React.Component {
             serviceFee = {this.state.serviceFee}
             numNights = {this.state.numNights}
             priceOfStay = {this.state.priceOfStay}/>
-          <button >Reserve</button>
+          <ReserveButton >Reserve</ReserveButton>
         </div>
       </div>
 

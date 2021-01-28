@@ -4,8 +4,13 @@ import styled from 'styled-components';
 
 const ReservationSummaryTable = styled.table`
     width: 250px;
-    margin: 0 auto;
     border-collapse: collapse;
+    position:fixed;
+    background-color: white;
+    top:250px;
+    float:right;
+    right: 35px;
+
 `;
 const ReservationSummaryTd = styled.td`
     text-align: right;
@@ -13,9 +18,13 @@ const ReservationSummaryTd = styled.td`
 
 const TotalTable = styled.table`
     width: 250px;
-    margin: 0 auto;
+    position: fixed;
     border-collapse: collapse;
     font-weight: 700;
+    float:right;
+    top: 350px;
+    right: 35px;
+
 `;
 const TotalTd = styled.td`
     text-align: right;
