@@ -4,9 +4,12 @@ import App from './App.jsx';
 import AppSecondary from './AppSecondary.jsx';
 import SamplePage from './samplePage.js';
 import "@fontsource/roboto"
+import $ from 'jquery';
 
 
 class AppsRoot extends Component {
+
+
   render() {
     const history = createBrowserHistory();
 
