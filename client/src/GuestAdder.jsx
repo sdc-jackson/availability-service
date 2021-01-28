@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import {PlusCircleOutlined, MinusCircleOutlined} from '@ant-design/icons';
 
 
-const GuestPickerTable = styled.table`
 
-`;
 const GptTD = styled.td`
   column-width: 180px;
 `;
@@ -23,6 +21,10 @@ const PlusCircle = styled.div`
 const CircleIcon = styled.div`
   font-size: 30px;
   color: lightgrey;
+  &:hover {
+    color: grey;
+    border-color: black;
+  }
 
 `;
 
@@ -37,7 +39,7 @@ class GuestAdder extends React.Component {
     return (<div>
       <div>
 
-        <GuestPickerTable>
+        <table>
           <tbody>
             <tr>
               <GptTD>Adults</GptTD>
@@ -58,7 +60,7 @@ class GuestAdder extends React.Component {
               <td onClick={ () => { this.props.updateGuests({numInfants: this.props.guests.numInfants + 1}); }}><CircleIcon><PlusCircleOutlined/></CircleIcon></td>
             </tr>
           </tbody>
-        </GuestPickerTable>
+        </table>
       </div>
     </div>);
   }
