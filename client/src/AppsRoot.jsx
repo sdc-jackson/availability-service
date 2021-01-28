@@ -5,7 +5,15 @@ import AppSecondary from './AppSecondary.jsx';
 import SamplePage from './samplePage.js';
 import "@fontsource/roboto"
 import $ from 'jquery';
+import styled from 'styled-components';
 
+const RestOfPage = styled.div`
+  color: lightgrey;
+  z-index: 1;
+  position: static;
+  top: 1000px;
+
+`;
 
 class AppsRoot extends Component {
 
@@ -16,9 +24,9 @@ class AppsRoot extends Component {
     return (<div>
       <App id={1} history={history}/>
       <AppSecondary id={2} history={history}/>
-      <p style={{color: 'lightgrey'}}>
+      <RestOfPage>
         {SamplePage.words}
-      </p>
+      </RestOfPage>
     </div>);
   }
 }

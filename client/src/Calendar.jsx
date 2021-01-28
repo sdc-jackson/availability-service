@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 const ClearCloseButtonsFlex = styled.div`
   display: flex;
-  justify-content: ${props => props.id === 1 ? 'flex-end' : 'flex-start'};
-
+  justify-content: ${props => props.id === 1 ? 'flex-end' : 'flex-end'};
+  height: 35px;
 
 `;
 

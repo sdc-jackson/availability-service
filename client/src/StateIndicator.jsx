@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import availabilityHelpers from './availabilityHelpers.js';
+import styled from 'styled-components';
+
+const StateIndicatorContainer = styled.div`
+  width: 330px;
+  height: 100px;
+  margin-left: 50px;
+`;
+
 
 class StateIndicator extends React.Component {
   constructor(props) {
     super(props);
-    //props are:
-    // checkIn
-    // checkOut
-    // showReserveButton
-    // numNights
-    // nameOfStay
+
   }
 
 
@@ -33,20 +36,20 @@ class StateIndicator extends React.Component {
 
   render() {
     if (this.props.checkIn === 'notSelected') {
-      return (<div>
-        <h2>Select check-in date</h2>
-        <h3>Add your travel dates for exact pricing</h3>
-      </div>);
+      return (<StateIndicatorContainer>
+        <h3>Select check-in date</h3>
+        <p>Add your travel dates for exact pricing</p>
+      </StateIndicatorContainer>);
     } else if (this.props.checkOut === 'notSelected') {
-      return (<div>
-        <h2>Select check-out date</h2>
-        <h3>Add your travel dates for exact pricing</h3>
-      </div>);
+      return (<StateIndicatorContainer>
+        <h3>Select check-out date</h3>
+        <p>Add your travel dates for exact pricing</p>
+      </StateIndicatorContainer>);
     } else if (this.props.showReserveButton) {
-      return (<div>
-        <h2>{this.props.numNights} nights in {this.props.nameOfStay}</h2>
-        <h3>{this.getResDateSummaryStr()} </h3>
-      </div>);
+      return (<StateIndicatorContainer>
+        <h3>{this.props.numNights} nights in {this.props.nameOfStay}</h3>
+        <p>{this.getResDateSummaryStr()} </p>
+      </StateIndicatorContainer>);
     }
   }
 }
