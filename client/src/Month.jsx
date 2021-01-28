@@ -15,9 +15,12 @@ const MonthScrollButtonDiv = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px solid white;
   height: 30px;
   width: 30px;
+  &:hover {
+    background-color: lightgrey;
+  }
 `;
 
 const PrevMonthFlexChildDiv = styled.div`
