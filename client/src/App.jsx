@@ -205,7 +205,8 @@ class App extends React.Component {
         }
       } else {
         //we have both check-in and check-out
-        newState.checkOut = checkOutDate.toString();
+        newState.checkOut = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
+        newState.maxSelectableDate = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
         newState.currentlySelecting = 'checkIn';
         newState.showCheckAvailabilityButton = false;
         newState.showReserveButton = true;

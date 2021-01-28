@@ -75,7 +75,7 @@ class Week extends React.Component {
             cDate.setHours(0, 0, 0);
             maxDate.setHours(0, 0, 0);
             if (cDate.toString() === itemDate.toString()) {
-              if (cDate > maxDate) {
+              if (cDate.getDate() > maxDate.getDate() || cDate.getMonth() > maxDate.getMonth()) {
                 dateIsAvailable = false;
               } else if (this.props.dates[i].isAvailable === true) {
                 dateIsAvailable = true;
@@ -94,10 +94,15 @@ class Week extends React.Component {
             if (itemDate < checkInDate) {
               chosenStyle = blockedStyle;
             } else if (dateIsCheckoutOnly === true) {
-              chosenStyle = checkOutOnlyStyle;
-              choosable = true;
-              if (itemDate.toString() === this.props.hoveredDate.toString() && item !== 'blank') {
-                chosenStyle = checkOutOnlyHoverStyle;
+              if (itemDate.toString() === this.props.checkOutDate.toString()) {
+                chosenStyle = checkInOutStyle;
+              } else {
+                chosenStyle = checkOutOnlyStyle;
+                choosable = true;
+                if (itemDate.toString() === this.props.hoveredDate.toString() && item !== 'blank') {
+                  chosenStyle = checkOutOnlyHoverStyle;
+                }
+
               }
             }
           } else if (itemDate.toString() === this.props.checkInDate.toString() && item !== 'blank') {

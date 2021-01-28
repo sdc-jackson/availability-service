@@ -5,10 +5,6 @@ import styled from 'styled-components';
 
 
 
-const MonthDiv = styled.div`
-  display: flex;
-`;
-
 const MonthScrollFlexDiv = styled.div`
   display: flex;
   height: 30px;
@@ -39,8 +35,7 @@ const MonthYearFlexChildDiv = styled.div`
   font-weight: 700;
 `;
 
-const CalendarTableDiv = styled.div`
-`;
+
 
 const CalendarTable = styled.table`
   width: 260px;
