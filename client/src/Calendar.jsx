@@ -4,11 +4,6 @@ import Month from './Month.jsx';
 import styled from 'styled-components';
 
 
-const MonthScrollSVG = styled.svg`
-
-  height: 12px;
-  width: 12px;
-`;
 
 const ClearCloseButtonsFlex = styled.div`
   display: flex;
