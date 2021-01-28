@@ -1,4 +1,18 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
+
+const DateCircle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: ${props => props.chosenStyle.border};
+  background-color: ${props => props.chosenStyle.backgroundColor};
+  font-weight: ${props => props.chosenStyle.fontWeight};
+  color: ${props => props.chosenStyle.color};
+  height: 30px;
+  width: 30px;
+`;
 
 class Week extends React.Component {
   constructor(props) {
@@ -7,38 +21,52 @@ class Week extends React.Component {
 
   render() {
     var checkInOutStyle = {
+      border: '1px solid black',
       backgroundColor: 'black',
+      fontWeight: 500,
       color: 'white',
       testId: 'checkInOut'
     };
     var rangeStyle = {
+      border: '1px solid grey',
       backgroundColor: 'grey',
+      fontWeight: 500,
       color: 'black',
       testId: 'range'
     };
     var normalDateStyle = {
+      border: '1px solid white',
       backgroundColor: 'white',
       fontWeight: 700,
       color: 'black',
       testId: 'normal'
     };
     var hoveredDateStyle = {
-      backgroundColor: 'cornflowerBlue',
-      color: 'white',
+      border: '1px solid black',
+      backgroundColor: 'white',
+      fontWeight: 500,
+      color: 'black',
       testId: 'hoveredDate'
     };
     var blockedStyle = {
       textDecoration: 'line-through',
+      border: '1px solid white',
+      backgroundColor: 'white',
+      fontWeight: 500,
       color: 'lightGrey',
       testId: 'blocked'
     };
     var checkOutOnlyStyle = {
+      border: '1px solid white',
+      backgroundColor: 'white',
+      fontWeight: 700,
       color: 'grey',
       testId: 'checkOutOnly',
-      fontWeight: 700
     };
     var checkOutOnlyHoverStyle = {
-      backgroundColor: 'lightGrey',
+      border: '1px solid grey',
+      backgroundColor: 'white',
+      fontWeight: 700,
       color: 'grey',
       testId: 'checkOutOnlyHover'
     };
@@ -124,7 +152,7 @@ class Week extends React.Component {
           }
 
           return <td className = 'day' key={index}
-            style = { chosenStyle }
+
             data-testId = {chosenStyle.testId}
             onClick={ () => {
               if (choosable) {
@@ -137,7 +165,9 @@ class Week extends React.Component {
             onMouseLeave={ () => {
               changedHoveredDate('none');
             }}>
-            { item === 'blank' ? '  ' : item.getDate() }
+              <DateCircle chosenStyle={chosenStyle}>
+                { item === 'blank' ? '  ' : item.getDate() }
+              </DateCircle>
           </td>;
 
 
