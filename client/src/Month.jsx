@@ -41,6 +41,7 @@ const CalendarTable = styled.table`
   width: 260px;
   height: 260px;
   text-align: center;
+  border-collapse: collapse;
 `;
 
 const DOWRow = styled.tr`
