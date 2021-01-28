@@ -40,15 +40,34 @@ const DatesGuestsTablePickerGuestTd = styled.td`
 const ReserveButton = styled.button`
   position: fixed;
   float: right;
-  right: 140px;
-  top: 400px;
+  right: 35px;
+  top: 380px;
+  border-radius: 3px;
+  border: 1px solid white;
+  background-color: #FF5A5F;
+  color: white;
+  font-weight: 700;
+  font-size: medium;
+  width: 250px;
+  height: 35px;
+  text-align: center;
 `;
 
-const CheckAvailabilityButton = styled.button`
+const CheckAvailabilityButton = styled.div`
   position: fixed;
-  flight: right;
-  right: 130px;
+  float: right;
   top: 250px;
+  right: 35px;
+  border-radius: 3px;
+  border: 1px solid white;
+  background-color: #FF5A5F;
+  color: white;
+  font-weight: 700;
+  font-size: medium;
+  width: 250px;
+  height: 35px;
+  text-align: center;
+
 `;
 
 class App extends React.Component {

@@ -18,9 +18,9 @@ const ClearCloseButtonsFlex = styled.div`
 `;
 
 const ClearDatesButton = styled.div`
-  border: 2px solid black;
+  border: 2px solid #484848;
   background-color: white;
-  color: black;
+  color: #484848;
   border-radius: 3px;
   font-weight: 700;
   width: 115px;
@@ -30,9 +30,9 @@ const ClearDatesButton = styled.div`
 `;
 
 const CloseCalendarButton = styled.div`
-  border: 2px solid black;
+  border: 2px solid #484848;
   background-color: white;
-  color: black;
+  color: #484848;
   border-radius: 3px;
   font-weight: 700;
   display: ${props => props.id === 1 ? 'block' : 'none'};
