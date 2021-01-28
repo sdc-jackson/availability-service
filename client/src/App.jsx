@@ -48,7 +48,7 @@ const ReserveButton = styled.button`
   top: 380px;
   border-radius: 10px;
   border: 1px solid white;
-  background-color: #FF5A5F;
+  background: linear-gradient(120DEG, #fd5c63, #c30b03);
   color: white;
   font-weight: 700;
   font-size: medium;
@@ -57,6 +57,7 @@ const ReserveButton = styled.button`
   text-align: center;
 `;
 
+
 const CheckAvailabilityButton = styled.div`
   position: fixed;
   float: right;
@@ -64,13 +65,14 @@ const CheckAvailabilityButton = styled.div`
   right: 35px;
   border-radius: 10px;
   border: 1px solid white;
-  background-color: #FF5A5F;
+  background: linear-gradient(120DEG, #fd5c63, #c30b03);
   color: white;
   font-weight: 700;
   font-size: medium;
   width: 250px;
   height: 35px;
   text-align: center;
+  z-index:98;
 
 `;
 

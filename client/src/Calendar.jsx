@@ -18,7 +18,7 @@ const ClearCloseButtonsFlex = styled.div`
 `;
 
 const ClearDatesButton = styled.div`
-  border: 2px solid #484848;
+  text-decoration: underline;
   background-color: white;
   color: #484848;
   border-radius: 10px;
@@ -32,8 +32,8 @@ const ClearDatesButton = styled.div`
 
 const CloseCalendarButton = styled.div`
   border: 2px solid #484848;
-  background-color: white;
-  color: #484848;
+  background-color: #484848;
+  color: white;
   border-radius: 10px;
   font-weight: 700;
   display: ${props => props.id === 1 ? 'block' : 'none'};
@@ -191,8 +191,8 @@ class Calendar extends React.Component {
         <br/>
         <br/>
         <ClearCloseButtonsFlex id={this.props.id}>
-          <ClearDatesButton onClick = {this.props.clearDates}>CLEAR DATES</ClearDatesButton>
-          <CloseCalendarButton id={this.props.id} onClick = {this.props.closeCalendar}>CLOSE</CloseCalendarButton>
+          <ClearDatesButton onClick = {this.props.clearDates}>Clear dates</ClearDatesButton>
+          <CloseCalendarButton id={this.props.id} onClick = {this.props.closeCalendar}>Close</CloseCalendarButton>
         </ClearCloseButtonsFlex>
       </div>
 
