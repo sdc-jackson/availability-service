@@ -1,6 +1,4 @@
-h1 {
-  font-family: 'Montserrate', 'Arial Narrow', Arial, sans-serif;
-}
+
 
 .flex-calendar-container {
   align-content: center;
@@ -29,6 +27,20 @@ h1 {
   flex: 1;
 }
 
+
+
+.flex-guest-summary-container {
+  align-content: center;
+  display: flex;
+}
+
+.flex-guest-summary-numguests-child {
+  flex: 4;
+}
+.flex-guest-summary-button-child {
+  align-self: flex-end;
+}
+
 div.sticky {
   position: sticky;
   top: 100px;
@@ -36,6 +48,7 @@ div.sticky {
   border: 2px solid lightgrey;
   width: 300px;
   float:right;
+  white-space: nowrap;
 }
 div.pop-out-calendar-sticky {
   position: sticky;
@@ -46,9 +59,19 @@ div.pop-out-calendar-sticky {
   float:right;
 }
 
+div.pop-out-guests-sticky {
+  position: sticky;
+  top: 200px;
+  background-color: white;
+  border: 2px solid lightgrey;
+  width: 250px;
+  float:right;
+}
+
 body {
   font-family: 'Roboto';
 }
 b, strong {
   font-weight: 700;
 }
+

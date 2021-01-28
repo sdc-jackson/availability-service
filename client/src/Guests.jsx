@@ -14,11 +14,11 @@ class Guests extends React.Component {
   render() {
     return (<div>
       <div className='guest-title' style={{fontSize: 'x-small'}}>GUESTS</div>
-      <div className='number-of-guests'> {`${this.sumGuests()} ${this.sumGuests() > 1 ? 'guests' : 'guest'}`}</div>
-      <button className='guest-dropdown-button' onClick={this.props.showGuestPicker}> {this.props.guestPickerShowing ? '^' : 'v' }</button>
-      <div style={{display: this.props.guestPickerShowing ? 'block' : 'none' }}>
-        <GuestAdder guests = {this.props.guests} updateGuests={this.props.updateGuests}/>
+      <div className='flex-guest-summary-container'>
+        <div className='flex-guest-summary-numguests-child'> {`${this.sumGuests()} ${this.sumGuests() > 1 ? 'guests' : 'guest'}`}</div>
+        <button className='flex-guest-summary-button-child ' onClick={this.props.showGuestPicker}> {this.props.guestPickerShowing ? '/\\' : '\\/' }</button>
       </div>
+
     </div>);
   }
 }
