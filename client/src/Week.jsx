@@ -5,7 +5,7 @@ const DateCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: ${props => props.chosenStyle.isRange ? '0%' : '50%'};
+  border-radius: ${props => props.chosenStyle.isRange ? '5%' : '50%'};
   border: ${props => props.chosenStyle.border};
   background-color: ${props => props.chosenStyle.backgroundColor};
   font-weight: ${props => props.chosenStyle.fontWeight};
@@ -29,9 +29,9 @@ class Week extends React.Component {
       testId: 'checkInOut'
     };
     var rangeStyle = {
-      border: '1px solid grey',
+      border: '1px solid lightgrey',
       isRange: true,
-      backgroundColor: 'grey',
+      backgroundColor: 'lightgrey',
       fontWeight: 500,
       color: 'black',
       testId: 'range'
