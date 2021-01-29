@@ -35,13 +35,23 @@ const DatesGuestsTablePicker = styled.table`
 
 const DatesGuestsTablePickerRow = styled.tr`
     border: 1px solid lightgrey;
+
     border-spacing: 0;
     line-height: 25px;
 
 `;
 const DatesGuestsTablePickerDiv = styled.div`
-  border: 1px solid lightgrey;
+  border: ${(props) => {
+    if (props.currentlySelecting === 'checkIn' && props.activeSelecting === true && props.checkin === true) {
+      return '2px solid black;';
+    } else if (props.currentlySelecting === 'checkOut' && props.activeSelecting === true && props.checkin === false) {
+      return '2px solid black;';
+    }
+    return '1px solid lightgrey;';
+
+  }}
   border-radius: ${props => props.checkin === true ? '10px 0 0 0' : '0 10px 0 0'};
+  z-index: 105;
 
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
@@ -511,7 +521,7 @@ class App extends React.Component {
           <tbody>
             <DatesGuestsTablePickerRow>
               <td>
-              <DatesGuestsTablePickerDiv checkin = {true}>
+              <DatesGuestsTablePickerDiv checkin = {true} currentlySelecting = {this.state.currentlySelecting} activeSelecting = {this.state.activeSelecting}>
 
                 <TextDivSpaced>
                   <div id = "check-in1" style = {checkInStyle}>
@@ -527,9 +537,9 @@ class App extends React.Component {
               </DatesGuestsTablePickerDiv>
               </td>
               <td>
-              <DatesGuestsTablePickerDiv checkin = {false}>
+              <DatesGuestsTablePickerDiv checkin = {false} currentlySelecting = {this.state.currentlySelecting} activeSelecting = {this.state.activeSelecting}>
                 <TextDivSpaced>
-                  <div id = "check-out1" style = {checkOutStyle}>
+                  <div id = "check-out1" style = {checkOutStyle} >
                     CHECKOUT
                   </div>
                   <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
@@ -561,7 +571,7 @@ class App extends React.Component {
 
 
         <div id = 'calendar' >
-          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
+          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
             <Calendar id = {1}
               maxSelectableDate = {this.state.maxSelectableDate}
               hoveredDate = {this.state.hoveredDate}
