@@ -35,13 +35,13 @@ const DatesGuestsTablePicker = styled.table`
 
 const DatesGuestsTablePickerRow = styled.tr`
     border: 1px solid lightgrey;
+
     border-spacing: 0;
     line-height: 25px;
 
 `;
 const DatesGuestsTablePickerDiv = styled.div`
   border: ${(props) => {
-    console.log(props.currentlySelecting, props.activeSelecting, props.checkin)
     if (props.currentlySelecting === 'checkIn' && props.activeSelecting === true && props.checkin === true) {
       return '2px solid black;';
     } else if (props.currentlySelecting === 'checkOut' && props.activeSelecting === true && props.checkin === false) {
@@ -51,6 +51,7 @@ const DatesGuestsTablePickerDiv = styled.div`
 
   }}
   border-radius: ${props => props.checkin === true ? '10px 0 0 0' : '0 10px 0 0'};
+  z-index: 105;
 
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
@@ -570,7 +571,7 @@ class App extends React.Component {
 
 
         <div id = 'calendar' >
-          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
+          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
             <Calendar id = {1}
               maxSelectableDate = {this.state.maxSelectableDate}
               hoveredDate = {this.state.hoveredDate}

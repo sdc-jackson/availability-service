@@ -8,8 +8,9 @@ import styled from 'styled-components';
 const ClearCloseButtonsFlex = styled.div`
   display: flex;
   justify-content: flex-end;
-  height: 35px;
+  height: 50px;
   width: 680px;
+  align-items: center;
 
 `;
 
