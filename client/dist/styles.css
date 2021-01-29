@@ -36,9 +36,11 @@
 
 .flex-guest-summary-numguests-child {
   flex: 4;
+  margin-left: 5%;
 }
 .flex-guest-summary-button-child {
   align-self: flex-end;
+  margin-right: 5%;
 }
 
 

@@ -42,6 +42,7 @@ const DatesGuestsTablePickerRow = styled.tr`
 const DatesGuestsTablePickerDiv = styled.div`
   border: 1px solid lightgrey;
   border-radius: ${props => props.checkin === true ? '10px 0 0 0' : '0 10px 0 0'};
+
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
     line-height: 25px;
@@ -51,6 +52,10 @@ const DatesGuestsTablePickerGuestTd = styled.td`
     colspan: "2";
     border-radius: 0 0 10px 10px;
 
+`;
+
+const TextDivSpaced = styled.div`
+  margin-left: 5%;
 `;
 
 const ReserveButton = styled.button`
@@ -508,20 +513,22 @@ class App extends React.Component {
               <td>
               <DatesGuestsTablePickerDiv checkin = {true}>
 
-                <div id = 'check-in'>
+                <TextDivSpaced>
                   <div id = "check-in1" style = {checkInStyle}>
                     CHECK-IN
                   </div>
-                </div>
-                <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-                  <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
-                  </span>
-                </div>
+                </TextDivSpaced>
+                <TextDivSpaced>
+                  <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+                    <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
+                    </span>
+                  </div>
+                </TextDivSpaced>
               </DatesGuestsTablePickerDiv>
               </td>
               <td>
               <DatesGuestsTablePickerDiv checkin = {false}>
-                <div id = 'check-out'>
+                <TextDivSpaced>
                   <div id = "check-out1" style = {checkOutStyle}>
                     CHECKOUT
                   </div>
@@ -529,7 +536,7 @@ class App extends React.Component {
                     <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
                     </span>
                   </div>
-                </div>
+                </TextDivSpaced>
               </DatesGuestsTablePickerDiv>
               </td>
             </DatesGuestsTablePickerRow>
