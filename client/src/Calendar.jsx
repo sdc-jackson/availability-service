@@ -46,15 +46,8 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
 
-    var today = new Date();
-    var oneMonthFromToday = new Date();
-    oneMonthFromToday.setDate(today.getDate() + 30);
 
-    this.state = {
-      month1Date: today,
-      month2Date: oneMonthFromToday,
 
-    };
 
     this.monthsMap = [
       'January',
@@ -83,12 +76,21 @@ class Calendar extends React.Component {
     ];
   }
 
-  getWeekArrays (month, year) {
-    let monthStartDate = new Date();
 
+
+
+
+
+  getWeekArrays (month, year) {
+
+
+
+    var monthStartDate = new Date();
     monthStartDate.setMonth(month);
-    monthStartDate.setDate(1); //first day of this month
+    monthStartDate.setDate(1);
     monthStartDate.setYear(year);
+
+
     var weeks = [];
     var week1 = [];
     for (var day = 0; day < monthStartDate.getDay(); day++) {
@@ -120,30 +122,30 @@ class Calendar extends React.Component {
   }
 
 
-  goNextMonth() {
-    this.setState({
-      month1Date: new Date(this.state.month2Date),
-      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 30))
-    });
-  }
+  // goNextMonth() {
+  //   this.setState({
+  //     month1Date: new Date(this.state.month2Date),
+  //     month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 30))
+  //   });
+  // }
 
-  goPrevMonth() {
-    this.setState({
-      month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 30)),
-      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 30)),
-    });
-  }
+  // goPrevMonth() {
+  //   this.setState({
+  //     month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 30)),
+  //     month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 30)),
+  //   });
+  // }
 
 
 
   render() {
     var month1dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
-      return adate.getMonth() === this.state.month1Date.getMonth();
+      return adate.getMonth() === this.props.month1Date.getMonth();
     });
     var month2dates = this.props.dates.filter((date) => {
       var adate = new Date(date.date);
-      return adate.getMonth() === this.state.month2Date.getMonth();
+      return adate.getMonth() === this.props.month2Date.getMonth();
     });
     return (
       <div>
@@ -152,8 +154,9 @@ class Calendar extends React.Component {
 
             <Month
               first = {true}  //first month of the 2-month calendar
-              goPrevMonth = {this.goPrevMonth.bind(this)}
-              goNextMonth = {this.goNextMonth.bind(this)}
+              updateDisplayedMonths = {this.props.updateDisplayedMonths}
+              //goPrevMonth = {this.goPrevMonth.bind(this)}
+              //goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month1dates}
@@ -162,16 +165,17 @@ class Calendar extends React.Component {
               hoveredDate = {this.props.hoveredDate}
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
-              month = {this.monthsMap[this.state.month1Date.getMonth()]}
-              year = {this.state.month1Date.getFullYear()}
-              weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}
+              month = {this.monthsMap[this.props.month1Date.getMonth()]}
+              year = {this.props.month1Date.getFullYear()}
+              weeks = {this.getWeekArrays(this.props.month1Date.getMonth(), this.props.month1Date.getFullYear())}
             />
           </div>
           <div className='flex-calendar-child'>
             <Month
               first = {false}
-              goPrevMonth = {this.goPrevMonth.bind(this)}
-              goNextMonth = {this.goNextMonth.bind(this)}
+              updateDisplayedMonths = {this.props.updateDisplayedMonths}
+              // goPrevMonth = {this.goPrevMonth.bind(this)}
+              // goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month2dates}
@@ -180,9 +184,9 @@ class Calendar extends React.Component {
               hoveredDate = {this.props.hoveredDate}
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
-              month = {this.monthsMap[this.state.month2Date.getMonth()]}
-              year = {this.state.month1Date.getFullYear()}
-              weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}
+              month = {this.monthsMap[this.props.month2Date.getMonth()]}
+              year = {this.props.month1Date.getFullYear()}
+              weeks = {this.getWeekArrays(this.props.month2Date.getMonth(), this.props.month2Date.getFullYear())}
             />
           </div>
         </div>

@@ -107,7 +107,6 @@ class Week extends React.Component {
             if (cDate.toString() === itemDate.toString()) {
               if ((cDate.getDate() > maxDate.getDate() && cDate.getMonth() === maxDate.getMonth()) || cDate.getMonth() > maxDate.getMonth()) {
                 dateIsAvailable = false;
-                console.log(cDate.getDate(), maxDate.getDate(), cDate.getMonth(), maxDate.getMonth());
               } else if (this.props.dates[i].isAvailable === true) {
                 dateIsAvailable = true;
               } else if (i > 0) {
@@ -117,9 +116,7 @@ class Week extends React.Component {
               }
             }
           }
-          //console.log(itemDate, checkInDate);
           if ((this.props.checkInDate !== 'notSelected' && itemDate < checkInDate) || dateIsAvailable === false) {
-            //console.log('blocked date: ', itemDate);
             chosenStyle = blockedStyle;
             choosable = false;
             if (itemDate < checkInDate) {

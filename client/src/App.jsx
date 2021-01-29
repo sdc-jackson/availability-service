@@ -129,6 +129,11 @@ const ReviewsDiv = styled.div`
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    var today = new Date();
+    var oneMonthFromToday = new Date(today);
+    oneMonthFromToday.setDate(today.getDate() + 30);
+
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -151,7 +156,9 @@ class App extends React.Component {
         numChildren: 0,
         numInfants: 0
       },
-      guestPickerShowing: false
+      guestPickerShowing: false,
+      month1Date: today,
+      month2Date: oneMonthFromToday
 
 
 
@@ -194,6 +201,7 @@ class App extends React.Component {
     } else {
       newState.showReserveButton = false;
       newState.checkIn = checkInDate.toString();
+      this.updateDisplayedMonths(0, checkInDate.toString());
       if (checkOutDate === null) {
         //we have a check-in but not a check-out
         newState.checkOut = 'notSelected';
@@ -418,6 +426,39 @@ class App extends React.Component {
       guests: stateUpdateObj}), {foo: 'check_out'});
   }
 
+  goNextMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month2Date),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 31))
+    });
+  }
+
+  goPrevMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 31)),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 31)),
+    });
+  }
+
+  updateDisplayedMonths(dir, checkIn) {
+    if (dir === -1) {
+      this.goPrevMonth();
+    } else if (dir === 1) {
+      this.goNextMonth();
+    } else if (dir === 0) {
+
+      var newMonth1 = new Date(checkIn);
+      if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
+        newMonth1.setDate(1);
+        var newMonth2 = new Date(newMonth1);
+        newMonth2.setDate(newMonth2.getDate() + 31);
+        this.setState({
+          month1Date: newMonth1,
+          month2Date: newMonth2
+        })
+      }
+    }
+  }
 
 
   render() {
@@ -524,7 +565,10 @@ class App extends React.Component {
               checkOutDate = {this.state.checkOut}
               clearDates = {this.clearDates.bind(this)}
               closeCalendar = {this.closeCalendar.bind(this)}
-              dateClicked = {this.dateClicked.bind(this)}/>
+              dateClicked = {this.dateClicked.bind(this)}
+              month1Date = {this.state.month1Date}
+              month2Date = {this.state.month2Date}
+              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}/>
           </div>
 
 
