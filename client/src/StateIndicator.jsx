@@ -38,17 +38,17 @@ class StateIndicator extends React.Component {
     if (this.props.checkIn === 'notSelected') {
       return (<StateIndicatorContainer>
         <h3>Select check-in date</h3>
-        <p>Add your travel dates for exact pricing</p>
+        <span style={{fontSize: '15px', color: 'grey'}}>Add your travel dates for exact pricing</span>
       </StateIndicatorContainer>);
     } else if (this.props.checkOut === 'notSelected') {
       return (<StateIndicatorContainer>
         <h3>Select check-out date</h3>
-        <p>Add your travel dates for exact pricing</p>
+        <span style={{fontSize: '15px', color: 'grey'}}>Add your travel dates for exact pricing</span>
       </StateIndicatorContainer>);
     } else if (this.props.showReserveButton) {
       return (<StateIndicatorContainer>
         <h3>{this.props.numNights} nights in {this.props.nameOfStay}</h3>
-        <p>{this.getResDateSummaryStr()} </p>
+        <span style={{fontSize: '15px', color: 'grey'}}>{this.getResDateSummaryStr()} </span>
       </StateIndicatorContainer>);
     }
   }
