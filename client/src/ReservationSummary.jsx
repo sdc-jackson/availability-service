@@ -47,7 +47,7 @@ class ReservationSummary extends React.Component {
       <ReservationSummaryTable>
         <tbody>
           <tr>
-            <td>
+            <td style={{textDecoration: 'underline'}}>
               {`$${this.props.priceOfStay / this.props.numNights} per night x ${this.props.numNights} nights`}
             </td>
             <ReservationSummaryTd>
@@ -55,7 +55,7 @@ class ReservationSummary extends React.Component {
             </ReservationSummaryTd>
           </tr>
           <tr>
-            <td>
+            <td style={{textDecoration: 'underline'}}>
               Cleaning fee
             </td>
             <ReservationSummaryTd>
@@ -63,7 +63,7 @@ class ReservationSummary extends React.Component {
             </ReservationSummaryTd>
           </tr>
           <tr>
-            <td>
+            <td style={{textDecoration: 'underline'}}>
               Service Fee
             </td>
             <ReservationSummaryTd>
