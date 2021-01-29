@@ -67,18 +67,6 @@ const DOWRow = styled.tr`
   color: grey;
 `;
 
-// const MonthRow = styled.tr`
-//   font-weight: 700;
-//   font-size: medium
-//   text-align: center
-// `;
-
-// const ButtonTd = styled.td`
-//   column-width:
-// `;
-
-
-
 
 class Month extends React.Component {
   constructor(props) {

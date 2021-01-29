@@ -289,7 +289,6 @@ class AppSecondary extends React.Component {
         newMonth1.setDate(1);
         var newMonth2 = new Date(newMonth1);
         newMonth2.setDate(newMonth2.getDate() + 31);
-        console.log(newMonth1, newMonth2)
         this.setState({
           month1Date: newMonth1,
           month2Date: newMonth2

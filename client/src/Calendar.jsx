@@ -122,21 +122,6 @@ class Calendar extends React.Component {
   }
 
 
-  // goNextMonth() {
-  //   this.setState({
-  //     month1Date: new Date(this.state.month2Date),
-  //     month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 30))
-  //   });
-  // }
-
-  // goPrevMonth() {
-  //   this.setState({
-  //     month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 30)),
-  //     month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 30)),
-  //   });
-  // }
-
-
 
   render() {
     var month1dates = this.props.dates.filter((date) => {
@@ -155,8 +140,6 @@ class Calendar extends React.Component {
             <Month
               first = {true}  //first month of the 2-month calendar
               updateDisplayedMonths = {this.props.updateDisplayedMonths}
-              //goPrevMonth = {this.goPrevMonth.bind(this)}
-              //goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month1dates}
@@ -174,8 +157,6 @@ class Calendar extends React.Component {
             <Month
               first = {false}
               updateDisplayedMonths = {this.props.updateDisplayedMonths}
-              // goPrevMonth = {this.goPrevMonth.bind(this)}
-              // goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month2dates}
