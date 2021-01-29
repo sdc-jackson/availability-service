@@ -22,6 +22,7 @@ const StickyReservationDiv = styled.div`
   height: ${props => props.height};
   float:right;
   white-space: nowrap;
+  box-shadow:         2px 2px 2px 3px #D8D8D8;
 `;
 
 const DatesGuestsTablePicker = styled.table`
@@ -106,20 +107,21 @@ const RateDiv = styled.div`
 `;
 
 const RateNumberDiv = styled.div`
-  font-weight: 700;
+  font-weight: 500;
   font-size: 20px;
   order: 1;
 `;
 
 const PerNightDiv = styled.div`
   font-weight: 500;
-  font-size: small;
+  font-size: 15px;
   order: 2;
 `;
 
 const ReviewsDiv = styled.div`
   float:right;
   order: 2;
+  font-size: 12px;
 `;
 
 
@@ -448,11 +450,11 @@ class App extends React.Component {
               { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)}`}
             </RateNumberDiv>
             <PerNightDiv>
-              / night
+              {'  / night'}
             </PerNightDiv>
           </RateDiv>
           <ReviewsDiv>
-            <StarFilled twoToneColor="#fd5c63" style={{color:'#c30b03'}} /> <b>4.78</b> (103)
+            <StarFilled twoToneColor="#fd5c63" style={{color:'#c30b03'}} /> 4.78 <span style={{color: 'lightgrey'}}>(103)</span>
           </ReviewsDiv>
         </RateReviewsDiv>
 
@@ -471,7 +473,8 @@ class App extends React.Component {
                   </div>
                 </div>
                 <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-                  {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
+                  <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
+                  </span>
                 </div>
               </DatesGuestsTablePickerDiv>
               </td>
@@ -482,7 +485,8 @@ class App extends React.Component {
                     CHECKOUT
                   </div>
                   <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-                    {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
+                    <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
+                    </span>
                   </div>
                 </div>
               </DatesGuestsTablePickerDiv>
