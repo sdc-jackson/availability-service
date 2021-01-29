@@ -1,4 +1,19 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
+
+const DateCircle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${props => props.chosenStyle.isRange ? '0%' : '50%'};
+  border: ${props => props.chosenStyle.border};
+  background-color: ${props => props.chosenStyle.backgroundColor};
+  font-weight: ${props => props.chosenStyle.fontWeight};
+  color: ${props => props.chosenStyle.color};
+  text-decoration: ${props => props.chosenStyle.textDecoration ? 'line-through' : 'none'};
+  height: 30px;
+  width: 30px;
+`;
 
 class Week extends React.Component {
   constructor(props) {
@@ -7,36 +22,53 @@ class Week extends React.Component {
 
   render() {
     var checkInOutStyle = {
+      border: '1px solid black',
       backgroundColor: 'black',
+      fontWeight: 500,
       color: 'white',
       testId: 'checkInOut'
     };
     var rangeStyle = {
+      border: '1px solid grey',
+      isRange: true,
       backgroundColor: 'grey',
+      fontWeight: 500,
       color: 'black',
       testId: 'range'
     };
     var normalDateStyle = {
+      border: '1px solid white',
       backgroundColor: 'white',
+      fontWeight: 500,
       color: 'black',
       testId: 'normal'
     };
     var hoveredDateStyle = {
-      backgroundColor: 'cornflowerBlue',
-      color: 'white',
+      border: '1px solid black',
+      backgroundColor: 'white',
+      fontWeight: 500,
+      color: 'black',
       testId: 'hoveredDate'
     };
     var blockedStyle = {
       textDecoration: 'line-through',
+      border: '1px solid white',
+      backgroundColor: 'white',
+      fontWeight: 500,
       color: 'lightGrey',
       testId: 'blocked'
     };
     var checkOutOnlyStyle = {
+      border: '1px solid white',
+      backgroundColor: 'white',
+      fontWeight: 500,
       color: 'grey',
-      testId: 'checkOutOnly'
+      testId: 'checkOutOnly',
     };
     var checkOutOnlyHoverStyle = {
-      backgroundColor: 'lightGrey',
+      border: '1px solid grey',
+      backgroundColor: 'white',
+      fontWeight: 500,
       color: 'grey',
       testId: 'checkOutOnlyHover'
     };
@@ -73,7 +105,7 @@ class Week extends React.Component {
             cDate.setHours(0, 0, 0);
             maxDate.setHours(0, 0, 0);
             if (cDate.toString() === itemDate.toString()) {
-              if (cDate > maxDate) {
+              if (cDate.getDate() > maxDate.getDate() || cDate.getMonth() > maxDate.getMonth()) {
                 dateIsAvailable = false;
               } else if (this.props.dates[i].isAvailable === true) {
                 dateIsAvailable = true;
@@ -92,10 +124,15 @@ class Week extends React.Component {
             if (itemDate < checkInDate) {
               chosenStyle = blockedStyle;
             } else if (dateIsCheckoutOnly === true) {
-              chosenStyle = checkOutOnlyStyle;
-              choosable = true;
-              if (itemDate.toString() === this.props.hoveredDate.toString() && item !== 'blank') {
-                chosenStyle = checkOutOnlyHoverStyle;
+              if (itemDate.toString() === this.props.checkOutDate.toString()) {
+                chosenStyle = checkInOutStyle;
+              } else {
+                chosenStyle = checkOutOnlyStyle;
+                choosable = true;
+                if (itemDate.toString() === this.props.hoveredDate.toString() && item !== 'blank') {
+                  chosenStyle = checkOutOnlyHoverStyle;
+                }
+
               }
             }
           } else if (itemDate.toString() === this.props.checkInDate.toString() && item !== 'blank') {
@@ -117,7 +154,7 @@ class Week extends React.Component {
           }
 
           return <td className = 'day' key={index}
-            style = { chosenStyle }
+
             data-testId = {chosenStyle.testId}
             onClick={ () => {
               if (choosable) {
@@ -130,7 +167,9 @@ class Week extends React.Component {
             onMouseLeave={ () => {
               changedHoveredDate('none');
             }}>
-            { item === 'blank' ? '  ' : item.getDate() }
+              <DateCircle chosenStyle={chosenStyle}>
+                { item === 'blank' ? '  ' : item.getDate() }
+              </DateCircle>
           </td>;
 
 

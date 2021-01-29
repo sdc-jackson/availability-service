@@ -1,17 +1,130 @@
 
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Calendar from './Calendar.jsx';
 import ReservationSummary from './ReservationSummary.jsx';
 import $ from 'jquery';
-import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
 import "@fontsource/roboto/700.css"
+import styled from 'styled-components';
+import GuestAdder from './GuestAdder.jsx';
+import {StarOutlined, StarTwoTone, StarFilled} from '@ant-design/icons';
+
+const StickyReservationDiv = styled.div`
+
+  border-radius: 10px;
+  position: sticky;
+  top: 100px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  width: 300px;
+  height: ${props => props.height};
+  float:right;
+  white-space: nowrap;
+  box-shadow:         2px 2px 2px 3px #D8D8D8;
+`;
+
+const DatesGuestsTablePicker = styled.table`
+    width: 250px;
+    border-spacing: 0;
+    position: fixed;
+    top: 160px;
+    right: 35px;
+`;
+
+const DatesGuestsTablePickerRow = styled.tr`
+    border: 1px solid lightgrey;
+    border-spacing: 0;
+    line-height: 25px;
+
+`;
+const DatesGuestsTablePickerDiv = styled.div`
+  border: 1px solid lightgrey;
+  border-radius: ${props => props.checkin === true ? '10px 0 0 0' : '0 10px 0 0'};
+`;
+const DatesGuestsTablePickerGuestRow = styled.tr`
+    line-height: 25px;
+`;
+const DatesGuestsTablePickerGuestTd = styled.td`
+    border: 1px solid lightgrey;
+    colspan: "2";
+    border-radius: 0 0 10px 10px;
+
+`;
+
+const ReserveButton = styled.button`
+  position: fixed;
+  float: right;
+  right: 35px;
+  top: 450px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: linear-gradient(120DEG, #fd5c63, #c30b03);
+  color: white;
+  font-weight: 700;
+  font-size: medium;
+  width: 250px;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+`;
 
 
-//const history = createBrowserHistory();
+const CheckAvailabilityButton = styled.div`
+  position: fixed;
+  float: right;
+  top: 300px;
+  right: 35px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: linear-gradient(120DEG, #fd5c63, #c30b03);
+  color: white;
+  font-size: medium;
+  width: 250px;
+  height: 45px;
+  text-align: center;
+  z-index:98;
+  line-height: 45px;
+
+`;
+
+const RateReviewsDiv = styled.div`
+  width: 250px;
+  right: 35px;
+  top: 130px;
+  display:flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: fixed;
+
+`;
+
+const RateDiv = styled.div`
+  order: 1;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const RateNumberDiv = styled.div`
+  font-weight: 500;
+  font-size: 20px;
+  order: 1;
+`;
+
+const PerNightDiv = styled.div`
+  font-weight: 500;
+  font-size: 15px;
+  order: 2;
+`;
+
+const ReviewsDiv = styled.div`
+  float:right;
+  order: 2;
+  font-size: 12px;
+`;
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -77,6 +190,7 @@ class App extends React.Component {
       newState.checkOut = 'notSelected';
       newState.maxSelectableDate = 'notSelected';
       newState.showReserveButton = false;
+      newState.showCheckAvailabilityButton = true;
     } else {
       newState.showReserveButton = false;
       newState.checkIn = checkInDate.toString();
@@ -90,7 +204,8 @@ class App extends React.Component {
         }
       } else {
         //we have both check-in and check-out
-        newState.checkOut = checkOutDate.toString();
+        newState.checkOut = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
+        newState.maxSelectableDate = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
         newState.currentlySelecting = 'checkIn';
         newState.showCheckAvailabilityButton = false;
         newState.showReserveButton = true;
@@ -105,6 +220,7 @@ class App extends React.Component {
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
+
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
@@ -215,7 +331,7 @@ class App extends React.Component {
       selectedCheckoutOnlyDate: 'none',
       hoveredDate: 'none',
       checkoutOnlyShowing: false,
-      howCheckAvailabilityButton: true,
+      showCheckAvailabilityButton: true,
       showReserveButton: false,
       maxSelectableDate: 'notSelected'
     });
@@ -227,7 +343,7 @@ class App extends React.Component {
     this.setState({
       activeSelecting: false,
       currentlySelecting: 'checkIn',
-      showing: false
+      showing: false,
     });
     window.location.hash = '';
   }
@@ -302,55 +418,99 @@ class App extends React.Component {
       guests: stateUpdateObj}), {foo: 'check_out'});
   }
 
+
+
   render() {
     var checkInStyle = {
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      fontSize: 'x-small'
     };
     var checkOutStyle = {
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      fontSize: 'x-small'
     };
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkIn') {
       var checkInStyle = {
-        fontWeight: 700
+        fontWeight: 700,
+        fontSize: 'x-small'
       };
     }
     if (this.state.activeSelecting === true && this.state.currentlySelecting === 'checkOut') {
       var checkOutStyle = {
-        fontWeight: 700
+        fontWeight: 700,
+        fontSize: 'x-small'
       };
     }
     return (
-      <div className='sticky'>
+      <StickyReservationDiv height={this.state.showReserveButton ? '415px' : '300px'}>
+
+        <RateReviewsDiv>
+          <RateDiv>
+            <RateNumberDiv>
+              { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)}`}
+            </RateNumberDiv>
+            <PerNightDiv>
+              {'  / night'}
+            </PerNightDiv>
+          </RateDiv>
+          <ReviewsDiv>
+            <StarFilled twoToneColor="#fd5c63" style={{color:'#c30b03'}} /> 4.78 <span style={{color: 'lightgrey'}}>(103)</span>
+          </ReviewsDiv>
+        </RateReviewsDiv>
+
         <div id = 'minNightlyRate' style={{display: this.state.minNightlyRate === 'none' ? 'none' : 'block' }}>
-          { ` $${(this.state.checkOut === 'notSelected') ? this.state.minNightlyRate : Math.floor(this.state.priceOfStay / this.state.numNights)} per night`}
         </div>
         <br/>
-        <div id = 'check-in'>
-          <div id = "check-in1" style = {checkInStyle}>
-            Check-in:
-          </div>
-        </div>
-        <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
-          {this.state.checkIn === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckIn().getDay()]} ${this.monthsMap[this.getCheckIn().getMonth()]} ${this.getCheckIn().getDate()} ${this.getCheckIn().getFullYear()}` }
+        <DatesGuestsTablePicker>
+          <tbody>
+            <DatesGuestsTablePickerRow>
+              <td>
+              <DatesGuestsTablePickerDiv checkin = {true}>
+
+                <div id = 'check-in'>
+                  <div id = "check-in1" style = {checkInStyle}>
+                    CHECK-IN
+                  </div>
+                </div>
+                <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+                  <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
+                  </span>
+                </div>
+              </DatesGuestsTablePickerDiv>
+              </td>
+              <td>
+              <DatesGuestsTablePickerDiv checkin = {false}>
+                <div id = 'check-out'>
+                  <div id = "check-out1" style = {checkOutStyle}>
+                    CHECKOUT
+                  </div>
+                  <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+                    <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
+                    </span>
+                  </div>
+                </div>
+              </DatesGuestsTablePickerDiv>
+              </td>
+            </DatesGuestsTablePickerRow>
+            <DatesGuestsTablePickerGuestRow>
+              <DatesGuestsTablePickerGuestTd colSpan={2}>
+                <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+                  <Guests
+                    guestPickerShowing = {this.state.guestPickerShowing}
+                    guests={this.state.guests}
+                    showGuestPicker={this.showGuestPicker.bind(this)}
+                    closeGuestPicker={this.closeGuestPicker.bind(this)}
+                    updateGuests={this.updateGuests.bind(this)}/>
+                </div>
+              </DatesGuestsTablePickerGuestTd>
+            </DatesGuestsTablePickerGuestRow>
+          </tbody>
+          </DatesGuestsTablePicker>
+        <div className='pop-out-guests-sticky' style={{display: this.state.guestPickerShowing ? 'block' : 'none' }}>
+          <GuestAdder guests = {this.state.guests} updateGuests={this.updateGuests.bind(this)}/>
         </div>
 
-        <div id = 'check-out'>
-          <div id = "check-out1" style = {checkOutStyle}>
-            Check-out:
-          </div>
-          <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
-            {this.state.checkOut === 'notSelected' ? 'Add date' : `${this.daysMap[this.getCheckOut().getDay()]} ${this.monthsMap[this.getCheckOut().getMonth()]} ${this.getCheckOut().getDate()} ${this.getCheckOut().getFullYear()}`}
-          </div>
-        </div>
 
-        <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
-          <Guests
-            guestPickerShowing = {this.state.guestPickerShowing}
-            guests={this.state.guests}
-            showGuestPicker={this.showGuestPicker.bind(this)}
-            closeGuestPicker={this.closeGuestPicker.bind(this)}
-            updateGuests={this.updateGuests.bind(this)}/>
-        </div>
 
         <div id = 'calendar' >
           <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'block' : 'none' }}>
@@ -371,11 +531,11 @@ class App extends React.Component {
         </div>
         <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         <br/>
-        <button
+        <CheckAvailabilityButton
           onClick={this.onClickCheckinShowCalendar.bind(this)}
           style={{display: (this.state.showCheckAvailabilityButton) ? 'block' : 'none'}}>
-          Check Availability
-        </button>
+          Check availability
+        </CheckAvailabilityButton>
 
         <div style={{display: (this.state.showReserveButton) ? 'block' : 'none'}}>
           <br/>
@@ -385,9 +545,9 @@ class App extends React.Component {
             serviceFee = {this.state.serviceFee}
             numNights = {this.state.numNights}
             priceOfStay = {this.state.priceOfStay}/>
-          <button >Reserve</button>
+          <ReserveButton >Reserve</ReserveButton>
         </div>
-      </div>
+      </StickyReservationDiv>
 
 
     );

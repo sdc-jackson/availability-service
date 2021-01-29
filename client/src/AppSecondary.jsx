@@ -8,8 +8,18 @@ import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import StateIndicator from './StateIndicator.jsx';
-
+import styled from 'styled-components';
 //const history = createBrowserHistory();
+
+const CalendarContainer = styled.div`
+  width: 720px;
+  height: 330px;
+`;
+
+const AppContainer = styled.div`
+  width: 720px;
+  height: 600px;
+`;
 
 class AppSecondary extends React.Component {
   constructor(props) {
@@ -68,7 +78,8 @@ class AppSecondary extends React.Component {
         }
       } else {
         //we have both check-in and check-out
-        newState.checkOut = checkOutDate.toString();
+        newState.checkOut = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
+        newState.maxSelectableDate = availabilityHelpers.getDateObjFromStr(checkOutDate.toString());
         newState.currentlySelecting = 'checkIn';
         newState.showReserveButton = true;
         newState.showCheckAvailabilityButton = false;
@@ -263,21 +274,21 @@ class AppSecondary extends React.Component {
       };
     }
     return (
-      <div>
+      <AppContainer>
         <div id = 'stateIndicator'>
           <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
         </div>
 
-        <div id = 'calendar'>
+        <CalendarContainer>
           <div id = 'calendar-table' data-testId = 'calendar' >
             <Calendar id={2} maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
           </div>
 
-        </div>
-        <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
-        <br/>
+          <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
+        </CalendarContainer>
 
-      </div>
+
+      </AppContainer>
 
 
     );

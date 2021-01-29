@@ -1,6 +1,46 @@
 import React, {Component} from 'react';
 import Week from './Week.jsx';
 import Month from './Month.jsx';
+import styled from 'styled-components';
+
+
+
+const ClearCloseButtonsFlex = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 35px;
+  width: 680px;
+
+`;
+
+const ClearDatesButton = styled.div`
+  text-decoration: underline;
+  background-color: white;
+  color: #484848;
+  border-radius: 10px;
+  font-weight: 700;
+  width: 115px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+
+
+`;
+
+const CloseCalendarButton = styled.div`
+  border: 2px solid #484848;
+  background-color: #484848;
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+  display: ${props => props.id === 1 ? 'block' : 'none'};
+  height: 35px;
+  width: 70px;
+  text-align: center;
+  line-height: 35px;
+
+`;
+
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -108,9 +148,12 @@ class Calendar extends React.Component {
     return (
       <div>
         <div className='flex-calendar-container'>
-          <button className='flex-scroll-button-child' id = 'prevMonthButton' onClick = {this.goPrevMonth.bind(this)} > {'<'} </button>
           <div className='flex-calendar-child'>
+
             <Month
+              first = {true}  //first month of the 2-month calendar
+              goPrevMonth = {this.goPrevMonth.bind(this)}
+              goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month1dates}
@@ -120,11 +163,15 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month1Date.getMonth()]}
+              year = {this.state.month1Date.getFullYear()}
               weeks = {this.getWeekArrays(this.state.month1Date.getMonth(), this.state.month1Date.getFullYear())}
             />
           </div>
           <div className='flex-calendar-child'>
             <Month
+              first = {false}
+              goPrevMonth = {this.goPrevMonth.bind(this)}
+              goNextMonth = {this.goNextMonth.bind(this)}
               maxSelectableDate = {this.props.maxSelectableDate}
               selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
               dates = {month2dates}
@@ -134,15 +181,15 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.state.month2Date.getMonth()]}
+              year = {this.state.month1Date.getFullYear()}
               weeks = {this.getWeekArrays(this.state.month2Date.getMonth(), this.state.month2Date.getFullYear())}
             />
           </div>
-          <button className='flex-scroll-button-child' id = 'nextMonthButton' onClick = {this.goNextMonth.bind(this)} > {'>'} </button>
         </div>
-        <br/>
-        <br/>
-        <button onClick = {this.props.clearDates}>Clear Dates</button>
-        <button style={{display: this.props.id === 1 ? 'block' : 'none' }} onClick = {this.props.closeCalendar}>Close</button>
+        <ClearCloseButtonsFlex id={this.props.id}>
+          <ClearDatesButton onClick = {this.props.clearDates}>Clear dates</ClearDatesButton>
+          <CloseCalendarButton id={this.props.id} onClick = {this.props.closeCalendar}>Close</CloseCalendarButton>
+        </ClearCloseButtonsFlex>
       </div>
 
 
