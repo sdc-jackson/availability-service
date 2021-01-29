@@ -41,17 +41,7 @@
   align-self: flex-end;
 }
 
-div.sticky {
-  border-radius: 10px;
-  position: sticky;
-  top: 100px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  width: 300px;
-  height: 330px;
-  float:right;
-  white-space: nowrap;
-}
+
 div.pop-out-calendar-sticky {
   position: absolute;
   top: 110px;
@@ -60,6 +50,7 @@ div.pop-out-calendar-sticky {
   border: 2px solid lightgrey;
   border-radius: 20px;
   width: 800px;
+  height: 430px;
   float:right;
   z-index:99;
 }

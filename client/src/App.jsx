@@ -64,9 +64,9 @@ const ReserveButton = styled.button`
   font-weight: 700;
   font-size: medium;
   width: 250px;
-  height: 35px;
+  height: 45px;
   text-align: center;
-  line-height: 35px;
+  line-height: 45px;
 `;
 
 
@@ -81,10 +81,10 @@ const CheckAvailabilityButton = styled.div`
   color: white;
   font-size: medium;
   width: 250px;
-  height: 35px;
+  height: 45px;
   text-align: center;
   z-index:98;
-  line-height: 35px;
+  line-height: 45px;
 
 `;
 
@@ -440,7 +440,7 @@ class App extends React.Component {
       };
     }
     return (
-      <StickyReservationDiv height={this.state.showReserveButton ? '450px' : '330px'}>
+      <StickyReservationDiv height={this.state.showReserveButton ? '415px' : '300px'}>
 
         <RateReviewsDiv>
           <RateDiv>
