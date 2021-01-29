@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const MonthScrollFlexDiv = styled.div`
   display: flex;
   height: 30px;
+  width: 260px;
 `;
 
 const MonthScrollButtonDiv = styled.div`
@@ -16,26 +17,41 @@ const MonthScrollButtonDiv = styled.div`
   align-items: center;
   border-radius: 50%;
   border: 1px solid white;
+  fill: ${props => {
+    if(props.first && props.id=== 'nextMonthButton') {
+      return 'white';
+    } else if (!props.first && props.id === 'prevMonthButton') {
+      return 'white';
+    } else {
+      return 'black'
+    }
+  }};
   height: 30px;
   width: 30px;
   &:hover {
-    background-color: lightgrey;
+    background-color: ${props => {
+      if(props.first && props.id=== 'nextMonthButton') {
+        return 'white';
+      } else if (!props.first && props.id === 'prevMonthButton') {
+        return 'white';
+      } else {
+        return 'lightgrey'
+      }
+    }};
   }
 `;
 
 const PrevMonthFlexChildDiv = styled.div`
   align-self: flex-start;
-  display: ${props => {return props.first ? 'block' : 'none'}}
 `;
 const NextMonthFlexChildDiv = styled.div`
   align-self: flex-end;
-  display: ${props => {return props.first ? 'none' : 'block'}}
 `;
 const MonthYearFlexChildDiv = styled.div`
   flex: 4;
   align-self: center;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 
@@ -74,7 +90,7 @@ class Month extends React.Component {
       <div id = 'month1' >
         <MonthScrollFlexDiv>
           <PrevMonthFlexChildDiv first={this.props.first}>
-            <MonthScrollButtonDiv id = 'prevMonthButton' onClick = {this.props.goPrevMonth} >
+            <MonthScrollButtonDiv first={this.props.first} id ={'prevMonthButton'} onClick = {this.props.goPrevMonth} >
               <svg style={{height: '20px', width: '20px'}}>
                 <path d="m13.7 16.29a1 1 0 1 1 -1.42 1.41l-8-8a1 1 0 0 1 0-1.41l8-8a1 1 0 1 1 1.42 1.41l-7.29 7.29z" fill-rule="evenodd"></path>
               </svg>
@@ -82,7 +98,7 @@ class Month extends React.Component {
           </PrevMonthFlexChildDiv>
           <MonthYearFlexChildDiv>{this.props.month} {this.props.year}</MonthYearFlexChildDiv>
           <NextMonthFlexChildDiv first={this.props.first}>
-            <MonthScrollButtonDiv id = 'nextMonthButton' onClick = {this.props.goNextMonth} >
+            <MonthScrollButtonDiv first={this.props.first} id={'nextMonthButton'} onClick = {this.props.goNextMonth} >
               <svg style={{height: '20px', width: '20px'}}>
                 <path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z" fill-rule="evenodd"></path>
               </svg>

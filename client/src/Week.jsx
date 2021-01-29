@@ -39,7 +39,7 @@ class Week extends React.Component {
     var normalDateStyle = {
       border: '1px solid white',
       backgroundColor: 'white',
-      fontWeight: 700,
+      fontWeight: 500,
       color: 'black',
       testId: 'normal'
     };
@@ -61,14 +61,14 @@ class Week extends React.Component {
     var checkOutOnlyStyle = {
       border: '1px solid white',
       backgroundColor: 'white',
-      fontWeight: 700,
+      fontWeight: 500,
       color: 'grey',
       testId: 'checkOutOnly',
     };
     var checkOutOnlyHoverStyle = {
       border: '1px solid grey',
       backgroundColor: 'white',
-      fontWeight: 700,
+      fontWeight: 500,
       color: 'grey',
       testId: 'checkOutOnlyHover'
     };
