@@ -24,6 +24,11 @@ const AppContainer = styled.div`
 class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
+
+    var today = new Date();
+    var oneMonthFromToday = new Date(today);
+    oneMonthFromToday.setDate(today.getDate() + 30);
+
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -40,7 +45,9 @@ class AppSecondary extends React.Component {
       priceOfStay: 0,
       numNights: 0,
       minNightlyRate: 'none',
-      nameOfStay: 'Big Bear Lake' //fix me later!
+      nameOfStay: 'Big Bear Lake', //fix me later!
+      month1Date: today,
+      month2Date: oneMonthFromToday
     };
 
     this.monthsMap = availabilityHelpers.monthsMap;
@@ -68,6 +75,7 @@ class AppSecondary extends React.Component {
       newState.maxSelectableDate = 'notSelected';
     } else {
       newState.checkIn = checkInDate.toString();
+      this.updateDisplayedMonths(0, checkInDate.toString());
       if (checkOutDate === null) {
         //we have a check-in but not a check-out
         newState.checkOut = 'notSelected';
@@ -256,6 +264,39 @@ class AppSecondary extends React.Component {
     return new Date(this.state.checkOut);
   }
 
+  goNextMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month2Date),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 31))
+    });
+  }
+
+  goPrevMonth() {
+    this.setState({
+      month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 31)),
+      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 31)),
+    });
+  }
+
+  updateDisplayedMonths(dir, checkIn) {
+    if (dir === -1) {
+      this.goPrevMonth();
+    } else if (dir === 1) {
+      this.goNextMonth();
+    } else if (dir === 0) {
+      var newMonth1 = new Date(checkIn);
+      if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
+        newMonth1.setDate(1);
+        var newMonth2 = new Date(newMonth1);
+        newMonth2.setDate(newMonth2.getDate() + 31);
+        this.setState({
+          month1Date: newMonth1,
+          month2Date: newMonth2
+        })
+      }
+    }
+  }
+
   render() {
     var checkInStyle = {
       fontWeight: 'normal'
@@ -281,7 +322,20 @@ class AppSecondary extends React.Component {
 
         <CalendarContainer>
           <div id = 'calendar-table' data-testId = 'calendar' >
-            <Calendar id={2} maxSelectableDate = {this.state.maxSelectableDate} hoveredDate = {this.state.hoveredDate} changeHoveredDate = {this.changeHoveredDate.bind(this)} selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate} dates = {this.state.dates} checkInDate = {this.state.checkIn} checkOutDate = {this.state.checkOut} clearDates = {this.clearDates.bind(this)} closeCalendar = {this.closeCalendar.bind(this)} dateClicked = {this.dateClicked.bind(this)}/>
+            <Calendar
+              id={2}
+              maxSelectableDate = {this.state.maxSelectableDate}
+              hoveredDate = {this.state.hoveredDate}
+              changeHoveredDate = {this.changeHoveredDate.bind(this)}
+              selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate}
+              dates = {this.state.dates} checkInDate = {this.state.checkIn}
+              checkOutDate = {this.state.checkOut}
+              clearDates = {this.clearDates.bind(this)}
+              closeCalendar = {this.closeCalendar.bind(this)}
+              dateClicked = {this.dateClicked.bind(this)}
+              month1Date = {this.state.month1Date}
+              month2Date = {this.state.month2Date}
+              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}/>
           </div>
 
           <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>

@@ -5,7 +5,7 @@ const DateCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: ${props => props.chosenStyle.isRange ? '0%' : '50%'};
+  border-radius: ${props => props.chosenStyle.isRange ? '5%' : '50%'};
   border: ${props => props.chosenStyle.border};
   background-color: ${props => props.chosenStyle.backgroundColor};
   font-weight: ${props => props.chosenStyle.fontWeight};
@@ -29,9 +29,9 @@ class Week extends React.Component {
       testId: 'checkInOut'
     };
     var rangeStyle = {
-      border: '1px solid grey',
+      border: '1px solid #E8E8E8',
       isRange: true,
-      backgroundColor: 'grey',
+      backgroundColor: '#E8E8E8',
       fontWeight: 500,
       color: 'black',
       testId: 'range'
@@ -105,7 +105,7 @@ class Week extends React.Component {
             cDate.setHours(0, 0, 0);
             maxDate.setHours(0, 0, 0);
             if (cDate.toString() === itemDate.toString()) {
-              if (cDate.getDate() > maxDate.getDate() || cDate.getMonth() > maxDate.getMonth()) {
+              if ((cDate.getDate() > maxDate.getDate() && cDate.getMonth() === maxDate.getMonth()) || cDate.getMonth() > maxDate.getMonth()) {
                 dateIsAvailable = false;
               } else if (this.props.dates[i].isAvailable === true) {
                 dateIsAvailable = true;
@@ -116,9 +116,7 @@ class Week extends React.Component {
               }
             }
           }
-          //console.log(itemDate, checkInDate);
           if ((this.props.checkInDate !== 'notSelected' && itemDate < checkInDate) || dateIsAvailable === false) {
-            //console.log('blocked date: ', itemDate);
             chosenStyle = blockedStyle;
             choosable = false;
             if (itemDate < checkInDate) {
