@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppsRoot from './AppsRoot.jsx';
+import '../dist/styles.css';
 // import {createBrowserHistory} from 'history';
 
 // const history = createBrowserHistory();
