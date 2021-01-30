@@ -82,15 +82,11 @@ class Calendar extends React.Component {
 
 
 
-  getWeekArrays (month, year) {
+  getWeekArrays (monthStartDateInput) {
 
-
-
-    var monthStartDate = new Date();
-    monthStartDate.setMonth(month);
+    var monthStartDate = new Date(monthStartDateInput);
     monthStartDate.setDate(1);
-    monthStartDate.setYear(year);
-
+    var month = monthStartDate.getMonth();
 
     var weeks = [];
     var week1 = [];
@@ -151,7 +147,7 @@ class Calendar extends React.Component {
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.props.month1Date.getMonth()]}
               year = {this.props.month1Date.getFullYear()}
-              weeks = {this.getWeekArrays(this.props.month1Date.getMonth(), this.props.month1Date.getFullYear())}
+              weeks = {this.getWeekArrays(this.props.month1Date)}
             />
           </div>
           <div className='flex-calendar-child'>
@@ -167,8 +163,8 @@ class Calendar extends React.Component {
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
               month = {this.monthsMap[this.props.month2Date.getMonth()]}
-              year = {this.props.month1Date.getFullYear()}
-              weeks = {this.getWeekArrays(this.props.month2Date.getMonth(), this.props.month2Date.getFullYear())}
+              year = {this.props.month2Date.getFullYear()}
+              weeks = {this.getWeekArrays(this.props.month2Date)}
             />
           </div>
         </div>

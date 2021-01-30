@@ -26,8 +26,9 @@ class AppSecondary extends React.Component {
     super(props);
 
     var today = new Date();
-    var oneMonthFromToday = new Date(today);
-    oneMonthFromToday.setDate(today.getDate() + 30);
+    today.setDate(1);
+
+    var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
 
     this.state = {
       dates: [],
@@ -267,14 +268,14 @@ class AppSecondary extends React.Component {
   goNextMonth() {
     this.setState({
       month1Date: new Date(this.state.month2Date),
-      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() + 31))
+      month2Date: availabilityHelpers.getStartOfNextOrPrevMonth(this.state.month2Date.toString(), 1)
     });
   }
 
   goPrevMonth() {
     this.setState({
-      month1Date: new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 31)),
-      month2Date: new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 31)),
+      month1Date: availabilityHelpers.getStartOfNextOrPrevMonth(this.state.month1Date.toString(), -1),  //new Date(this.state.month1Date.setDate(this.state.month1Date.getDate() - 31)),
+      month2Date: availabilityHelpers.getStartOfNextOrPrevMonth(this.state.month2Date.toString(), -1) // new Date(this.state.month2Date.setDate(this.state.month2Date.getDate() - 31)),
     });
   }
 
@@ -284,14 +285,14 @@ class AppSecondary extends React.Component {
     } else if (dir === 1) {
       this.goNextMonth();
     } else if (dir === 0) {
-      var newMonth1 = new Date(checkIn);
-      if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
-        newMonth1.setDate(1);
-        var newMonth2 = new Date(newMonth1);
-        newMonth2.setDate(newMonth2.getDate() + 31);
+      var newMonth1Date = new Date(checkIn);
+      if(this.state.month2Date.getMonth() !== newMonth1Date.getMonth()) {
+        newMonth1Date.setDate(1);
+        var newMonth2Date = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1Date.toString(), 1);
+
         this.setState({
-          month1Date: newMonth1,
-          month2Date: newMonth2
+          month1Date: newMonth1Date,
+          month2Date: newMonth2Date
         })
       }
     }
