@@ -48,11 +48,21 @@ var daysMap = [
   'Sat'
 ];
 
+var getStartOfNextOrPrevMonth = (inputDate, dir) => {
+  //dir = 1 means increment month; dir = -1 means decrement month
+  var date = getDateObjFromStr(inputDate.toString());
+  date.setDate(15);
+  date.setHours(0, 0, 0);
+  date.setMonth(date.getMonth() + dir);
+  date.setDate(1);
+  return date;
+}
+
 
 module.exports = {
   getMaxSelectableDate,
   getDateObjFromStr,
+  getStartOfNextOrPrevMonth,
   monthsMap,
   daysMap
-
 }

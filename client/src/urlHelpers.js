@@ -14,12 +14,13 @@ var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
   if (searchParams[lookFor] === undefined) {
     return null;
   } else {
+
     var cidStr = searchParams[lookFor];
     var cidArr = cidStr.split('-');
     var cid = new Date();
     cid.setFullYear(cidArr[0]);
-    cid.setMonth(cidArr[1] - 1);
-    cid.setDate(cidArr[2]);
+    cid.setDate(cidArr[2]); //HAVE TO SET DATE FIRST! In case the month doesn't have today's date. Cough cough February :(
+    cid.setMonth(parseInt(cidArr[1]) - 1);
     cid.setHours(0, 0, 0);
     return cid;
   }
@@ -27,7 +28,6 @@ var getCheckInOrOutDateFromUrl = (searchPath, lookFor) => {
 
 var getNumGuestsFromUrl = (searchPath) => {
   var searchParams = urlParser(searchPath);
-  var returnObj = {};
   return {
     numAdults: searchParams.adults === undefined ? parseInt(1) : parseInt(searchParams.adults),
     numChildren: searchParams.children === undefined ? parseInt(0) : parseInt(searchParams.children),

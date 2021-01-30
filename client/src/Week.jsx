@@ -84,6 +84,7 @@ class Week extends React.Component {
 
 
         this.props.thisWeek.map((item, index) => {
+          //console.log(item);
           var checkInDate = new Date(this.props.checkInDate);
           checkInDate.setHours(0, 0, 0);
           var checkOutDate = new Date(this.props.checkOutDate);
