@@ -115,9 +115,7 @@ class Month extends React.Component {
                 hoveredDate = {this.props.hoveredDate}
                 changedHoveredDate = {this.props.changedHoveredDate}
                 thisWeek = {arr} dateClicked = {this.props.dateClicked}
-                checkoutOnlyX = {this.props.checkoutOnlyX}
-                checkoutOnlyY = {this.props.checkoutOnlyY}
-                checkoutOnlyShowing = {this.props.checkoutOnlyShowing}
+
                 />);
             })}
           </tbody>

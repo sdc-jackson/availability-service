@@ -363,9 +363,7 @@ class AppSecondary extends React.Component {
               month1Date = {this.state.month1Date}
               month2Date = {this.state.month2Date}
               updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}
-              checkoutOnlyX = {this.state.checkoutOnlyX}
-              checkoutOnlyY = {this.state.checkoutOnlyY}
-              checkoutOnlyShowing = {this.state.checkoutOnlyShowing}
+
 
               />
           </div>
