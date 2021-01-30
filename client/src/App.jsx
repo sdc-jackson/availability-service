@@ -173,7 +173,9 @@ class App extends React.Component {
       },
       guestPickerShowing: false,
       month1Date: today,
-      month2Date: oneMonthFromToday
+      month2Date: oneMonthFromToday,
+      checkoutOnlyX: 0,
+      checkoutOnlyY: 0
 
 
 
@@ -583,12 +585,15 @@ class App extends React.Component {
               dateClicked = {this.dateClicked.bind(this)}
               month1Date = {this.state.month1Date}
               month2Date = {this.state.month2Date}
-              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}/>
+              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}
+              checkoutOnlyX = {this.state.checkoutOnlyX}
+              checkoutOnlyY = {this.state.checkoutOnlyY}
+              checkoutOnlyShowing = {this.state.checkoutOnlyShowing}/>
           </div>
 
 
         </div>
-        <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
+        {/* <div id = 'dateIsCheckoutOnly' style={{zIndex: '109', display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div> */}
         <br/>
         <CheckAvailabilityButton
           onClick={this.onClickCheckinShowCalendar.bind(this)}

@@ -148,6 +148,7 @@ class Calendar extends React.Component {
               month = {this.monthsMap[this.props.month1Date.getMonth()]}
               year = {this.props.month1Date.getFullYear()}
               weeks = {this.getWeekArrays(this.props.month1Date)}
+
             />
           </div>
           <div className='flex-calendar-child'>
@@ -165,6 +166,7 @@ class Calendar extends React.Component {
               month = {this.monthsMap[this.props.month2Date.getMonth()]}
               year = {this.props.month2Date.getFullYear()}
               weeks = {this.getWeekArrays(this.props.month2Date)}
+
             />
           </div>
         </div>

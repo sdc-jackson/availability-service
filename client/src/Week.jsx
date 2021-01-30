@@ -15,6 +15,8 @@ const DateCircle = styled.div`
   width: 30px;
 `;
 
+
+
 class Week extends React.Component {
   constructor(props) {
     super(props);
@@ -78,7 +80,9 @@ class Week extends React.Component {
 
 
 
-    return (<tr>
+    return (
+
+    <tr>
 
       {
 
@@ -155,9 +159,9 @@ class Week extends React.Component {
           return <td className = 'day' key={index}
 
             data-testId = {chosenStyle.testId}
-            onClick={ () => {
+            onClick={ (e) => {
               if (choosable) {
-                dateClicked(item, dateIsCheckoutOnly);
+                dateClicked(item, dateIsCheckoutOnly, e);
               }
             }}
             onMouseEnter={ () => {
@@ -166,6 +170,7 @@ class Week extends React.Component {
             onMouseLeave={ () => {
               changedHoveredDate('none');
             }}>
+
               <DateCircle chosenStyle={chosenStyle}>
                 { item === 'blank' ? '  ' : item.getDate() }
               </DateCircle>
