@@ -93,6 +93,7 @@ class Month extends React.Component {
             </MonthScrollButtonDiv>
           </NextMonthFlexChildDiv>
         </MonthScrollFlexDiv>
+
         <CalendarTable>
           <tbody>
             <DOWRow>
@@ -105,7 +106,19 @@ class Month extends React.Component {
               <td>Sa</td>
             </DOWRow>
             {this.props.weeks.map((arr, index) => {
-              return (<Week key={index} maxSelectableDate = {this.props.maxSelectableDate} selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate} dates = {this.props.dates} checkInDate = {this.props.checkInDate} checkOutDate = {this.props.checkOutDate} hoveredDate = {this.props.hoveredDate} changedHoveredDate = {this.props.changedHoveredDate} thisWeek = {arr} dateClicked = {this.props.dateClicked}/>);
+              return (<Week key={index}
+                maxSelectableDate = {this.props.maxSelectableDate}
+                selectedCheckoutOnlyDate = {this.props.selectedCheckoutOnlyDate}
+                dates = {this.props.dates}
+                checkInDate = {this.props.checkInDate}
+                checkOutDate = {this.props.checkOutDate}
+                hoveredDate = {this.props.hoveredDate}
+                changedHoveredDate = {this.props.changedHoveredDate}
+                thisWeek = {arr} dateClicked = {this.props.dateClicked}
+                checkoutOnlyX = {this.props.checkoutOnlyX}
+                checkoutOnlyY = {this.props.checkoutOnlyY}
+                checkoutOnlyShowing = {this.props.checkoutOnlyShowing}
+                />);
             })}
           </tbody>
         </CalendarTable>

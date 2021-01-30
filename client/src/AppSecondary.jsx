@@ -21,6 +21,19 @@ const AppContainer = styled.div`
   height: 600px;
 `;
 
+const CheckoutOnlyIndicator = styled.div`
+  position: absolute;
+  z-index: 109;
+  left: ${props => (props.checkoutOnlyX.toString() + 'px')};
+  top: ${props => (props.checkoutOnlyY.toString() + 'px')};
+  display: ${props => (props.checkoutOnlyShowing && (props.hoveredDate.toString().slice(0, 17) === props.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'};
+  color: black;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  background-color: white;
+  padding: 1%;
+`;
+
 class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
@@ -48,7 +61,9 @@ class AppSecondary extends React.Component {
       minNightlyRate: 'none',
       nameOfStay: 'Big Bear Lake', //fix me later!
       month1Date: today,
-      month2Date: oneMonthFromToday
+      month2Date: oneMonthFromToday,
+      checkoutOnlyX: 0,
+      checkoutOnlyY: 0
     };
 
     this.monthsMap = availabilityHelpers.monthsMap;
@@ -159,7 +174,7 @@ class AppSecondary extends React.Component {
     });
   }
 
-  dateClicked(e, dateIsCheckoutOnly) {
+  dateClicked(e, dateIsCheckoutOnly, event) {
     if (this.state.currentlySelecting === 'checkIn' && dateIsCheckoutOnly === false) {
       //go through dates and find the maxSelectableDate
       var checkInDate = availabilityHelpers.getDateObjFromStr(e);
@@ -188,10 +203,13 @@ class AppSecondary extends React.Component {
       window.location.hash = '';
       this.getTotalPrice(checkOutDate.toString());
     } else if (dateIsCheckoutOnly) {
+
       var checkOutOnlyDate = availabilityHelpers.getDateObjFromStr(e);
       this.setState({
         checkoutOnlyShowing: true,
-        selectedCheckoutOnlyDate: checkOutOnlyDate.toString()
+        selectedCheckoutOnlyDate: checkOutOnlyDate.toString(),
+        checkoutOnlyX: event.clientX + 5,
+        checkoutOnlyY: event.clientY + 5
       });
     }
 
@@ -320,7 +338,15 @@ class AppSecondary extends React.Component {
         <div id = 'stateIndicator'>
           <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
         </div>
-
+        <CheckoutOnlyIndicator
+          checkoutOnlyShowing = {this.state.checkoutOnlyShowing}
+          checkoutOnlyX = {this.state.checkoutOnlyX}
+          checkoutOnlyY = {this.state.checkoutOnlyY}
+          hoveredDate = {this.state.hoveredDate}
+          selectedCheckoutOnlyDate = {this.state.selectedCheckoutOnlyDate}>
+            This date is checkout only.
+        </CheckoutOnlyIndicator>
+        {/* <div id = 'dateIsCheckoutOnly' style={{position: 'absolute', zIndex: 109, left: this.state.checkoutOnlyX.toString() + 'px', top: this.state.checkoutOnlyY.toString() + 'px', display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div> */}
         <CalendarContainer>
           <div id = 'calendar-table' data-testId = 'calendar' >
             <Calendar
@@ -336,10 +362,14 @@ class AppSecondary extends React.Component {
               dateClicked = {this.dateClicked.bind(this)}
               month1Date = {this.state.month1Date}
               month2Date = {this.state.month2Date}
-              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}/>
+              updateDisplayedMonths = {this.updateDisplayedMonths.bind(this)}
+              checkoutOnlyX = {this.state.checkoutOnlyX}
+              checkoutOnlyY = {this.state.checkoutOnlyY}
+              checkoutOnlyShowing = {this.state.checkoutOnlyShowing}
+
+              />
           </div>
 
-          <div id = 'dateIsCheckoutOnly' style={{display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div>
         </CalendarContainer>
 
 

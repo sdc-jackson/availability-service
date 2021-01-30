@@ -15,6 +15,14 @@ const DateCircle = styled.div`
   width: 30px;
 `;
 
+const CheckoutOnlyDiv = styled.div`
+  position: 'absolute',
+  z-index: 105;
+  left: ${props => (props.checkoutOnlyX.toString() + 'px')},
+  top: ${props => (props.checkoutOnlyY.toString() + 'px')},
+  display: ${(props) => props.checkoutOnlyShowing && (props.hoveredDate.toString().slice(0, 17) === props.selectedCheckoutOnlyDate.toString().slice(0, 17)) ? 'none' : 'block'}
+`;
+
 class Week extends React.Component {
   constructor(props) {
     super(props);
@@ -78,7 +86,9 @@ class Week extends React.Component {
 
 
 
-    return (<tr>
+    return (
+
+    <tr>
 
       {
 
@@ -155,9 +165,9 @@ class Week extends React.Component {
           return <td className = 'day' key={index}
 
             data-testId = {chosenStyle.testId}
-            onClick={ () => {
+            onClick={ (e) => {
               if (choosable) {
-                dateClicked(item, dateIsCheckoutOnly);
+                dateClicked(item, dateIsCheckoutOnly, e);
               }
             }}
             onMouseEnter={ () => {
@@ -166,6 +176,14 @@ class Week extends React.Component {
             onMouseLeave={ () => {
               changedHoveredDate('none');
             }}>
+              {/* <CheckoutOnlyDiv
+                checkoutOnlyShowing={this.props.checkoutOnlyShowing}
+                selectedCheckoutOnlyDate={this.props.selectedCheckoutOnlyDate}
+                checkoutOnlyX={this.props.checkoutOnlyX}
+                checkoutOnlyY={this.props.checkoutOnlyY}
+                hoveredDate={this.props.hoveredDate}>
+                  {`This date is checkout only. ${this.props.checkoutOnlyShowing} ${this.props.selectedCheckoutOnlyDate} ${this.props.hoveredDate}`}
+              </CheckoutOnlyDiv> */}
               <DateCircle chosenStyle={chosenStyle}>
                 { item === 'blank' ? '  ' : item.getDate() }
               </DateCircle>
