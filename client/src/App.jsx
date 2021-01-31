@@ -28,8 +28,8 @@ const StickyReservationDiv = styled.div`
 const DatesGuestsTablePicker = styled.table`
     width: 250px;
     border-spacing: 0;
-    position: fixed;
-    top: 160px;
+    position: absolute;
+    top: 60px;
     right: 35px;
 `;
 
@@ -55,7 +55,7 @@ const DatesGuestsTablePickerDiv = styled.div`
 
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
-    line-height: 25px;
+    line-height: 50px;
 `;
 const DatesGuestsTablePickerGuestTd = styled.td`
     border: 1px solid lightgrey;
@@ -69,10 +69,10 @@ const TextDivSpaced = styled.div`
 `;
 
 const ReserveButton = styled.button`
-  position: fixed;
+  position: absolute;
   float: right;
   right: 35px;
-  top: 450px;
+  top: 350px;
   border-radius: 10px;
   border: 1px solid white;
   background: linear-gradient(120DEG, #fd5c63, #c30b03);
@@ -87,9 +87,9 @@ const ReserveButton = styled.button`
 
 
 const CheckAvailabilityButton = styled.div`
-  position: fixed;
+  position: absolute;
   float: right;
-  top: 300px;
+  top: 200px;
   right: 35px;
   border-radius: 10px;
   border: 1px solid white;
@@ -107,11 +107,11 @@ const CheckAvailabilityButton = styled.div`
 const RateReviewsDiv = styled.div`
   width: 250px;
   right: 35px;
-  top: 130px;
+  top: 30px;
   display:flex;
   align-items: flex-end;
   justify-content: space-between;
-  position: fixed;
+  position: absolute;
 
 `;
 
