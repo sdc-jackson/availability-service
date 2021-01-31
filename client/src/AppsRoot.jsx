@@ -24,9 +24,9 @@ class AppsRoot extends Component {
     return (<div>
       <App id={1} history={history}/>
       <AppSecondary id={2} history={history}/>
-      <RestOfPage>
+      {/* <RestOfPage>
         {SamplePage.words}
-      </RestOfPage>
+      </RestOfPage> */}
     </div>);
   }
 }
