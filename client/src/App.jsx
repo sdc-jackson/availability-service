@@ -245,7 +245,6 @@ class App extends React.Component {
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
-
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 

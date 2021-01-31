@@ -6,13 +6,13 @@ var db = require('../database/db.js');
 
 
 var app = express();
+app.use(cors());
 app.use('/rooms/:id', express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
-
   db.getMinNightlyRate(req.params.id, (err, rate) => {
     if (err) {
-      //console.log(err);
       res.sendStatus(404);
     } else {
       res.status(200);
