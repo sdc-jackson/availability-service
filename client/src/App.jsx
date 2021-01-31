@@ -55,12 +55,15 @@ const DatesGuestsTablePickerDiv = styled.div`
 
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
-    line-height: 50px;
+    line-height: 25px;
+    colSpan: 2;
 `;
 const DatesGuestsTablePickerGuestTd = styled.td`
     border: 1px solid lightgrey;
-    colspan: "2";
+    colSpan: 2;
     border-radius: 0 0 10px 10px;
+
+
 
 `;
 
@@ -551,7 +554,7 @@ class App extends React.Component {
             </DatesGuestsTablePickerRow>
             <DatesGuestsTablePickerGuestRow>
               <DatesGuestsTablePickerGuestTd colSpan={2}>
-                <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+                <div id='guests' style={{display: this.state.showing ? 'none' : 'flex', height: '50px'}}>
                   <Guests
                     guestPickerShowing = {this.state.guestPickerShowing}
                     guests={this.state.guests}

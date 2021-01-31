@@ -31,6 +31,8 @@
 
 
 .flex-guest-summary-container {
+
+  width: 225px;
   position: absolute;
   align-content: center;
   display: flex;
