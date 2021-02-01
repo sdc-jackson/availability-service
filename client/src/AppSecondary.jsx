@@ -115,7 +115,7 @@ class AppSecondary extends React.Component {
   }
 
   componentDidMount() {
-    var productId = window.location.pathname.split('/')[1];
+    var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
@@ -129,12 +129,12 @@ class AppSecondary extends React.Component {
     var urlStateInfo;
     $.ajax({
       method: 'GET',
-      url: `/${productId}/availableDates`,
+      url: `/rooms/${productId}/availableDates`,
       success: (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
         $.ajax({
           method: 'GET',
-          url: `/${productId}/minNightlyRate`,
+          url: `/rooms/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);

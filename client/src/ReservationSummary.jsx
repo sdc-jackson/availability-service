@@ -5,9 +5,9 @@ import styled from 'styled-components';
 const ReservationSummaryTable = styled.table`
     width: 250px;
     border-collapse: collapse;
-    position:fixed;
+    position:absolute;
     background-color: white;
-    top:300px;
+    top:200px;
     float:right;
     right: 35px;
 
@@ -18,11 +18,11 @@ const ReservationSummaryTd = styled.td`
 
 const TotalTable = styled.table`
     width: 250px;
-    position: fixed;
+    position: absolute;
     border-collapse: collapse;
     font-weight: 700;
     float:right;
-    top: 400px;
+    top: 300px;
     right: 35px;
 
 `;

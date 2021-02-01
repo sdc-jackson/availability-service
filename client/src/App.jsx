@@ -28,8 +28,8 @@ const StickyReservationDiv = styled.div`
 const DatesGuestsTablePicker = styled.table`
     width: 250px;
     border-spacing: 0;
-    position: fixed;
-    top: 160px;
+    position: absolute;
+    top: 60px;
     right: 35px;
 `;
 
@@ -56,11 +56,14 @@ const DatesGuestsTablePickerDiv = styled.div`
 `;
 const DatesGuestsTablePickerGuestRow = styled.tr`
     line-height: 25px;
+    colSpan: 2;
 `;
 const DatesGuestsTablePickerGuestTd = styled.td`
     border: 1px solid lightgrey;
-    colspan: "2";
+    colSpan: 2;
     border-radius: 0 0 10px 10px;
+
+
 
 `;
 
@@ -69,10 +72,10 @@ const TextDivSpaced = styled.div`
 `;
 
 const ReserveButton = styled.button`
-  position: fixed;
+  position: absolute;
   float: right;
   right: 35px;
-  top: 450px;
+  top: 350px;
   border-radius: 10px;
   border: 1px solid white;
   background: linear-gradient(120DEG, #fd5c63, #c30b03);
@@ -87,9 +90,9 @@ const ReserveButton = styled.button`
 
 
 const CheckAvailabilityButton = styled.div`
-  position: fixed;
+  position: absolute;
   float: right;
-  top: 300px;
+  top: 200px;
   right: 35px;
   border-radius: 10px;
   border: 1px solid white;
@@ -107,11 +110,11 @@ const CheckAvailabilityButton = styled.div`
 const RateReviewsDiv = styled.div`
   width: 250px;
   right: 35px;
-  top: 130px;
+  top: 30px;
   display:flex;
   align-items: flex-end;
   justify-content: space-between;
-  position: fixed;
+  position: absolute;
 
 `;
 
@@ -241,11 +244,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    var productId = window.location.pathname.split('/')[1];
+    var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
-
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
@@ -256,12 +258,12 @@ class App extends React.Component {
     var urlStateInfo;
     $.ajax({
       method: 'GET',
-      url: `/${productId}/availableDates`,
+      url: `/rooms/${productId}/availableDates`,
       success: (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
         $.ajax({
           method: 'GET',
-          url: `/${productId}/minNightlyRate`,
+          url: `/rooms/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
@@ -552,7 +554,7 @@ class App extends React.Component {
             </DatesGuestsTablePickerRow>
             <DatesGuestsTablePickerGuestRow>
               <DatesGuestsTablePickerGuestTd colSpan={2}>
-                <div id='guests' style={{display: this.state.showing ? 'none' : 'block'}}>
+                <div id='guests' style={{display: this.state.showing ? 'none' : 'flex', height: '50px'}}>
                   <Guests
                     guestPickerShowing = {this.state.guestPickerShowing}
                     guests={this.state.guests}
