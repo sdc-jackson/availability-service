@@ -17,6 +17,7 @@ const CalendarContainer = styled.div`
 `;
 
 const AppContainer = styled.div`
+
   width: 720px;
   height: 600px;
 `;
