@@ -39,10 +39,6 @@ class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
 
-    var today = new Date();
-    today.setDate(1);
-
-    var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
 
     this.state = {
       dates: [],
@@ -61,19 +57,29 @@ class AppSecondary extends React.Component {
       numNights: 0,
       minNightlyRate: 'none',
       nameOfStay: 'Big Bear Lake', //fix me later!
-      month1Date: today,
-      month2Date: oneMonthFromToday,
+      month1Date: '',
+      month2Date: '',
       checkoutOnlyX: 0,
       checkoutOnlyY: 0
     };
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
-    this.history = this.props.history;
+
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
     var newState = {};
+
+    if(this.state.month1Date === '') {
+
+      var today = new Date();
+      today.setDate(1);
+      var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
+
+      newState.month1Date = today;
+      newState.month2Date = oneMonthFromToday;
+    }
 
     newState.dates = dates;
 
@@ -116,12 +122,16 @@ class AppSecondary extends React.Component {
   }
 
   componentDidMount() {
+    this.history = this.props.history;
+
     var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
     }
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
+
+
 
     this.history.listen(() => {
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
@@ -349,7 +359,7 @@ class AppSecondary extends React.Component {
         </CheckoutOnlyIndicator>
         {/* <div id = 'dateIsCheckoutOnly' style={{position: 'absolute', zIndex: 109, left: this.state.checkoutOnlyX.toString() + 'px', top: this.state.checkoutOnlyY.toString() + 'px', display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div> */}
         <CalendarContainer>
-          <div id = 'calendar-table' data-testId = 'calendar' >
+          <div id = 'calendar-table' data-testid = 'calendar' >
             <Calendar
               id={2}
               maxSelectableDate = {this.state.maxSelectableDate}

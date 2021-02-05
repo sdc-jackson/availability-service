@@ -158,7 +158,7 @@ class Week extends React.Component {
 
           return <td className = 'day' key={index}
 
-            data-testId = {chosenStyle.testId}
+            data-testid = {chosenStyle.testId}
             onClick={ (e) => {
               if (choosable) {
                 dateClicked(item, dateIsCheckoutOnly, e);

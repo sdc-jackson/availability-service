@@ -148,10 +148,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    var today = new Date();
-    today.setDate(1);
-    var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
-
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -175,8 +171,8 @@ class App extends React.Component {
         numInfants: 0
       },
       guestPickerShowing: false,
-      month1Date: today,
-      month2Date: oneMonthFromToday,
+      month1Date: '',
+      month2Date: '',
       checkoutOnlyX: 0,
       checkoutOnlyY: 0
 
@@ -186,13 +182,24 @@ class App extends React.Component {
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
-    this.history = this.props.history;
+
   }
 
-  getStateObjFromUrl(searchStr, hash, dates) {
+
+  getStateObjFromUrl (searchStr, hash, dates) {
     var newState = {};
 
     newState.dates = dates;
+
+    if(this.state.month1Date === '') {
+
+      var today = new Date();
+      today.setDate(1);
+      var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
+
+      newState.month1Date = today;
+      newState.month2Date = oneMonthFromToday;
+    }
 
     //should the calendar be showing?
     if (hash.slice(0, 22) === '#availability-calendar') {
@@ -244,6 +251,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.history = this.props.history;
     var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
@@ -254,17 +262,20 @@ class App extends React.Component {
     this.history.listen(() => {
       this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
     });
-
+    console.log('FIRST HELLO!');
     var urlStateInfo;
     $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
       success: (dates) => {
+        console.log('HELLO HELLO!');
+        console.log(typeof dates);
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
         $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
           success: ({minNightlyRate}) => {
+            console.log(minNightlyRate);
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },
@@ -275,7 +286,9 @@ class App extends React.Component {
         });
       },
       error: (err) => {
+        console.log('error getting available dates')
       }
+
 
     });
   }
@@ -531,7 +544,7 @@ class App extends React.Component {
                   </div>
                 </TextDivSpaced>
                 <TextDivSpaced>
-                  <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+                  <div id = 'check-in-add-date' data-testid ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
                     <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
                     </span>
                   </div>
@@ -544,7 +557,7 @@ class App extends React.Component {
                   <div id = "check-out1" style = {checkOutStyle} >
                     CHECKOUT
                   </div>
-                  <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+                  <div id = 'check-out-add-date' data-testid ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
                     <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
                     </span>
                   </div>
@@ -573,7 +586,7 @@ class App extends React.Component {
 
 
         <div id = 'calendar' >
-          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
+          <div id = 'calendar-table' data-testid = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
             <Calendar id = {1}
               maxSelectableDate = {this.state.maxSelectableDate}
               hoveredDate = {this.state.hoveredDate}
