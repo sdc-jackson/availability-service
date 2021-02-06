@@ -269,21 +269,16 @@ class App extends React.Component {
         this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
       }
     });
-    console.log('FIRST HELLO!');
     var urlStateInfo;
     await $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
       success: async (dates) => {
-        //console.log('HELLO HELLO!');
-        //dates = dates.exampleData;
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        console.log(dates.length);
         await $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
           success: async ({minNightlyRate}) => {
-            console.log(minNightlyRate);
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },

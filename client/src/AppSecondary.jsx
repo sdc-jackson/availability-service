@@ -9,7 +9,6 @@ import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import StateIndicator from './StateIndicator.jsx';
 import styled from 'styled-components';
-//const history = createBrowserHistory();
 import 'regenerator-runtime/runtime';
 
 const CalendarContainer = styled.div`
