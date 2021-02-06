@@ -10,6 +10,7 @@ import "@fontsource/roboto/700.css"
 import styled from 'styled-components';
 import GuestAdder from './GuestAdder.jsx';
 import {StarOutlined, StarTwoTone, StarFilled} from '@ant-design/icons';
+import 'regenerator-runtime/runtime';
 
 const StickyReservationDiv = styled.div`
 
@@ -145,9 +146,11 @@ const ReviewsDiv = styled.div`
 
 
 class App extends React.Component {
+
+
   constructor(props) {
     super(props);
-
+    this._isMounted = false;
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -189,7 +192,7 @@ class App extends React.Component {
   getStateObjFromUrl (searchStr, hash, dates) {
     var newState = {};
 
-    newState.dates = dates;
+    newState.dates = dates.slice();
 
     if(this.state.month1Date === '') {
 
@@ -250,7 +253,8 @@ class App extends React.Component {
     return newState;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this._isMounted = true;
     this.history = this.props.history;
     var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
@@ -259,27 +263,33 @@ class App extends React.Component {
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
-    this.history.listen(() => {
-      this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+    this.history.listen(async () => {
+      if(this._isMounted) {
+
+        this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+      }
     });
     console.log('FIRST HELLO!');
     var urlStateInfo;
-    $.ajax({
+    await $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: (dates) => {
-        console.log('HELLO HELLO!');
-        console.log(typeof dates);
+      success: async (dates) => {
+        //console.log('HELLO HELLO!');
+        //dates = dates.exampleData;
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        $.ajax({
+        console.log(dates.length);
+        await $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
-          success: ({minNightlyRate}) => {
+          success: async ({minNightlyRate}) => {
             console.log(minNightlyRate);
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },
-          error: (err) => {
+          error: async (err) => {
+            console.log(err);
+            console.log('error getting min nightly rate');
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
@@ -291,6 +301,10 @@ class App extends React.Component {
 
 
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   onSelect(dates) {
@@ -479,13 +493,16 @@ class App extends React.Component {
       this.goNextMonth();
     } else if (dir === 0) {
       var newMonth1 = new Date(checkIn);
-      if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
-        newMonth1.setDate(1);
-        var newMonth2 = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1.toString(), 1);
-        this.setState({
-          month1Date: newMonth1,
-          month2Date: newMonth2
-        })
+      if(this.state.month2Date !== '') {
+        if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
+          newMonth1.setDate(1);
+          var newMonth2 = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1.toString(), 1);
+          this.setState({
+            month1Date: newMonth1,
+            month2Date: newMonth2
+          })
+        }
+
       }
     }
   }

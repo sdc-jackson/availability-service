@@ -10,6 +10,7 @@ import availabilityHelpers from './availabilityHelpers';
 import StateIndicator from './StateIndicator.jsx';
 import styled from 'styled-components';
 //const history = createBrowserHistory();
+import 'regenerator-runtime/runtime';
 
 const CalendarContainer = styled.div`
   width: 720px;
@@ -39,7 +40,7 @@ class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
 
-
+    this._isMounted = false;
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -81,7 +82,7 @@ class AppSecondary extends React.Component {
       newState.month2Date = oneMonthFromToday;
     }
 
-    newState.dates = dates;
+    newState.dates = dates.slice();
 
     //secondary calendar should always be showing
     newState.showing = true;
@@ -121,7 +122,8 @@ class AppSecondary extends React.Component {
     return newState;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this._isMounted = true;
     this.history = this.props.history;
 
     var productId = window.location.pathname.split('/')[2];
@@ -133,24 +135,26 @@ class AppSecondary extends React.Component {
 
 
 
-    this.history.listen(() => {
-      this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+    this.history.listen( () => {
+      if (this._isMounted) {
+        this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+      }
     });
 
     var urlStateInfo;
-    $.ajax({
+    await $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: (dates) => {
+      success: async (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        $.ajax({
+        await $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
-          success: ({minNightlyRate}) => {
+          success: async ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },
-          error: (err) => {
+          error: async (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
@@ -161,6 +165,11 @@ class AppSecondary extends React.Component {
 
     });
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
 
   onSelect(dates) {
     this.setState({ dates });
@@ -315,14 +324,16 @@ class AppSecondary extends React.Component {
       this.goNextMonth();
     } else if (dir === 0) {
       var newMonth1Date = new Date(checkIn);
-      if(this.state.month2Date.getMonth() !== newMonth1Date.getMonth()) {
-        newMonth1Date.setDate(1);
-        var newMonth2Date = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1Date.toString(), 1);
+      if (this.state.month2Date !== ''){
+        if(this.state.month2Date.getMonth() !== newMonth1Date.getMonth()) {
+          newMonth1Date.setDate(1);
+          var newMonth2Date = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1Date.toString(), 1);
 
-        this.setState({
-          month1Date: newMonth1Date,
-          month2Date: newMonth2Date
-        })
+          this.setState({
+            month1Date: newMonth1Date,
+            month2Date: newMonth2Date
+          })
+        }
       }
     }
   }

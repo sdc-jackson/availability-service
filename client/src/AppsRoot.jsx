@@ -8,7 +8,7 @@ import $ from 'jquery';
 import styled from 'styled-components';
 
 const RestOfPage = styled.div`
-  color: lightgrey;
+  color: white;
   z-index: 1;
   position: static;
   top: 1000px;
