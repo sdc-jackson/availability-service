@@ -10,6 +10,7 @@ import "@fontsource/roboto/700.css"
 import styled from 'styled-components';
 import GuestAdder from './GuestAdder.jsx';
 import {StarOutlined, StarTwoTone, StarFilled} from '@ant-design/icons';
+import 'regenerator-runtime/runtime';
 
 const StickyReservationDiv = styled.div`
 
@@ -145,13 +146,11 @@ const ReviewsDiv = styled.div`
 
 
 class App extends React.Component {
+
+
   constructor(props) {
     super(props);
-
-    var today = new Date();
-    today.setDate(1);
-    var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
-
+    this._isMounted = false;
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -175,8 +174,8 @@ class App extends React.Component {
         numInfants: 0
       },
       guestPickerShowing: false,
-      month1Date: today,
-      month2Date: oneMonthFromToday,
+      month1Date: '',
+      month2Date: '',
       checkoutOnlyX: 0,
       checkoutOnlyY: 0
 
@@ -186,13 +185,24 @@ class App extends React.Component {
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
-    this.history = this.props.history;
+
   }
 
-  getStateObjFromUrl(searchStr, hash, dates) {
+
+  getStateObjFromUrl (searchStr, hash, dates) {
     var newState = {};
 
-    newState.dates = dates;
+    newState.dates = dates.slice();
+
+    if(this.state.month1Date === '') {
+
+      var today = new Date();
+      today.setDate(1);
+      var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
+
+      newState.month1Date = today;
+      newState.month2Date = oneMonthFromToday;
+    }
 
     //should the calendar be showing?
     if (hash.slice(0, 22) === '#availability-calendar') {
@@ -243,7 +253,9 @@ class App extends React.Component {
     return newState;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this._isMounted = true;
+    this.history = this.props.history;
     var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
@@ -251,33 +263,43 @@ class App extends React.Component {
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
-    this.history.listen(() => {
-      this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
-    });
+    this.history.listen(async () => {
+      if(this._isMounted) {
 
+        this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+      }
+    });
     var urlStateInfo;
-    $.ajax({
+    await $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: (dates) => {
+      success: async (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        $.ajax({
+        await $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
-          success: ({minNightlyRate}) => {
+          success: async ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },
-          error: (err) => {
+          error: async (err) => {
+            console.log(err);
+            console.log('error getting min nightly rate');
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
         });
       },
       error: (err) => {
+        console.log('error getting available dates')
       }
 
+
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   onSelect(dates) {
@@ -466,13 +488,16 @@ class App extends React.Component {
       this.goNextMonth();
     } else if (dir === 0) {
       var newMonth1 = new Date(checkIn);
-      if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
-        newMonth1.setDate(1);
-        var newMonth2 = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1.toString(), 1);
-        this.setState({
-          month1Date: newMonth1,
-          month2Date: newMonth2
-        })
+      if(this.state.month2Date !== '') {
+        if(this.state.month2Date.getMonth() !== newMonth1.getMonth()) {
+          newMonth1.setDate(1);
+          var newMonth2 = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1.toString(), 1);
+          this.setState({
+            month1Date: newMonth1,
+            month2Date: newMonth2
+          })
+        }
+
       }
     }
   }
@@ -531,7 +556,7 @@ class App extends React.Component {
                   </div>
                 </TextDivSpaced>
                 <TextDivSpaced>
-                  <div id = 'check-in-add-date' data-testId ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
+                  <div id = 'check-in-add-date' data-testid ='checkInDate' onClick = {this.onClickCheckinShowCalendar.bind(this)}>
                     <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkIn === 'notSelected' ? 'Add date' : `${this.getCheckIn().getMonth() + 1}/${this.getCheckIn().getDate()}/${this.getCheckIn().getFullYear()}` }
                     </span>
                   </div>
@@ -544,7 +569,7 @@ class App extends React.Component {
                   <div id = "check-out1" style = {checkOutStyle} >
                     CHECKOUT
                   </div>
-                  <div id = 'check-out-add-date' data-testId ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
+                  <div id = 'check-out-add-date' data-testid ='checkOutDate' onClick = {this.onClickCheckoutShowCalendar.bind(this)}>
                     <span style={{color: '#404040', fontSize: '15px'}}>{this.state.checkOut === 'notSelected' ? 'Add date' : `${this.getCheckOut().getMonth() + 1}/${this.getCheckOut().getDate()}/${this.getCheckOut().getFullYear()}`}
                     </span>
                   </div>
@@ -573,7 +598,7 @@ class App extends React.Component {
 
 
         <div id = 'calendar' >
-          <div id = 'calendar-table' data-testId = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
+          <div id = 'calendar-table' data-testid = 'calendar' className='pop-out-calendar-sticky' style={{display: this.state.showing ? 'flex' : 'none' }}>
             <Calendar id = {1}
               maxSelectableDate = {this.state.maxSelectableDate}
               hoveredDate = {this.state.hoveredDate}

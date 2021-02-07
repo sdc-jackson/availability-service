@@ -83,7 +83,9 @@ class Calendar extends React.Component {
 
 
   getWeekArrays (monthStartDateInput) {
-
+    if (monthStartDateInput === '') {
+      return [];
+    }
     var monthStartDate = new Date(monthStartDateInput);
     monthStartDate.setDate(1);
     var month = monthStartDate.getMonth();
@@ -145,8 +147,8 @@ class Calendar extends React.Component {
               hoveredDate = {this.props.hoveredDate}
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
-              month = {this.monthsMap[this.props.month1Date.getMonth()]}
-              year = {this.props.month1Date.getFullYear()}
+              month = {this.monthsMap[this.props.month1Date !== '' ? this.props.month1Date.getMonth() : 0]}
+              year = {this.props.month1Date !== '' ? this.props.month1Date.getFullYear() : '2021'}
               weeks = {this.getWeekArrays(this.props.month1Date)}
 
             />
@@ -163,8 +165,8 @@ class Calendar extends React.Component {
               hoveredDate = {this.props.hoveredDate}
               changedHoveredDate = {this.props.changeHoveredDate}
               dateClicked = {this.props.dateClicked}
-              month = {this.monthsMap[this.props.month2Date.getMonth()]}
-              year = {this.props.month2Date.getFullYear()}
+              month = {this.monthsMap[this.props.month2Date !== '' ? this.props.month2Date.getMonth() : 0]}
+              year = {this.props.month2Date !== '' ? this.props.month2Date.getFullYear() : '2021'}
               weeks = {this.getWeekArrays(this.props.month2Date)}
 
             />

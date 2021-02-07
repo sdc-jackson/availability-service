@@ -17,6 +17,7 @@ const MonthScrollButtonDiv = styled.div`
   align-items: center;
   border-radius: 50%;
   border: 1px solid white;
+  data-testid: ${props => props.id};
   fill: ${props => {
     if(props.first && props.id=== 'nextMonthButton') {
       return 'white';

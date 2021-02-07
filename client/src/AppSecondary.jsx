@@ -9,7 +9,7 @@ import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import StateIndicator from './StateIndicator.jsx';
 import styled from 'styled-components';
-//const history = createBrowserHistory();
+import 'regenerator-runtime/runtime';
 
 const CalendarContainer = styled.div`
   width: 720px;
@@ -17,6 +17,7 @@ const CalendarContainer = styled.div`
 `;
 
 const AppContainer = styled.div`
+
   width: 720px;
   height: 600px;
 `;
@@ -38,11 +39,7 @@ class AppSecondary extends React.Component {
   constructor(props) {
     super(props);
 
-    var today = new Date();
-    today.setDate(1);
-
-    var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
-
+    this._isMounted = false;
     this.state = {
       dates: [],
       checkIn: 'notSelected',
@@ -60,21 +57,31 @@ class AppSecondary extends React.Component {
       numNights: 0,
       minNightlyRate: 'none',
       nameOfStay: 'Big Bear Lake', //fix me later!
-      month1Date: today,
-      month2Date: oneMonthFromToday,
+      month1Date: '',
+      month2Date: '',
       checkoutOnlyX: 0,
       checkoutOnlyY: 0
     };
 
     this.monthsMap = availabilityHelpers.monthsMap;
     this.daysMap = availabilityHelpers.daysMap;
-    this.history = this.props.history;
+
   }
 
   getStateObjFromUrl(searchStr, hash, dates) {
     var newState = {};
 
-    newState.dates = dates;
+    if(this.state.month1Date === '') {
+
+      var today = new Date();
+      today.setDate(1);
+      var oneMonthFromToday = availabilityHelpers.getStartOfNextOrPrevMonth(today.toString(), 1);
+
+      newState.month1Date = today;
+      newState.month2Date = oneMonthFromToday;
+    }
+
+    newState.dates = dates.slice();
 
     //secondary calendar should always be showing
     newState.showing = true;
@@ -114,7 +121,10 @@ class AppSecondary extends React.Component {
     return newState;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this._isMounted = true;
+    this.history = this.props.history;
+
     var productId = window.location.pathname.split('/')[2];
     if (productId === null || productId === undefined || productId.length === 0) {
       productId = '109';
@@ -122,24 +132,28 @@ class AppSecondary extends React.Component {
     var windowLocationSearch = window.location.search;
     var windowLocationHash = window.location.hash;
 
-    this.history.listen(() => {
-      this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+
+
+    this.history.listen( () => {
+      if (this._isMounted) {
+        this.setState(this.getStateObjFromUrl(window.location.search, window.location.hash, this.state.dates));
+      }
     });
 
     var urlStateInfo;
-    $.ajax({
+    await $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: (dates) => {
+      success: async (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        $.ajax({
+        await $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
-          success: ({minNightlyRate}) => {
+          success: async ({minNightlyRate}) => {
             urlStateInfo.minNightlyRate = minNightlyRate;
             this.setState(urlStateInfo);
           },
-          error: (err) => {
+          error: async (err) => {
             urlStateInfo.minNightlyRate = 100;
             this.setState(urlStateInfo);
           }
@@ -150,6 +164,11 @@ class AppSecondary extends React.Component {
 
     });
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
 
   onSelect(dates) {
     this.setState({ dates });
@@ -304,14 +323,16 @@ class AppSecondary extends React.Component {
       this.goNextMonth();
     } else if (dir === 0) {
       var newMonth1Date = new Date(checkIn);
-      if(this.state.month2Date.getMonth() !== newMonth1Date.getMonth()) {
-        newMonth1Date.setDate(1);
-        var newMonth2Date = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1Date.toString(), 1);
+      if (this.state.month2Date !== ''){
+        if(this.state.month2Date.getMonth() !== newMonth1Date.getMonth()) {
+          newMonth1Date.setDate(1);
+          var newMonth2Date = availabilityHelpers.getStartOfNextOrPrevMonth(newMonth1Date.toString(), 1);
 
-        this.setState({
-          month1Date: newMonth1Date,
-          month2Date: newMonth2Date
-        })
+          this.setState({
+            month1Date: newMonth1Date,
+            month2Date: newMonth2Date
+          })
+        }
       }
     }
   }
@@ -348,7 +369,7 @@ class AppSecondary extends React.Component {
         </CheckoutOnlyIndicator>
         {/* <div id = 'dateIsCheckoutOnly' style={{position: 'absolute', zIndex: 109, left: this.state.checkoutOnlyX.toString() + 'px', top: this.state.checkoutOnlyY.toString() + 'px', display: (this.state.checkoutOnlyShowing && (this.state.hoveredDate.toString().slice(0, 17) === this.state.selectedCheckoutOnlyDate.toString().slice(0, 17))) ? 'block' : 'none'}}> This date is check-out only. </div> */}
         <CalendarContainer>
-          <div id = 'calendar-table' data-testId = 'calendar' >
+          <div id = 'calendar-table' data-testid = 'calendar' >
             <Calendar
               id={2}
               maxSelectableDate = {this.state.maxSelectableDate}

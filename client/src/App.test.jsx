@@ -22,10 +22,10 @@ it('renders correctly', () => {
 
 
 const server = setupServer(
-  rest.get('/109/availableDates', (req, res, ctx) => {
+  rest.get('/rooms/109/availableDates', (req, res, ctx) => {
     return res(ctx.json(exampleData));
   }),
-  rest.get('/109/minNightlyRate', (req, res, ctx) => {
+  rest.get('/rooms/109/minNightlyRate', (req, res, ctx) => {
     return res(ctx.json({minNightlyRate: 888}))
   })
 )
