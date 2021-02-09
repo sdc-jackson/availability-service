@@ -75,5 +75,38 @@ describe("Calendar tests", () => {
     }, 3000);
   })
 
+
+  test('Clicking a check-in and check-out date pulls up the reservation summary', async(done) => {
+
+    server1.listen();
+    const { unmount } = render(<AppsRoot />);
+
+    await waitFor(() => {
+      const selectedCheckInDate = screen.queryAllByText("3");
+      console.log(selectedCheckInDate[0].innerHTML);
+      fireEvent.click(selectedCheckInDate[0]);
+    });
+    await waitFor(() => {
+      const selectedCheckOutDate = screen.queryAllByText("5");
+      console.log(selectedCheckOutDate[0].innerHTML);
+      fireEvent.click(selectedCheckOutDate[0]);
+    });
+
+    await waitFor(() => {
+      const reservationSummaryButton = screen.queryAllByText("Reserve");
+      console.log(reservationSummaryButton[0].innerHTML);
+      expect(reservationSummaryButton).toHaveLength(1);
+    })
+
+
+    setTimeout(() => {
+      //screen.logTestingPlaygroundURL()
+      unmount();
+      server1.close();
+      done();
+    }, 3000);
+  })
+
+
 });
 
