@@ -279,20 +279,14 @@ class App extends React.Component {
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
           success:  ({minNightlyRate}) => {
-            console.log('here')
             if(minNightlyRate === undefined) {
-              console.log('here here');
               urlStateInfo.minNightlyRate = dates[0].nightlyRate;
-              console.log(urlStateInfo.minNightlyRate);
             } else {
               urlStateInfo.minNightlyRate = minNightlyRate;
             }
             this.setState(urlStateInfo);
           },
           error:  (err) => {
-            //console.log(err);
-            console.log('problem getting minNightlyRate')
-            console.log(dates[0].nightlyRate);
             urlStateInfo.minNightlyRate = dates[0].nightlyRate;
             this.setState(urlStateInfo);
           }

@@ -7,12 +7,6 @@ import exampleData from './exampleData.js';
 import '@testing-library/jest-dom/extend-expect';
 
 
-
-
-
-
-
-
 describe("Calendar tests", () => {
 
   test('If call to minNightlyRate does not respond, display the first available nightly rate', async(done) => {
@@ -109,7 +103,6 @@ describe("Calendar tests", () => {
 
 
     setTimeout(() => {
-      //screen.logTestingPlaygroundURL()
       unmount();
       server1.close();
       cleanup();
@@ -136,24 +129,20 @@ describe("Calendar tests", () => {
 
     await waitFor(() => {
       const selectedCheckInDate = screen.queryAllByText("3");
-      //console.log(selectedCheckInDate[0].innerHTML);
       fireEvent.click(selectedCheckInDate[0]);
     });
     await waitFor(() => {
       const selectedCheckOutDate = screen.queryAllByText("5");
-      //console.log(selectedCheckOutDate[0].innerHTML);
       fireEvent.click(selectedCheckOutDate[0]);
     });
 
     await waitFor(() => {
       const reservationSummaryButton = screen.queryAllByText("Reserve");
-      //console.log(reservationSummaryButton[0].innerHTML);
       expect(reservationSummaryButton).toHaveLength(1);
     })
 
 
     setTimeout(() => {
-      //screen.logTestingPlaygroundURL()
       unmount();
       server1.close();
       cleanup();
