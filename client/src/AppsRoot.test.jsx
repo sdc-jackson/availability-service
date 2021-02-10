@@ -1,35 +1,58 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import AppsRoot from './AppsRoot.jsx';
 import {render, fireEvent, screen, cleanup, waitFor} from '@testing-library/react';
-import { TestWatcher } from 'jest';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import exampleData from './exampleData.js';
-
 import '@testing-library/jest-dom/extend-expect';
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
-
-
-
-var server1 = setupServer(
-  rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
-
-    if(req.params.thisone === 'availableDates') {
-      return res(ctx.status(200), ctx.json(exampleData));
-    } else {
-      return res(ctx.status(200), ctx.json({minNightlyRate: 888}))
-    }
-  })
-);
-
 
 
 describe("Calendar tests", () => {
 
+  test('If call to minNightlyRate does not respond, display the first available nightly rate', async(done) => {
+    var server1 = setupServer(
+      rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
+        if(req.params.thisone === 'availableDates') {
+          return res(ctx.status(200), ctx.json(exampleData));
+        }
+      })
+    );
+    await waitFor(() => {
+      server1.listen();
+    });
+    var {unmount} = render(<AppsRoot />);
+    var minNightlyRate;
+
+    setTimeout(async () => {
+      await waitFor(() => {
+        minNightlyRate = screen.queryAllByText("$434");
+      })
+      expect(minNightlyRate).toHaveLength(1);
+      await waitFor(() => {
+        screen.logTestingPlaygroundURL()
+      })
+      await waitFor(() => {
+        unmount();
+        server1.close();
+        cleanup();
+        done();
+      })
+    }, 3000);
+
+  })
 
   test('Selecting the selected check-in or check-out date should pull up the calendar', async( done) => {
+
+    var server1 = setupServer(
+      rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
+
+        if(req.params.thisone === 'availableDates') {
+          return res(ctx.status(200), ctx.json(exampleData));
+        } else {
+          return res(ctx.status(200), ctx.json({minNightlyRate: 888}))
+        }
+      })
+    );
 
     server1.listen();
     const { unmount } = render(<AppsRoot />);
@@ -46,11 +69,23 @@ describe("Calendar tests", () => {
     setTimeout(() => {
       unmount();
       server1.close();
+      cleanup();
       done();
     }, 3000);
   })
 
   test('The calendars communicate- i.e. selecting a date in the secondary calendar modifies the displayed check-in date in the primary calendar', async( done) => {
+
+    var server1 = setupServer(
+      rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
+
+        if(req.params.thisone === 'availableDates') {
+          return res(ctx.status(200), ctx.json(exampleData));
+        } else {
+          return res(ctx.status(200), ctx.json({minNightlyRate: 888}))
+        }
+      })
+    );
 
     server1.listen();
     const { unmount } = render(<AppsRoot />);
@@ -68,12 +103,56 @@ describe("Calendar tests", () => {
 
 
     setTimeout(() => {
-      //screen.logTestingPlaygroundURL()
       unmount();
       server1.close();
+      cleanup();
       done();
     }, 3000);
   })
+
+
+  test('Clicking a check-in and check-out date pulls up the reservation summary', async(done) => {
+
+    var server1 = setupServer(
+      rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
+
+        if(req.params.thisone === 'availableDates') {
+          return res(ctx.status(200), ctx.json(exampleData));
+        } else {
+          return res(ctx.status(200), ctx.json({minNightlyRate: 888}))
+        }
+      })
+    );
+
+    server1.listen();
+    const { unmount } = render(<AppsRoot />);
+
+    await waitFor(() => {
+      const selectedCheckInDate = screen.queryAllByText("3");
+      fireEvent.click(selectedCheckInDate[0]);
+    });
+    await waitFor(() => {
+      const selectedCheckOutDate = screen.queryAllByText("5");
+      fireEvent.click(selectedCheckOutDate[0]);
+    });
+
+    await waitFor(() => {
+      const reservationSummaryButton = screen.queryAllByText("Reserve");
+      expect(reservationSummaryButton).toHaveLength(1);
+    })
+
+
+    setTimeout(() => {
+      unmount();
+      server1.close();
+      cleanup();
+      done();
+    }, 3000);
+  })
+
+
+
+
 
 });
 

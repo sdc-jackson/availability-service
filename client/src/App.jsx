@@ -270,22 +270,24 @@ class App extends React.Component {
       }
     });
     var urlStateInfo;
-    await $.ajax({
+    $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: async (dates) => {
+      success:  (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        await $.ajax({
+        $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/minNightlyRate`,
-          success: async ({minNightlyRate}) => {
-            urlStateInfo.minNightlyRate = minNightlyRate;
+          success:  ({minNightlyRate}) => {
+            if(minNightlyRate === undefined) {
+              urlStateInfo.minNightlyRate = dates[0].nightlyRate;
+            } else {
+              urlStateInfo.minNightlyRate = minNightlyRate;
+            }
             this.setState(urlStateInfo);
           },
-          error: async (err) => {
-            console.log(err);
-            console.log('error getting min nightly rate');
-            urlStateInfo.minNightlyRate = 100;
+          error:  (err) => {
+            urlStateInfo.minNightlyRate = dates[0].nightlyRate;
             this.setState(urlStateInfo);
           }
         });
