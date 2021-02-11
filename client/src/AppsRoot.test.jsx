@@ -92,7 +92,6 @@ describe("Calendar tests", () => {
 
     await waitFor(() => {
       const selectedCheckInDate = screen.queryAllByText("3");
-      console.log(selectedCheckInDate[0].innerHTML);
       fireEvent.click(selectedCheckInDate[0]);
     });
 
