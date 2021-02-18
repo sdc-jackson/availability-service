@@ -14,6 +14,7 @@ const ReservationSummaryTable = styled.table`
 `;
 const ReservationSummaryTd = styled.td`
     text-align: right;
+    color: #404040;
 `;
 
 const TotalTable = styled.table`
@@ -47,7 +48,7 @@ class ReservationSummary extends React.Component {
       <ReservationSummaryTable>
         <tbody>
           <tr>
-            <td style={{textDecoration: 'underline'}}>
+            <td style={{textDecoration: 'underline', color: '#585858'}}>
               {`$${this.props.priceOfStay / this.props.numNights} per night x ${this.props.numNights} nights`}
             </td>
             <ReservationSummaryTd>
@@ -55,7 +56,7 @@ class ReservationSummary extends React.Component {
             </ReservationSummaryTd>
           </tr>
           <tr>
-            <td style={{textDecoration: 'underline'}}>
+            <td style={{textDecoration: 'underline', color: '#585858'}}>
               Cleaning fee
             </td>
             <ReservationSummaryTd>
@@ -63,7 +64,7 @@ class ReservationSummary extends React.Component {
             </ReservationSummaryTd>
           </tr>
           <tr>
-            <td style={{textDecoration: 'underline'}}>
+            <td style={{textDecoration: 'underline', color: '#585858'}}>
               Service Fee
             </td>
             <ReservationSummaryTd>
