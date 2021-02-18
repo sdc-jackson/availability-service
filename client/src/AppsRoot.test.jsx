@@ -3,7 +3,7 @@ import AppsRoot from './AppsRoot.jsx';
 import {render, fireEvent, screen, cleanup, waitFor} from '@testing-library/react';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import exampleData from './exampleData.js';
+import { exampleData } from './exampleData.js';
 import '@testing-library/jest-dom/extend-expect';
 
 
@@ -14,9 +14,12 @@ describe("Calendar tests", () => {
       rest.get('/rooms/109/:thisone', async (req, res, ctx) => {
         if(req.params.thisone === 'availableDates') {
           return res(ctx.status(200), ctx.json(exampleData));
+        } else if (req.params.thisone === 'title') {
+          return res(ctx.status(200), ctx.json({location: 'Valencia'}));
         }
       })
     );
+
     await waitFor(() => {
       server1.listen();
     });
@@ -28,9 +31,9 @@ describe("Calendar tests", () => {
         minNightlyRate = screen.queryAllByText("$434");
       })
       expect(minNightlyRate).toHaveLength(1);
-      await waitFor(() => {
-        screen.logTestingPlaygroundURL()
-      })
+      // await waitFor(() => {
+      //   screen.logTestingPlaygroundURL()
+      // })
       await waitFor(() => {
         unmount();
         server1.close();
