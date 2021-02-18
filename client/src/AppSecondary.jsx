@@ -56,7 +56,7 @@ class AppSecondary extends React.Component {
       priceOfStay: 0,
       numNights: 0,
       minNightlyRate: 'none',
-      nameOfStay: 'Big Bear Lake', //fix me later!
+      location: 'none', //fix me later!
       month1Date: '',
       month2Date: '',
       checkoutOnlyX: 0,
@@ -148,13 +148,13 @@ class AppSecondary extends React.Component {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
         await $.ajax({
           method: 'GET',
-          url: `/rooms/${productId}/minNightlyRate`,
-          success: async ({minNightlyRate}) => {
-            urlStateInfo.minNightlyRate = minNightlyRate;
+          url: `/rooms/${productId}/title`,
+          success: (title) => {
+            urlStateInfo.location = title.location;
             this.setState(urlStateInfo);
           },
-          error: async (err) => {
-            urlStateInfo.minNightlyRate = 100;
+          error: (err) => {
+            urlStateInfo.location = 'Big Bear Lake';
             this.setState(urlStateInfo);
           }
         });
@@ -357,7 +357,7 @@ class AppSecondary extends React.Component {
     return (
       <AppContainer>
         <div id = 'stateIndicator'>
-          <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.nameOfStay}/>
+          <StateIndicator checkIn = {this.state.checkIn} checkOut = {this.state.checkOut} showReserveButton = {this.state.showReserveButton} numNights = {this.state.numNights} nameOfStay = {this.state.location}/>
         </div>
         <CheckoutOnlyIndicator
           checkoutOnlyShowing = {this.state.checkoutOnlyShowing}
