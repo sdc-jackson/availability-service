@@ -2,12 +2,20 @@ const mongoose = require('mongoose');
 const {exampleData} = require('../client/src/exampleData.js');
 require('dotenv');
 
-if (process.env.NODE_ENV !== 'test') { //for testing and circleCI
+if (process.env.NODE_ENV === 'test') { //for testing and circleCI
   var getMinNightlyRate = (productId, cb) => {
-    cb(null, {minNightlyRate: 434});
+    if(productId < 100 || productId > 199){
+      cb(new Error('invalid room id'));
+    } else {
+      cb(null, {minRate: 426});
+    }
   }
   var getAvailableDates = (productId, cb) => {
-    cb(null, exampleData);
+    if(productId < 100 || productId > 199) {
+      cb(new Error('invalid room id'));
+    } else {
+      cb(null, exampleData);
+    }
   }
   var listAllStays = () => {
     cb(null);
