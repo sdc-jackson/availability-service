@@ -3,12 +3,15 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
 var db = require('../database/db.js');
+var expressStaticGzip = require("express-static-gzip");
+
 
 
 var app = express();
 app.use(cors());
 app.use('/rooms/:id', express.static(__dirname + '/../client/dist'));
 app.use(express.static(__dirname + '/../client/dist'));
+app.use('/rooms/:id', expressStaticGzip(__dirname + '/../client/dist/'));
 
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
   db.getMinNightlyRate(req.params.id, (err, rate) => {
