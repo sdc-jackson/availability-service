@@ -1,11 +1,19 @@
 const path = require('path');
+const CompressionPlugin = require('compression-webpack-plugin');
 //webpack 4.46
 module.exports = {
+	devtool: 'eval-source-map',
 	entry: './client/src/index.jsx',
+  plugins: [
+    new CompressionPlugin({
+      algorithm: "gzip",
+    }),
+  ],
 	output: {
 		path: path.resolve(__dirname, 'client', 'dist'),
 		filename: 'bundle_availability.js'
 	},
+
 	module: {
 		rules: [
 			{
@@ -30,4 +38,5 @@ module.exports = {
 			}
 		]
 	}
+
 }
