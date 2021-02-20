@@ -29,7 +29,7 @@ const staySchema = new mongoose.Schema({
 const Stay = mongoose.model('Stay', staySchema);
 
 //Create Stays and Calendars for each stay
-for(var stayId = 0; stayId < 10; stayId++) {
+for(var stayId = 0; stayId < 100; stayId++) {
   var productId = stayId + 100; //100 to 199
   var minRate = Math.floor(Math.random() * 500) + 30; //Result between $30 and $530
   var thisStay = new Stay({productId: stayId + 100, minRate: minRate});
