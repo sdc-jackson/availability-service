@@ -11,6 +11,7 @@ const DateCircle = styled.div`
   font-weight: ${props => props.chosenStyle.fontWeight};
   color: ${props => props.chosenStyle.color};
   text-decoration: ${props => props.chosenStyle.textDecoration ? 'line-through' : 'none'};
+  font-size: 14px;
   height: 30px;
   width: 30px;
 `;
@@ -29,6 +30,7 @@ class Week extends React.Component {
       fontWeight: 500,
       color: 'white',
       testId: 'checkInOut'
+
     };
     var rangeStyle = {
       border: '1px solid #E8E8E8',

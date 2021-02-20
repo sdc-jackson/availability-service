@@ -62,10 +62,12 @@ const CalendarTable = styled.table`
   height: 260px;
   text-align: center;
   border-collapse: collapse;
+  font-size: 14px;
 `;
 
 const DOWRow = styled.tr`
   color: grey;
+  font-size: 14px;
 `;
 
 
