@@ -8,6 +8,11 @@ const StateIndicatorContainer = styled.div`
   margin-left: 50px;
 `;
 
+const StateIndicatorHeader = styled.div`
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 8px;
+`;
 
 class StateIndicator extends React.Component {
   constructor(props) {
@@ -37,18 +42,18 @@ class StateIndicator extends React.Component {
   render() {
     if (this.props.checkIn === 'notSelected') {
       return (<StateIndicatorContainer>
-        <h3>Select check-in date</h3>
-        <span style={{fontSize: '15px', color: 'grey'}}>Add your travel dates for exact pricing</span>
+        <StateIndicatorHeader>Select check-in date</StateIndicatorHeader>
+        <span style={{fontSize: '14px', color: 'grey'}}>Add your travel dates for exact pricing</span>
       </StateIndicatorContainer>);
     } else if (this.props.checkOut === 'notSelected') {
       return (<StateIndicatorContainer>
-        <h3>Select check-out date</h3>
-        <span style={{fontSize: '15px', color: 'grey'}}>Add your travel dates for exact pricing</span>
+        <StateIndicatorHeader>Select check-out date</StateIndicatorHeader>
+        <span style={{fontSize: '14px', color: 'grey'}}>Add your travel dates for exact pricing</span>
       </StateIndicatorContainer>);
     } else if (this.props.showReserveButton) {
       return (<StateIndicatorContainer>
-        <h3>{this.props.numNights} nights in {this.props.nameOfStay}</h3>
-        <span style={{fontSize: '15px', color: 'grey'}}>{this.getResDateSummaryStr()} </span>
+        <StateIndicatorHeader>{this.props.numNights} nights in {this.props.nameOfStay}</StateIndicatorHeader>
+        <span style={{fontSize: '14px', color: 'grey'}}>{this.getResDateSummaryStr()} </span>
       </StateIndicatorContainer>);
     }
   }

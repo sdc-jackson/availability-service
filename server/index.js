@@ -11,7 +11,7 @@ var app = express();
 app.use(cors());
 app.use('/rooms/:id', express.static(__dirname + '/../client/dist'));
 app.use(express.static(__dirname + '/../client/dist'));
-app.use('/rooms/:id', expressStaticGzip(__dirname + '/../client/dist/'));
+//app.use('/rooms/:id', expressStaticGzip(__dirname + '/../client/dist/'));
 
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
   db.getMinNightlyRate(req.params.id, (err, rate) => {
