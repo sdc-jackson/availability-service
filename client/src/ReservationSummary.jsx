@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
-
+//import styled from 'styled-components';
+const {styled} = window;
 
 const ReservationSummaryTable = styled.table`
     width: 250px;

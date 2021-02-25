@@ -8,7 +8,8 @@ import {createBrowserHistory} from 'history';
 import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import StateIndicator from './StateIndicator.jsx';
-import styled from 'styled-components';
+//import styled from 'styled-components';
+const {styled} = window;
 import 'regenerator-runtime/runtime';
 
 const CalendarContainer = styled.div`

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Week from './Week.jsx';
 import Month from './Month.jsx';
-import styled from 'styled-components';
-
+//import styled from 'styled-components';
+const {styled} = window;
 
 
 const ClearCloseButtonsFlex = styled.div`

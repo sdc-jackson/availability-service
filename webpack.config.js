@@ -1,5 +1,6 @@
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require('webpack');
 //webpack 4.46
 module.exports = {
 	devtool: 'eval-source-map',
@@ -7,7 +8,8 @@ module.exports = {
   plugins: [
     new CompressionPlugin({
       algorithm: "gzip",
-    }),
+		})
+
   ],
 	output: {
 		path: path.resolve(__dirname, 'client', 'dist'),

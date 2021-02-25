@@ -5,7 +5,8 @@ import AppSecondary from './AppSecondary.jsx';
 import SamplePage from './samplePage.js';
 import "@fontsource/roboto"
 import $ from 'jquery';
-import styled from 'styled-components';
+//import styled from 'styled-components';
+const {styled} = window;
 
 const RestOfPage = styled.div`
   color: white;
