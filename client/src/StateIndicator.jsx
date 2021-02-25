@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import availabilityHelpers from './availabilityHelpers.js';
-import styled from 'styled-components';
+//import styled from 'styled-components';
+const {styled} = window;
 
 const StateIndicatorContainer = styled.div`
   width: 330px;

@@ -7,7 +7,8 @@ import urlHelpers from './urlHelpers.js';
 import availabilityHelpers from './availabilityHelpers';
 import Guests from './Guests.jsx';
 import "@fontsource/roboto/700.css"
-import styled from 'styled-components';
+//import styled from 'styled-components';
+const {styled} = window;
 import GuestAdder from './GuestAdder.jsx';
 import {StarOutlined, StarTwoTone, StarFilled} from '@ant-design/icons';
 import 'regenerator-runtime/runtime';
@@ -50,7 +51,7 @@ const DatesGuestsTablePickerDiv = styled.div`
     }
     return '1px solid lightgrey;';
 
-  }}
+  }};
   border-radius: ${props => props.checkin === true ? '10px 0 0 0' : '0 10px 0 0'};
   z-index: 105;
 
