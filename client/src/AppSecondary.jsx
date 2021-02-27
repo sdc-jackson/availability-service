@@ -151,8 +151,9 @@ class AppSecondary extends React.Component {
           method: 'GET',
           url: `/rooms/${productId}/title`,
           success: (title) => {
-            console.log('setting location to ', title.location);
-            urlStateInfo.location = title.location;
+            console.log(title);
+            console.log('setting location to ', title[0].location);
+            urlStateInfo.location = title[0].location;
             this.setState(urlStateInfo);
           },
           error: (err) => {
