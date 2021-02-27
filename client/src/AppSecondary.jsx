@@ -57,7 +57,7 @@ class AppSecondary extends React.Component {
       priceOfStay: 0,
       numNights: 0,
       minNightlyRate: 'none',
-      location: 'none', //fix me later!
+      location: 'Legros Lock', //fix me later!
       month1Date: '',
       month2Date: '',
       checkoutOnlyX: 0,
@@ -151,11 +151,13 @@ class AppSecondary extends React.Component {
           method: 'GET',
           url: `/rooms/${productId}/title`,
           success: (title) => {
+            console.log('setting location to ', title.location);
             urlStateInfo.location = title.location;
             this.setState(urlStateInfo);
           },
           error: (err) => {
-            urlStateInfo.location = 'Big Bear Lake';
+            console.log('setting location to Legros Lock by default');
+            urlStateInfo.location = 'Legros Lock';
             this.setState(urlStateInfo);
           }
         });
