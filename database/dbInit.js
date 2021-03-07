@@ -4,7 +4,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'airBnB-availability connection error: '));
 db.once('open', function() {
   console.log('database is open');
-})
+});
 
 const calendarSchema = new mongoose.Schema({
   id: Number,
@@ -15,7 +15,6 @@ const calendarSchema = new mongoose.Schema({
   cleaningFee: Number,
   serviceFee: Number,
   occupancyTaxes: Number
-
 });
 
 const Calendar = mongoose.model('Calendar', calendarSchema);
@@ -32,16 +31,16 @@ const Stay = mongoose.model('Stay', staySchema);
 for(var stayId = 0; stayId < 100; stayId++) {
   var productId = stayId + 100; //100 to 199
   var minRate = Math.floor(Math.random() * 500) + 30; //Result between $30 and $530
-  var thisStay = new Stay({productId: stayId + 100, minRate: minRate});
+  var thisStay = new Stay({productId: stayId + 100, minRate});
   var thisStayId;
   thisStay.save( (err, q) => {
-    if(err) return console.log(err);
+    if (err) return console.log(err);
     else {
       thisStayId = q._doc._id;
       var weekendRate = Math.floor(Math.random() * 20) + q._doc.minRate;
       //also want to create calendar dates for each stay
       var date = new Date();
-      for(var dayCount = 0; dayCount < 365; dayCount++) {
+      for (var dayCount = 0; dayCount < 365; dayCount++) {
         date.setDate(date.getDate() + 1);
         var thisDate = new Date(date);
 
@@ -69,12 +68,11 @@ for(var stayId = 0; stayId < 100; stayId++) {
         })
 
         day.save((err, d) => {
-          if(err) console.log(err);
+          if (err) { console.log(err) }
         })
-
       }
     }
-  })
+  });
 }
 
 

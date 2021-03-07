@@ -26,7 +26,6 @@ app.get('/rooms/:id/minNightlyRate', (req, res) => {
 });
 
 app.get('/rooms/:id/availableDates', (req, res) => {
-
   db.getAvailableDates(req.params.id, (err, dates) => {
     if (err) {
       res.sendStatus(404);
@@ -38,6 +37,52 @@ app.get('/rooms/:id/availableDates', (req, res) => {
   });
 });
 
+app.post('/rooms/:id', (req, res) => {
+  db.createStay({ productId: req.params.id, ...req.body }, (err, message) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(message);
+    }
+  });
+});
+app.delete('/rooms/:id/stay', (req, res) => {
+  db.deleteStay(req.params.id, (err, message) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(message);
+    }
+});
+app.put('/rooms/:id/stay', (req, res) => {
+  db.updateStay({ productId: req.params.id, ...req.body }, (err, message) => {
+    if (err) { res.status(500).send(err) }
+    else { res.status(200).send(message) }
+  })
+})
+app.put('/rooms/:id/calendar', (req, res) => {
+  db.updateCalendar({ productId: req.params.id, ...req.body }, (err, message) => {
+    if (err) { res.status(500).send(err) }
+    else { res.status(200).send(message) }
+  })
+})
+app.delete('/rooms/:id/calendar', (req, res) => {
+  db.deleteDates({ id: req.body.id }, (err, message) => {
+    if (err) { res.status(500).send(err) }
+    else { res.status(200).send(message) }
+  })
+})
+app.post('/rooms/:id/calendar', (req, res) => {
+  db.createCalendar({ productId: req.params.id, ...req.body }, (err, doc) => {
+    if (err) { res.status(500).send(err) }
+    else {
+      res.status(200).send(doc)
+    }
+  })
+})
+
+
+})
 
 
 console.log('listening on port 5001');
