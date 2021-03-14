@@ -4,9 +4,9 @@ const nano = require('nano')(process.env.COUCHDB);
 
 
 let start = Date.now();
-let total = 100000;
+let total = 10000000;
 let batchStart = 1;
-let batchSize = 3000;
+let batchSize = 1500;
 let wait = 0;
 nano.db.destroy('sdc')
   .then(() => nano.db.create('sdc'))
@@ -18,33 +18,30 @@ nano.db.destroy('sdc')
       let docs = [];
       for (let i = batchStart; i < batchStart + batchSize; i++) {
         let minRate = Math.floor(Math.random() * 500) + 30;
+        let reservations = [];
         let dateCounter = new Date();
-        let dates = [];
-
-        for (let k = 1; k < 366; k++) {
-          dateCounter.setDate(dateCounter.getDate() + 1);
-          dates.push({
-            date: dateCounter,
-            isAvailable: Math.floor(Math.random() * 4) === 1 ? false : true,
-            rate: minRate * Math.floor(Math.random() * 100) / 100 + 1
-          });
+        let start = Math.floor(Math.random() * (10 - 1 - 0 + 1) + 0)
+        for (let k = 0; k < Math.floor(Math.random() * 30) + 1; k++) {
+          let end = start + Math.floor(Math.random() * 9) + 1;
+          reservations.push({
+            id: k,
+            startDate: new Date().setDate(dateCounter.getDate() + start),
+            endDate: new Date().setDate(dateCounter.getDate() + end),
+          })
+          start = Math.floor(Math.random() * (end + k * 15 - 1 - end + 1) + end)
         }
         docs.push({
           productId: i,
-          minRate: Math.floor(Math.random() * 500) + 30,
+          baseRate: Math.floor(Math.random() * 500) + 30,
+          weekendMulitplier: Math.floor(Math.random() * (150 - 100) + 100) / 100,
           cleaningFee: Math.floor(Math.random() * 200) + 50,
           serviceFee: Math.floor(Math.random() * 25) + 10,
           occupancyTaxes: Math.floor(Math.random() * 15) + 10,
-          dates
+          reservations
         });
       }
-
-
-      await axios.post('http://admin:admin@127.0.0.1:5984/sdc/_bulk_docs?batch=ok',
-        { docs }
-      ).then(res => console.log(res.data))
-      .catch(err=>console.log(err))
-      // wait > 10 ? wait = 0 :  wait++
+      wait < 3 ? db.bulk({docs}) : await db.bulk({docs});
+      wait < 3 ? wait++ : wait = 0;
       console.log('Batch starting with ' + batchStart + ' complete')
       batchStart += batchSize;
     }
