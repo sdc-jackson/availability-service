@@ -23,15 +23,9 @@ app.get('/rooms/:id/minNightlyRate', (req, res) => {
 });
 
 app.get('/rooms/:id/availableDates', (req, res) => {
-  db.getAvailableDates(req.params.id, (err, dates) => {
-    if (err) {
-      res.sendStatus(404);
-    } else {
-      res.status(200);
-      res.send(dates);
-      res.end;
-    }
-  });
+  db.getAvailableDates()
+    .then(dates => res.status(200).send(dates))
+    .catch(err => res.status(500).send(err))
 });
 
 
