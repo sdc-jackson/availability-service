@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
-var db = require('../database/db.js');
+var db = require('../database/postgres/postgres.js')
 var expressStaticGzip = require("express-static-gzip");
 
 
@@ -14,15 +14,12 @@ app.use(express.static(__dirname + '/../client/dist'));
 //app.use('/rooms/:id', expressStaticGzip(__dirname + '/../client/dist/'));
 
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
-  db.getMinNightlyRate(req.params.id, (err, rate) => {
-    if (err) {
-      res.sendStatus(404);
-    } else {
-      res.status(200);
-      res.send({minNightlyRate: rate.minRate});
-      res.end();
-    }
-  });
+  db.getMinNightlyRate(req.params.id)
+    .then(roomInfo => {
+      if(!roomInfo.baseRate) { res.status(404).send('product not found') }
+      else { res.status(200).send(roomInfo.baseRate) }
+    })
+    .catch(err => res.status(500).send(err))
 });
 
 app.get('/rooms/:id/availableDates', (req, res) => {
@@ -37,53 +34,35 @@ app.get('/rooms/:id/availableDates', (req, res) => {
   });
 });
 
-app.post('/rooms/:id', (req, res) => {
-  db.createStay({ productId: req.params.id, ...req.body }, (err, message) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(message);
-    }
-  });
+
+app.delete('/rooms/:id/reservation', (req, res) => {
+  const oldRes = {
+    productId: req.params.id,
+    ...req.body.oldRes
+  }
+  db.deleteReservation(oldRes)
+    .then(success => res.status(200).send(success))
+    .catch(err => res.status(500).send(err))
 });
-app.delete('/rooms/:id/stay', (req, res) => {
-  db.deleteStay(req.params.id, (err, message) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(message);
-    }
-});
-app.put('/rooms/:id/stay', (req, res) => {
-  db.updateStay({ productId: req.params.id, ...req.body }, (err, message) => {
-    if (err) { res.status(500).send(err) }
-    else { res.status(200).send(message) }
+app.post('/rooms/:id/reservation', (req, res) => {
+  db.createReservation({
+    productId: req.params.id,
+    ...req.body
   })
 })
-app.put('/rooms/:id/calendar', (req, res) => {
-  db.updateCalendar({ productId: req.params.id, ...req.body }, (err, message) => {
-    if (err) { res.status(500).send(err) }
-    else { res.status(200).send(message) }
-  })
+app.put('/rooms/:id/reservation', (req, res) => {
+  const oldRes = {
+    productId: req.params.id,
+    ...req.body.oldRes
+  }
+  const new Res = {
+    productId: req.params.id,
+    ...req.body.newRes
+  }
+  db.updateReservation(oldRes, newRes)
+    .then(success => res.status(200).send(success))
+    .catch(err => res.status(500).send(err))
 })
-app.delete('/rooms/:id/calendar', (req, res) => {
-  db.deleteDates({ id: req.body.id }, (err, message) => {
-    if (err) { res.status(500).send(err) }
-    else { res.status(200).send(message) }
-  })
-})
-app.post('/rooms/:id/calendar', (req, res) => {
-  db.createCalendar({ productId: req.params.id, ...req.body }, (err, doc) => {
-    if (err) { res.status(500).send(err) }
-    else {
-      res.status(200).send(doc)
-    }
-  })
-})
-
-
-})
-
 
 console.log('listening on port 5001');
 app.listen(5001);

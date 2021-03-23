@@ -17,10 +17,10 @@ nano.db.destroy('sdc')
     while (batchStart < total) {
       let docs = [];
       for (let i = batchStart; i < batchStart + batchSize; i++) {
-        let minRate = Math.floor(Math.random() * 500) + 30;
         let reservations = [];
         let dateCounter = new Date();
         let start = Math.floor(Math.random() * (10 - 1 - 0 + 1) + 0)
+
         for (let k = 0; k < Math.floor(Math.random() * 30) + 1; k++) {
           let end = start + Math.floor(Math.random() * 9) + 1;
           reservations.push({

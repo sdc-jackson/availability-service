@@ -1,9 +1,9 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { Client } = require('pg');
 
-const db = new Sequelize('test', 'dharmon', null, {
+const db = new Sequelize(process.env.DB_NAME || 'changeMyName', process.env.DB_USERNAME || 'dharmon', process.env.DB_PASSWORD || null, {
   host: 'localhost',
-  port: 5432,
+  port: process.env.DBPORT || 5432,
   dialect: 'postgres',
   logging: false,
 });
@@ -33,6 +33,11 @@ const Room = db.define('Room', {
   occupancyTaxes: {
     type: DataTypes.INTEGER
   }
+},{
+  indexes: [{
+    name: 'idx_Rooms_ProductId',
+    fields: ['productId']
+  }]
 });
 
 const Dates = db.define('Dates', {
@@ -55,36 +60,32 @@ const Reservations = db.define('Reservations', {
     primaryKey: true
   },
   startDate: {
-    type: DataTypes.UUID,
-    references: {
-      model: 'Dates',
-      key: 'id'
-    }
+    type: DataTypes.DATEONLY,
+
   },
   endDate: {
-    type: DataTypes.UUID,
-    references: {
-      model: 'Dates',
-      key: 'id'
-    }
-  },
-  roomId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'Rooms',
-      key: 'productId'
-    }
-  }
-},{tableName: 'Reservations'})
+    type: DataTypes.DATEONLY,
 
-Dates.belongsToMany(Room, { through: Reservations })
-Room.belongsToMany(Dates, { through: Reservations })
+  },
+  productId: {
+    type: DataTypes.INTEGER,
+  }
+},{
+  tableName: 'Reservations',
+  indexes: [{
+    name: 'idx_Reservations_ProductId',
+    fields: ['productId']
+  }]
+})
+
+Reservations.hasMany(Room)
+Room.belongsTo(Reservations)
 
 const asyncSeedPostgres = async () => {
   await db.sync({ force: true })
   console.log('All models were synced successfully')
   let start = Date.now();
-  let total = 10000000;
+  let total = 1000000;
   let batchStart = 1;
   let batchSize = 1000;
   let datesIds = [];
@@ -109,12 +110,13 @@ const asyncSeedPostgres = async () => {
         occupancyTaxes: Math.floor(Math.random() * 15) + 10
       })
       let start = Math.floor(Math.random() * (10 - 1 - 0 + 1) + 0)
+      let dateRef = new Date()
       for (let k = 0; k < Math.floor(Math.random() * 9) + 1; k++) {
         let end = start + Math.floor(Math.random() * 9) + 1;
         reservations.push({
           roomId: i,
-          startDate: datesIds[start],
-          endDate: datesIds[end],
+          startDate: new Date().setDate(dateRef.getDate() + start),
+          endDate: new Date().setDate(dateRef.getDate() + end),
         })
         start = Math.floor(Math.random() * (end + k * 30 - 1 - end + 1) + end)
       }
@@ -128,7 +130,40 @@ const asyncSeedPostgres = async () => {
 
   console.log('Seeding Complete')
   console.log(Date.now() - start)
-
 }
-module.exports = db
-module.exports.seed = asyncSeedPostgres
+
+const getAvailableDates = (productId) => {
+  return Dates.findAll({
+    where: {
+      date: {
+        [Op.notIn]: [
+          sequelize.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate";`)
+        ]
+      }
+    }
+  })
+}
+const createReservation = ({ productID, startDate, endDate }) => {
+  return Reservations.create({
+    roomId: productId,
+    startDate,
+    endDate
+  })
+}
+const updateReservation = (oldReservation, newReservation) => {
+  return Reservations.update(newRes, { where: oldRes })
+}
+const deleteReservation = (ReservationDetails) => {
+  return Reservations.destroy({ where: ReservationDetails })
+}
+const getMinNightlyRate = (productId) => {
+  return Rooms.findOne({where: { productId }})
+}
+
+module.exports = db;
+module.exports.seed = asyncSeedPostgres;
+module.exports.getAvailableDates = getAvailableDates;
+module.exports.getMinNightlyRate = getMinNightlyRate;
+module.exports.createReservation = createReservation;
+module.exports.updateReservation = updateReservation;
+module.exports.deleteReservation = deleteReservation;
