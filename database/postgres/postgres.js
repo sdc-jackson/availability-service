@@ -152,7 +152,7 @@ const getAvailableDates = (productId) => {
         }
       })
 
-      const reservedDates = await db.query(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`, QueryTypes.RAW)
+      const reservedDates = await db.query(`SELECT DISTINCT "date","Ressy"."id" from "Dates",(select "startDate", "endDate", "id" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`, QueryTypes.RAW)
       const availableObj = availableDates.map(availDate => {
         const day = new Date(availDate.date).getDay()
         let weekend = false;
@@ -176,7 +176,8 @@ const getAvailableDates = (productId) => {
             cleaningFee: room.cleaningFee,
             nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
             isAvailable: false,
-            date: resDate.date
+            date: resDate.date,
+            reservationId: resDate.id
         }
       })
       resolve([...availableObj, ...reservedObj])
