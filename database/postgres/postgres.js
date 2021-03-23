@@ -140,7 +140,7 @@ const getAvailableDates = (productId) => {
   return new Promise((resolve, reject) => {
     Room.findOne({ where: { productId } })
     .then(async (room) => {
-
+      if (!room) { resolve() }
      const availableDates = await Dates.findAll({
         attributes: ["date"],
         where: {
@@ -195,12 +195,13 @@ const createReservation = ({ productID, startDate, endDate }) => {
 const updateReservation = (oldReservation, newReservation) => {
   return Reservations.update(newRes, { where: oldRes })
 }
-const deleteReservation = (ReservationDetails) => {
-  return Reservations.destroy({ where: ReservationDetails })
+const deleteReservation = ({ reservationId }) => {
+  return Reservations.destroy({ where: { id: reservationId } })
 }
 const getMinNightlyRate = (productId) => {
   return Room.findOne({ where: { productId } })
 }
+
 
 module.exports.seed = asyncSeedPostgres;
 module.exports.getAvailableDates = getAvailableDates;
