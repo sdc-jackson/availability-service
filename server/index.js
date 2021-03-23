@@ -23,6 +23,7 @@ app.get('/rooms/:id/minNightlyRate', (req, res) => {
 });
 
 app.get('/rooms/:id/availableDates', (req, res) => {
+  console.log('hit')
   db.getAvailableDates(req.params.id)
     .then(dates => res.status(200).send(dates))
     .catch(err => res.status(500).send(err))

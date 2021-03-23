@@ -88,7 +88,7 @@ const asyncSeedPostgres = async () => {
   await db.sync({ force: true })
   console.log('All models were synced successfully')
   let start = Date.now();
-  let total = 1000000;
+  let total = 100000;
   let batchStart = 1;
   let batchSize = 1000;
   let datesIds = [];
@@ -117,7 +117,7 @@ const asyncSeedPostgres = async () => {
       for (let k = 0; k < Math.floor(Math.random() * 9) + 1; k++) {
         let end = start + Math.floor(Math.random() * 9) + 1;
         reservations.push({
-          roomId: i,
+          productId: i,
           startDate: new Date().setDate(dateRef.getDate() + start),
           endDate: new Date().setDate(dateRef.getDate() + end),
         })
@@ -136,15 +136,52 @@ const asyncSeedPostgres = async () => {
 }
 
 const getAvailableDates = (productId) => {
-  return Dates.findAll({
-    attributes: ["date"],
-    where: {
-      date: {
-        [Op.notIn]: [
-          db.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`)
-        ]
-      }
-    }
+
+  return new Promise((resolve, reject) => {
+    Room.findOne({ where: { productId } })
+    .then(async (room) => {
+
+     const availableDates = await Dates.findAll({
+        attributes: ["date"],
+        where: {
+          date: {
+            [Op.notIn]: [
+              db.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`)
+            ]
+          }
+        }
+      })
+
+      const reservedDates = await db.query(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`, QueryTypes.RAW)
+      const availableObj = availableDates.map(availDate => {
+        const day = new Date(availDate.date).getDay()
+        let weekend = false;
+        if (day === 5 || day === 6 || day === 0) { const weekend = true }
+        return {
+          occupancyTaxes: room.occupancyTaxes,
+          serviceFee: room.serviceFee,
+          cleaningFee: room.cleaningFee,
+          nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
+          isAvailable: true,
+          date: availDate.date
+        }
+      })
+      const reservedObj = reservedDates[0].map(resDate => {
+        const day = new Date(resDate.date).getDay()
+        let weekend = false;
+        if (day === 5 || day === 6 || day === 0) { weekend = true }
+        return {
+            occupancyTaxes: room.occupancyTaxes,
+            serviceFee: room.serviceFee,
+            cleaningFee: room.cleaningFee,
+            nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
+            isAvailable: false,
+            date: resDate.date
+        }
+      })
+      resolve([...availableObj, ...reservedObj])
+    })
+    .catch(err => reject(err))
   })
 }
 const createReservation = ({ productID, startDate, endDate }) => {
