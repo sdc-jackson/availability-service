@@ -8,6 +8,7 @@ var expressStaticGzip = require("express-static-gzip");
 
 
 var app = express();
+app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use('/rooms/:id', express.static(__dirname + '/../client/dist'));
 app.use(express.static(__dirname + '/../client/dist'));
@@ -44,6 +45,14 @@ app.post('/rooms/:id/reservation', (req, res) => {
     productId: req.params.id,
     ...req.body
   })
+})
+app.put('/rooms/:id', (req, res) => {
+  db.updateRoom(req.params.id, {...req.body})
+    .then(success => {
+      if(success[0] === 0) { res.status(404).send('no changes made') }
+      else { res.status(200).send(success) }
+    })
+    .catch(err => res.status(500).send(err))
 })
 app.put('/rooms/:id/reservation', (req, res) => {
   const oldRes = {

@@ -2,8 +2,13 @@ var app = require('./server.js');
 const supertest = require('supertest');
 const request = supertest(app);
 
+test('updates the room nightly rate', async done => {
+  const response = await request.put('/rooms/1').send({ "productId": "1", "baseRate": "360" })
+  expect(response.status).toBe(200)
+  done()
+});
 test('gets minNightlyRate for a valid stay ID', async done => {
-  const response = await request.get('/rooms/2/minNightlyRate')
+  const response = await request.get('/rooms/1/minNightlyRate')
 
   expect(response.status).toBe(200);
   expect(response.body.minNightlyRate).toBe(360);
