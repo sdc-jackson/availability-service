@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { Client } = require('pg');
 
-const db = new Sequelize(process.env.DB_NAME || 'changeMyName', process.env.DB_USERNAME || 'dharmon', process.env.DB_PASSWORD || null, {
+const db = new Sequelize(process.env.DB_NAME || 'test', process.env.DB_USERNAME || 'dharmon', process.env.DB_PASSWORD || null, {
   host: 'localhost',
   port: process.env.DBPORT || 5432,
   dialect: 'postgres',
@@ -48,6 +48,7 @@ const Dates = db.define('Dates', {
   },
   date: {
     type: DataTypes.DATEONLY,
+    allowNull: false
   }
 }, {
   tableName: 'Dates'
@@ -61,14 +62,16 @@ const Reservations = db.define('Reservations', {
   },
   startDate: {
     type: DataTypes.DATEONLY,
+    allowNull: false
 
   },
   endDate: {
     type: DataTypes.DATEONLY,
-
+    allowNull: false
   },
   productId: {
     type: DataTypes.INTEGER,
+    allowNull: false
   }
 },{
   tableName: 'Reservations',
@@ -134,10 +137,11 @@ const asyncSeedPostgres = async () => {
 
 const getAvailableDates = (productId) => {
   return Dates.findAll({
+    attributes: ["date"],
     where: {
       date: {
         [Op.notIn]: [
-          sequelize.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate";`)
+          db.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`)
         ]
       }
     }
@@ -157,10 +161,9 @@ const deleteReservation = (ReservationDetails) => {
   return Reservations.destroy({ where: ReservationDetails })
 }
 const getMinNightlyRate = (productId) => {
-  return Rooms.findOne({where: { productId }})
+  return Room.findOne({ where: { productId } })
 }
 
-module.exports = db;
 module.exports.seed = asyncSeedPostgres;
 module.exports.getAvailableDates = getAvailableDates;
 module.exports.getMinNightlyRate = getMinNightlyRate;

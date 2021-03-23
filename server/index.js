@@ -16,14 +16,14 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
   db.getMinNightlyRate(req.params.id)
     .then(roomInfo => {
-      if(!roomInfo.baseRate) { res.status(404).send('product not found') }
-      else { res.status(200).send(roomInfo.baseRate) }
+      if(!roomInfo.dataValues.baseRate) { res.status(404).send('product not found') }
+      else { res.status(200).send({minNightlyRate: roomInfo.baseRate}) }
     })
-    .catch(err => res.status(500).send(err))
+    .catch(err => res.status(500).send(err.message))
 });
 
 app.get('/rooms/:id/availableDates', (req, res) => {
-  db.getAvailableDates()
+  db.getAvailableDates(req.params.id)
     .then(dates => res.status(200).send(dates))
     .catch(err => res.status(500).send(err))
 });
@@ -49,7 +49,7 @@ app.put('/rooms/:id/reservation', (req, res) => {
     productId: req.params.id,
     ...req.body.oldRes
   }
-  const new Res = {
+  const newRes = {
     productId: req.params.id,
     ...req.body.newRes
   }
