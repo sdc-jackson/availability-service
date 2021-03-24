@@ -3,7 +3,7 @@ const supertest = require('supertest');
 const request = supertest(app);
 
 test('updates the room nightly rate', async done => {
-  const response = await request.put('/rooms/1').send({ "productId": "1", "baseRate": "360" })
+  const response = await request.put('/rooms/1').send({ "baseRate": "360" })
   expect(response.status).toBe(200)
   done()
 });

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { Client } = require('pg');
+require('dotenv').config()
 
 const db = new Sequelize(process.env.DB_NAME || 'test', process.env.DB_USERNAME || 'dharmon', process.env.DB_PASSWORD || null, {
   host: 'localhost',
@@ -33,11 +34,6 @@ const Room = db.define('Room', {
   occupancyTaxes: {
     type: DataTypes.INTEGER
   }
-},{
-  indexes: [{
-    name: 'idx_Rooms_ProductId',
-    fields: ['productId']
-  }]
 });
 
 const Dates = db.define('Dates', {
@@ -48,7 +44,6 @@ const Dates = db.define('Dates', {
   },
   date: {
     type: DataTypes.DATEONLY,
-    allowNull: false
   }
 }, {
   tableName: 'Dates'
@@ -61,34 +56,36 @@ const Reservations = db.define('Reservations', {
     primaryKey: true
   },
   startDate: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
-
+    type: DataTypes.UUID,
+    references: {
+      model: 'Dates',
+      key: 'id'
+    }
   },
   endDate: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
+    type: DataTypes.UUID,
+    references: {
+      model: 'Dates',
+      key: 'id'
+    }
   },
   productId: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    references: {
+      model: 'Rooms',
+      key: 'productId'
+    }
   }
 },{
   tableName: 'Reservations',
-  indexes: [{
-    name: 'idx_Reservations_ProductId',
-    fields: ['productId']
-  }]
 })
 
-Reservations.hasMany(Room)
-Room.belongsTo(Reservations)
 
 const asyncSeedPostgres = async () => {
   await db.sync({ force: true })
   console.log('All models were synced successfully')
   let start = Date.now();
-  let total = 100000;
+  let total = 1000000;
   let batchStart = 1;
   let batchSize = 1000;
   let datesIds = [];
@@ -113,13 +110,12 @@ const asyncSeedPostgres = async () => {
         occupancyTaxes: Math.floor(Math.random() * 15) + 10
       })
       let start = Math.floor(Math.random() * (10 - 1 - 0 + 1) + 0)
-      let dateRef = new Date()
       for (let k = 0; k < Math.floor(Math.random() * 9) + 1; k++) {
         let end = start + Math.floor(Math.random() * 9) + 1;
         reservations.push({
           productId: i,
-          startDate: new Date().setDate(dateRef.getDate() + start),
-          endDate: new Date().setDate(dateRef.getDate() + end),
+          startDate: datesIds[start],
+          endDate: datesIds[end],
         })
         start = Math.floor(Math.random() * (end + k * 30 - 1 - end + 1) + end)
       }
@@ -133,6 +129,8 @@ const asyncSeedPostgres = async () => {
 
   console.log('Seeding Complete')
   console.log(Date.now() - start)
+  db.query(`CREATE INDEX "idx_Rooms_productId" ON "Rooms" ("productId")`)
+  db.query(`CREATE INDEX "idx_Reservations_productId" ON "Reservations" ("productId")`)
 }
 
 const getAvailableDates = (productId) => {
@@ -146,13 +144,13 @@ const getAvailableDates = (productId) => {
         where: {
           date: {
             [Op.notIn]: [
-              db.literal(`SELECT DISTINCT "date" from "Dates",(select "startDate", "endDate" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`)
+              db.literal(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate";`)
             ]
           }
         }
       })
 
-      const reservedDates = await db.query(`SELECT DISTINCT "date","Ressy"."id" from "Dates",(select "startDate", "endDate", "id" from "Reservations" where "productId" = ${productId}) as "Ressy" WHERE "Dates"."date" BETWEEN "Ressy"."startDate" AND "Ressy"."endDate"`, QueryTypes.RAW)
+      const reservedDates = await db.query(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate";`, QueryTypes.RAW)
       const availableObj = availableDates.map(availDate => {
         const day = new Date(availDate.date).getDay()
         let weekend = false;
@@ -185,21 +183,26 @@ const getAvailableDates = (productId) => {
     .catch(err => reject(err))
   })
 }
-const createReservation = ({ productID, startDate, endDate }) => {
+const createReservation = async ({ productId, startDate, endDate }) => {
+  let startId = await Dates.findOne({ where: { date: startDate } }).map(date => date.id)
+  let endId = await Dates.findOne({ where: { date: endDate } }).map(date => date.id)
   return Reservations.create({
     roomId: productId,
-    startDate,
-    endDate
+    startDate: startId,
+    endDate: endId
   })
 }
 const updateReservation = (oldReservation, newReservation) => {
-  return Reservations.update(newRes, { where: oldRes })
+  return Reservations.update(newReservation, { where: { ...oldReservation } })
 }
 const deleteReservation = ({ reservationId }) => {
   return Reservations.destroy({ where: { id: reservationId } })
 }
 const getMinNightlyRate = (productId) => {
   return Room.findOne({ where: { productId } })
+}
+const updateRoom = (productId, updateObj) => {
+  return Room.update(updateObj, { where: { productId } })
 }
 
 
@@ -209,3 +212,4 @@ module.exports.getMinNightlyRate = getMinNightlyRate;
 module.exports.createReservation = createReservation;
 module.exports.updateReservation = updateReservation;
 module.exports.deleteReservation = deleteReservation;
+module.exports.updateRoom = updateRoom;
