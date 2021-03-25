@@ -85,7 +85,7 @@ const asyncSeedPostgres = async () => {
   await db.sync({ force: true })
   console.log('All models were synced successfully')
   let start = Date.now();
-  let total = 1000000;
+  let total = 10000000;
   let batchStart = 1;
   let batchSize = 1000;
   let datesIds = [];
@@ -144,7 +144,7 @@ const getAvailableDates = (productId) => {
         where: {
           date: {
             [Op.notIn]: [
-              db.literal(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate";`)
+              db.literal(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate"`)
             ]
           }
         }
@@ -165,7 +165,7 @@ const getAvailableDates = (productId) => {
         }
       })
       const reservedObj = reservedDates[0].map(resDate => {
-        const day = new Date(resDate.date).getDay()
+        const day = new Date(resDate.reservedDates).getDay()
         let weekend = false;
         if (day === 5 || day === 6 || day === 0) { weekend = true }
         return {
@@ -174,16 +174,21 @@ const getAvailableDates = (productId) => {
             cleaningFee: room.cleaningFee,
             nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
             isAvailable: false,
-            date: resDate.date,
-            reservationId: resDate.id
+            date: resDate.reservedDates,
+            stayId: resDate.id
         }
       })
-      resolve([...availableObj, ...reservedObj])
+
+      resolve([...availableObj, ...reservedObj].sort((a,b) => {
+        const c = new Date(a.date)
+        const d =  new Date(b.date)
+        return c-d;
+      }))
     })
     .catch(err => reject(err))
   })
 }
-const createReservation = async ({ productId, startDate, endDate }) => {
+const createReservation = async (productId, {startDate, endDate }) => {
   let startId = await Dates.findOne({ where: { date: startDate } }).map(date => date.id)
   let endId = await Dates.findOne({ where: { date: endDate } }).map(date => date.id)
   return Reservations.create({
