@@ -3,7 +3,7 @@ const supertest = require('supertest');
 const request = supertest(app);
 
 test('updates the room nightly rate', async done => {
-  const response = await request.put('/rooms/1').send({ "baseRate": "360" })
+  const response = await request.put('/rooms/1').send({ baseRate: 360 })
   expect(response.status).toBe(200)
   done()
 });
@@ -22,10 +22,11 @@ test('gets 404 when pinging /minNightlyRate with an invalid stay ID', async done
   done()
 });
 
-test('gets date availability info array when pinging /availableDates with a valid stay ID', async done => {
-  const response = await request.get('/rooms/109/availableDates')
-  expect(response.body.length).toBeGreaterThanOrEqual(365) //365 days
+test('gets date availability info array when pinging /availableDates with a valid productID', async done => {
+  const response = await request.get('/rooms/1/availableDates')
+
   expect(response.status).toBe(200);
+  expect(response.body.length).toBeGreaterThanOrEqual(365) //365 days
   done()
 });
 
