@@ -20,7 +20,7 @@ app.get('/rooms/:id/minNightlyRate', (req, res) => {
   db.getMinNightlyRate(req.params.id)
     .then(roomInfo => {
       if(!roomInfo) { res.status(404).send('product not found') }
-      else { res.status(200).send({minNightlyRate: roomInfo.baseRate}) }
+      else { res.status(200).send({minNightlyRate: roomInfo.rows[0].baseRate}) }
     })
     .catch(err => res.status(500).send(err.message))
 });
@@ -34,12 +34,12 @@ app.get('/rooms/:id/availableDates', (req, res) => {
 });
 
 app.delete('/rooms/:id/reservations', (req, res) => {
-  const oldRes = {
-    productId: req.params.id,
-    ...req.body.oldRes
-  }
-  db.deleteReservation(oldRes)
-    .then(success => res.status(200).send(success))
+  console.log(req.body)
+  db.deleteReservation(req.body.reservationId)
+    .then(success => {
+      if (success.rowCount > 0) { res.status(200).send('deleted')}
+      else { res.status(404).send('no changes made')}
+    })
     .catch(err => res.status(500).send(err))
 });
 app.get('/rooms/:id/reservations', (req, res) => {
@@ -52,29 +52,24 @@ app.post('/rooms/:id/reservations', (req, res) => {
     ...req.body
   })
     .then(response => {
-      res.status(200).send(response)
+      res.status(200).send({reservationId: response.rows[0].id})
     })
     .catch(err => res.status(500).send(err))
 })
 app.put('/rooms/:id', (req, res) => {
-  db.updateRoom(req.params.id, {...req.body})
+  db.updateRoom(req.params.id, req.body)
     .then(success => {
-      if(success[0] === 0) { res.status(404).send('no changes made') }
+      if(success[0] === 0) { res.status(404).send('No changes made') }
       else { res.status(200).send(success) }
     })
     .catch(err => res.status(500).send(err))
 })
 app.put('/rooms/:id/reservations', (req, res) => {
-  const oldRes = {
-    productId: req.params.id,
-    ...req.body.oldRes
-  }
-  const newRes = {
-    productId: req.params.id,
-    ...req.body.newRes
-  }
-  db.updateReservation(oldRes, newRes)
-    .then(success => res.status(200).send(success))
+  db.updateReservation(req.body)
+    .then(success => {
+      if(success.rowCount> 0) { res.status(200).send('Updated') }
+      else { res.status(404).send('No changes made')}
+    })
     .catch(err => res.status(500).send(err))
 })
 
