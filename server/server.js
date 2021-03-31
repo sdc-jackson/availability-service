@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.get('/rooms/:id/minNightlyRate', (req, res) => {
   db.getMinNightlyRate(req.params.id)
     .then(roomInfo => {
-      if(!roomInfo) { res.status(404).send('product not found') }
+      if(!roomInfo) { res.status(404).send('Product not found') }
       else { res.status(200).send({minNightlyRate: roomInfo.rows[0].baseRate}) }
     })
     .catch(err => res.status(500).send(err.message))
@@ -28,17 +28,16 @@ app.get('/rooms/:id/minNightlyRate', (req, res) => {
 app.get('/rooms/:id/availableDates', (req, res) => {
   db.getAvailableDates(req.params.id)
     .then(dates => {
-      if(!dates) { res.status(404).send('no product found') }
+      if(!dates) { res.status(404).send('No product found') }
       else { res.status(200).send(dates) } })
     .catch(err => res.status(500).send(err.message))
 });
 
 app.delete('/rooms/:id/reservations', (req, res) => {
-  console.log(req.body)
   db.deleteReservation(req.body.reservationId)
     .then(success => {
-      if (success.rowCount > 0) { res.status(200).send('deleted')}
-      else { res.status(404).send('no changes made')}
+      if (success.rowCount > 0) { res.status(200).send('Deleted')}
+      else { res.status(404).send('No changes made')}
     })
     .catch(err => res.status(500).send(err))
 });
