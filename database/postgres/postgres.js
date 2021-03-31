@@ -1,136 +1,148 @@
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
-const { Client } = require('pg');
+const { Client,Pool } = require('pg');
+const fs = require('fs')
+const path = require('path')
+const { v4: uuidv4 } = require('uuid')
 require('dotenv').config()
 
-const db = new Sequelize(process.env.DB_NAME || 'test', process.env.DB_USERNAME || 'dharmon', process.env.DB_PASSWORD || null, {
-  host: 'localhost',
-  port: process.env.DBPORT || 5432,
-  dialect: 'postgres',
-  logging: false,
-});
+const client = new Client()
 
-const Room = db.define('Room', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
-  productId: {
-    type: DataTypes.INTEGER,
-    unique: true
-  },
-  baseRate: {
-    type: DataTypes.INTEGER
-  },
-  weekendMulitplier: {
-    type: DataTypes.FLOAT
-  },
-  cleaningFee: {
-    type: DataTypes.INTEGER
-  },
-  serviceFee: {
-    type: DataTypes.INTEGER
-  },
-  occupancyTaxes: {
-    type: DataTypes.INTEGER
-  }
-});
 
-const Dates = db.define('Dates', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
-  date: {
-    type: DataTypes.DATEONLY,
-  }
-}, {
-  tableName: 'Dates'
-});
-
-const Reservations = db.define('Reservations', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
-  startDate: {
-    type: DataTypes.UUID,
-    references: {
-      model: 'Dates',
-      key: 'id'
-    }
-  },
-  endDate: {
-    type: DataTypes.UUID,
-    references: {
-      model: 'Dates',
-      key: 'id'
-    }
-  },
-  productId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'Rooms',
-      key: 'productId'
-    }
-  }
-},{
-  tableName: 'Reservations',
-})
 
 
 const asyncSeedPostgres = async () => {
-  await db.sync({ force: true })
-  console.log('All models were synced successfully')
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+
+//initialize variables
   let start = Date.now();
   let total = 10000000;
   let batchStart = 1;
-  let batchSize = 1000;
+  let batchSize = 1000000;
   let datesIds = [];
   let dateCounter = new Date();
-  let wait = 0;
+  let roomOutput = './roomOutput.csv';
+  let reservationOutput = './reservationOutput.csv';
+  //wait for connection
+  await client.connect()
 
+
+  //load tables
+  await client.query(`DROP TABLE IF EXISTS "Dates" CASCADE`)
+  await client.query(`DROP TABLE IF EXISTS "Reservations" CASCADE`)
+  await client.query(`DROP TABLE IF EXISTS "Rooms" CASCADE`)
+  await client.query(`CREATE TABLE "Dates" (
+    id uuid,
+    date DATE
+   );`)
+  await client.query(`CREATE TABLE "Rooms" (
+    id uuid NOT NULL,
+    "productId" INTEGER NOT NULL,
+    "baseRate" INTEGER NOT NULL,
+    "weekendMultiplier" DECIMAL NOT NULL,
+    "cleaningFee" INTEGER NOT NULL,
+    "serviceFee" INTEGER NOT NULL,
+    "occupancyTaxes" INTEGER NOT NULL
+   );`)
+   await client.query(`CREATE TABLE "Reservations" (
+    id uuid NOT NULL,
+    "startDate" uuid NOT NULL,
+    "endDate" uuid NOT NULL,
+    "productId" INTEGER NOT NULL
+   );`)
+    console.log('Tables Created')
+  //Add to dates table
   for (let j = 0; j < 366; j++) {
     dateCounter.setDate(dateCounter.getDate() + 1);
-    let dateResponse = await Dates.create({ date: dateCounter })
-    datesIds.push(dateResponse.dataValues.id)
+    datesIds.push(uuidv4());
+    await client.query(`INSERT INTO "Dates" (id, date) VALUES ('${datesIds[j]}', '${formatDate(dateCounter)}')`)
   }
+  console.log('dates created')
+  //start batching
   while (batchStart < total) {
+    let batchStartTime = Date.now()
     let rooms = [];
     let reservations = [];
+    let streamRoom = fs.createWriteStream(roomOutput);
+    let streamReservation = fs.createWriteStream(reservationOutput)
+    //write headers to csv files
+    streamRoom.write(`id, productId,baseRate,weekendMultiplier,cleaningFee,serviceFee,occupancyTaxes\n`)
+    streamReservation.write(`id,startDate,endDate,productId\n`)
+    //create data
     for (let i = batchStart; i < batchStart + batchSize; i++) {
-      rooms.push({
-        productId: i,
-        baseRate: Math.floor(Math.random() * 500) + 30,
-        weekendMulitplier: Math.floor(Math.random() * (150 - 100) + 100) / 100,
-        cleaningFee: Math.floor(Math.random() * 200) + 50,
-        serviceFee: Math.floor(Math.random() * 25) + 10,
-        occupancyTaxes: Math.floor(Math.random() * 15) + 10
-      })
+      streamRoom.write(`${uuidv4()},${i},${Math.floor(Math.random() * 500) + 30},${Math.floor(Math.random() * (150 - 100) + 100) / 100},${Math.floor(Math.random() * 200) + 50},${Math.floor(Math.random() * 25) + 10},${Math.floor(Math.random() * 15) + 10}\n`,'utf-8')
+
       let start = Math.floor(Math.random() * (10 - 1 - 0 + 1) + 0)
+      //make between 1 and 9 reservations
       for (let k = 0; k < Math.floor(Math.random() * 9) + 1; k++) {
+        //end the reservation between one and 10 days later
         let end = start + Math.floor(Math.random() * 9) + 1;
-        reservations.push({
-          productId: i,
-          startDate: datesIds[start],
-          endDate: datesIds[end],
-        })
-        start = Math.floor(Math.random() * (end + k * 30 - 1 - end + 1) + end)
+        //write the current reservation to the file
+        await streamReservation.write(`${uuidv4()},${datesIds[start]},${datesIds[end]},${i}\n`)
+        //make a new reservation between one and 10 days later
+        start = end + Math.floor(Math.random()* 9) + 1
       }
     }
-    Room.bulkCreate(rooms)
-    wait < 100 ? Reservations.bulkCreate(reservations) : await Reservations.bulkCreate(reservations)
-    wait < 100 ? wait++ : wait = 0
-    console.log('Batch starting with ' + batchStart + ' complete');
+    //wait for the files to close
+    streamRoom.end()
+    streamReservation.end()
+    await new Promise ((resolve, reject) => {
+      streamRoom.on('close', () => {
+        resolve()
+      })
+    })
+    await new Promise ((resolve, reject) => {
+      streamReservation.on('close', () => {
+        resolve()
+      })
+    })
+
+    //copy from the csv files
+    await client
+      .query(`COPY "Rooms" from '${path.resolve('roomOutput.csv')}' CSV HEADER;`)
+      .then(res => console.log('Rooms inserted'))
+      .catch(err => console.log(err))
+    await client
+      .query(`COPY "Reservations" from '${path.resolve('reservationOutput.csv')}' CSV HEADER;`)
+      .then(res => console.log('reservations inserted'))
+      .catch(err => console.log(err))
+    console.log(`Batch starting with ${batchStart} complete, ${batchSize} records inserted. Elapsed time: ${Date.now()-batchStartTime}`);
     batchStart += batchSize;
   }
-
-  console.log('Seeding Complete')
+  //add all the indexes and foreign keys
+  console.log('Seeding Complete...Adding Indexes and Foreign Keys')
+  await client.query(`ALTER TABLE "Dates" ADD CONSTRAINT dates_pkey PRIMARY KEY (id);`)
+  await client.query(`ALTER TABLE "Rooms" ADD CONSTRAINT rooms_pkey PRIMARY KEY (id);`)
+  await client.query(`ALTER TABLE "Reservations" ADD CONSTRAINT reservations_pkey PRIMARY KEY (id);`)
+  await client.query(`ALTER TABLE "Rooms" ADD CONSTRAINT rooms_unique_productid UNIQUE ("productId");`)
+  await client.query(`ALTER TABLE "Reservations" ADD CONSTRAINT "fk_endDate" FOREIGN KEY ("endDate") REFERENCES "Dates" ("id")`)
+  await client.query(`ALTER TABLE "Reservations" ADD CONSTRAINT "fk_startDate" FOREIGN KEY ("startDate") REFERENCES "Dates" ("id")`)
+  await client.query(`ALTER TABLE "Reservations" ADD CONSTRAINT "fk_productId" FOREIGN KEY ("productId") REFERENCES "Rooms" ("productId")`)
+  await client.query(`CREATE INDEX "idx_reservations_productId" ON "Reservations" ("productId")`)
+  client.end()
+  //delete the files
+  fs.unlink('reservationOutput.csv',(err) => {
+    if(err) { console.log(err) }
+    else { console.log('reservationOutput.csv deleted')}
+  })
+  fs.unlink('roomOutput.csv',(err) => {
+    if(err) { console.log(err) }
+    else { console.log('roomOutput.csv deleted')}
+  })
+  //TIME
   console.log(Date.now() - start)
-  db.query(`CREATE INDEX "idx_Rooms_productId" ON "Rooms" ("productId")`)
-  db.query(`CREATE INDEX "idx_Reservations_productId" ON "Reservations" ("productId")`)
 }
 
 const getAvailableDates = (productId) => {
@@ -189,13 +201,16 @@ const getAvailableDates = (productId) => {
   })
 }
 const createReservation = async (productId, {startDate, endDate }) => {
-  let startId = await Dates.findOne({ where: { date: startDate } }).map(date => date.id)
-  let endId = await Dates.findOne({ where: { date: endDate } }).map(date => date.id)
+  let startId = await Dates.findOrCreate({ where: { date: startDate } })
+  let endId = await Dates.findOrCreate({ where: { date: endDate } })
   return Reservations.create({
-    roomId: productId,
-    startDate: startId,
-    endDate: endId
+    productId: productId,
+    startDate: startId[0].id,
+    endDate: endId[0].id
   })
+}
+const getReservations = (productId) => {
+  return Reservations.findAll({where: { productId }, include: [Dates] })
 }
 const updateReservation = (oldReservation, newReservation) => {
   return Reservations.update(newReservation, { where: { ...oldReservation } })
@@ -218,3 +233,4 @@ module.exports.createReservation = createReservation;
 module.exports.updateReservation = updateReservation;
 module.exports.deleteReservation = deleteReservation;
 module.exports.updateRoom = updateRoom;
+module.exports.getReservations = getReservations;

@@ -1,3 +1,4 @@
+require('newrelic');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -9,6 +10,7 @@ var expressStaticGzip = require("express-static-gzip");
 
 var app = express();
 app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use(cors());
 app.use('/rooms/:id', express.static(__dirname + '/../client/dist'));
 app.use(express.static(__dirname + '/../client/dist'));
@@ -31,7 +33,7 @@ app.get('/rooms/:id/availableDates', (req, res) => {
     .catch(err => res.status(500).send(err.message))
 });
 
-app.delete('/rooms/:id/reservation', (req, res) => {
+app.delete('/rooms/:id/reservations', (req, res) => {
   const oldRes = {
     productId: req.params.id,
     ...req.body.oldRes
@@ -40,11 +42,19 @@ app.delete('/rooms/:id/reservation', (req, res) => {
     .then(success => res.status(200).send(success))
     .catch(err => res.status(500).send(err))
 });
-app.post('/rooms/:id/reservation', (req, res) => {
-  db.createReservation({
-    productId: req.params.id,
+app.get('/rooms/:id/reservations', (req, res) => {
+  db.getReservations(req.params.id)
+    .then(response => res.status(200).send(response))
+    .catch(err => res.status(500).send(err))
+})
+app.post('/rooms/:id/reservations', (req, res) => {
+  db.createReservation(req.params.id, {
     ...req.body
   })
+    .then(response => {
+      res.status(200).send(response)
+    })
+    .catch(err => res.status(500).send(err))
 })
 app.put('/rooms/:id', (req, res) => {
   db.updateRoom(req.params.id, {...req.body})
@@ -54,7 +64,7 @@ app.put('/rooms/:id', (req, res) => {
     })
     .catch(err => res.status(500).send(err))
 })
-app.put('/rooms/:id/reservation', (req, res) => {
+app.put('/rooms/:id/reservations', (req, res) => {
   const oldRes = {
     productId: req.params.id,
     ...req.body.oldRes
