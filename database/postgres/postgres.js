@@ -1,9 +1,9 @@
+require('dotenv').config()
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { Client,Pool } = require('pg');
 const fs = require('fs')
 const path = require('path')
 const { v4: uuidv4 } = require('uuid')
-require('dotenv').config()
 
 const client = new Client();
 const pool = new Pool();
@@ -31,7 +31,7 @@ const asyncSeedPostgres = async () => {
   let start = Date.now();
   let total = 10000000;
   let batchStart = 1;
-  let batchSize = 1000000;
+  let batchSize = 100000;
   let datesIds = [];
   let dateCounter = new Date();
   let roomOutput = './roomOutput.csv';
@@ -123,6 +123,15 @@ const asyncSeedPostgres = async () => {
     console.log(`Batch starting with ${batchStart} complete, ${batchSize} records inserted. Elapsed time: ${Date.now()-batchStartTime}`);
     batchStart += batchSize;
   }
+  //delete the files
+  fs.unlink('reservationOutput.csv',(err) => {
+    if(err) { console.log(err) }
+    else { console.log('reservationOutput.csv deleted')}
+  })
+  fs.unlink('roomOutput.csv',(err) => {
+    if(err) { console.log(err) }
+    else { console.log('roomOutput.csv deleted')}
+  })
   //add all the indexes and foreign keys
   console.log('Seeding Complete...Adding Indexes and Foreign Keys')
   await client.query(`ALTER TABLE "Dates" ADD CONSTRAINT dates_pkey PRIMARY KEY (id);`)
@@ -134,15 +143,6 @@ const asyncSeedPostgres = async () => {
   await client.query(`ALTER TABLE "Reservations" ADD CONSTRAINT "fk_productId" FOREIGN KEY ("productId") REFERENCES "Rooms" ("productId")`)
   await client.query(`CREATE INDEX "idx_reservations_productId" ON "Reservations" ("productId")`)
   client.end()
-  //delete the files
-  fs.unlink('reservationOutput.csv',(err) => {
-    if(err) { console.log(err) }
-    else { console.log('reservationOutput.csv deleted')}
-  })
-  fs.unlink('roomOutput.csv',(err) => {
-    if(err) { console.log(err) }
-    else { console.log('roomOutput.csv deleted')}
-  })
   //TIME
   console.log(Date.now() - start)
 }

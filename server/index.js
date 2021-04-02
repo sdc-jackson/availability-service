@@ -1,3 +1,4 @@
+require('newrelic');
 const app = require('./server.js');
 
 console.log('listening on port 5001');

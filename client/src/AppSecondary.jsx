@@ -142,12 +142,13 @@ class AppSecondary extends React.Component {
     });
 
     var urlStateInfo;
-    await $.ajax({
+    $.ajax({
       method: 'GET',
       url: `/rooms/${productId}/availableDates`,
-      success: async (dates) => {
+      success: (dates) => {
         urlStateInfo = this.getStateObjFromUrl(windowLocationSearch, windowLocationHash, dates);
-        await $.ajax({
+        this.setState(urlStateInfo);
+        $.ajax({
           method: 'GET',
           url: `/rooms/${productId}/title`,
           success: (title) => {
