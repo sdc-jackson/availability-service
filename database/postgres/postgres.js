@@ -154,19 +154,19 @@ const getAvailableDates = async (productId) => {
   const reservedDates = await pool.query(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate";`);
   // console.log(reservedDates)
   //const availableDates = await pool.query(`select "date" from "Dates" WHERE "date" NOT IN (SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate")`)
-  const availableObj = availableDates.rows.map(availDate => {
-    const day = new Date(availDate.date).getDay()
-    let weekend = false;
-    if (day === 5 || day === 6 || day === 0) { const weekend = true }
-    return {
-      occupancyTaxes: room.occupancyTaxes,
-      serviceFee: room.serviceFee,
-      cleaningFee: room.cleaningFee,
-      nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
-      isAvailable: true,
-      date: availDate.date
-    }
-  })
+  // const availableObj = availableDates.rows.map(availDate => {
+  //   const day = new Date(availDate.date).getDay()
+  //   let weekend = false;
+  //   if (day === 5 || day === 6 || day === 0) { const weekend = true }
+  //   return {
+  //     occupancyTaxes: room.occupancyTaxes,
+  //     serviceFee: room.serviceFee,
+  //     cleaningFee: room.cleaningFee,
+  //     nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
+  //     isAvailable: true,
+  //     date: availDate.date
+  //   }
+  // })
   const reservedObj = reservedDates.rows.map(resDate => {
     const day = new Date(resDate.reservedDates).getDay()
     let weekend = false;
