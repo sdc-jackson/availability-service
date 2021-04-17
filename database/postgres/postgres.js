@@ -4,6 +4,7 @@ const { Client,Pool } = require('pg');
 const fs = require('fs')
 const path = require('path')
 const { v4: uuidv4 } = require('uuid')
+const { perfomance } = require('perf_hooks');
 
 const client = new Client();
 const pool = new Pool();
@@ -148,6 +149,7 @@ const asyncSeedPostgres = async () => {
 }
 
 const getAvailableDates = async (productId) => {
+  let start = perfomance.now();
   let room = await pool.query(`SELECT * FROM "Rooms" WHERE "productId" = ${productId}`);
   room = room.rows[0]
   if (room === undefined) { return }
@@ -181,11 +183,7 @@ const getAvailableDates = async (productId) => {
         stayId: resDate.id
     }
   })
-  return [...reservedObj.sort((a,b) => {
-          const c = new Date(a.date)
-          const d =  new Date(b.date)
-          return c-d;
-        }),room]
+  return [...reservedObj,room, perfomance.now()-start]
 }
 const createReservation = async (productId, {startDate, endDate }) => {
   let startId = await pool.query(`SELECT "id" from "Dates" where "date" = '${startDate}'`)
