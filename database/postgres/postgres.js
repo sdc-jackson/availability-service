@@ -153,7 +153,7 @@ const getAvailableDates = async (productId) => {
   if (room === undefined) { return }
   const reservedDates = await pool.query(`SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate";`);
   // console.log(reservedDates)
-  const availableDates = await pool.query(`select "date" from "Dates" WHERE "date" NOT IN (SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate")`)
+  //const availableDates = await pool.query(`select "date" from "Dates" WHERE "date" NOT IN (SELECT DISTINCT "date" as "reservedDates" from "Dates",(select "start"."id","start"."startDate","date" as "endDate" from "Dates" inner join (select "date" as "startDate", "Ressy"."id","Ressy"."productId","Ressy"."endDate" from "Dates" inner join (select * from "Reservations" where "productId" = ${productId}) as "Ressy"on "Ressy"."startDate" = "Dates"."id") as "start" ON "start"."endDate" = "Dates"."id") as "Ressy" where "Dates"."date" BETWEEN "Ressy"."startDate" and "Ressy"."endDate")`)
   const availableObj = availableDates.rows.map(availDate => {
     const day = new Date(availDate.date).getDay()
     let weekend = false;
@@ -172,20 +172,20 @@ const getAvailableDates = async (productId) => {
     let weekend = false;
     if (day === 5 || day === 6 || day === 0) { weekend = true }
     return {
-        occupancyTaxes: room.occupancyTaxes,
-        serviceFee: room.serviceFee,
-        cleaningFee: room.cleaningFee,
-        nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
+        // occupancyTaxes: room.occupancyTaxes,
+        // serviceFee: room.serviceFee,
+        // cleaningFee: room.cleaningFee,
+        // nightlyRate: weekend ? room.baseRate * room.weekendMulitplier : room.baseRate,
         isAvailable: false,
         date: resDate.reservedDates,
         stayId: resDate.id
     }
   })
-  return [...availableObj, ...reservedObj].sort((a,b) => {
+  return [...reservedObj.sort((a,b) => {
           const c = new Date(a.date)
           const d =  new Date(b.date)
           return c-d;
-        })
+        }),room]
 }
 const createReservation = async (productId, {startDate, endDate }) => {
   let startId = await pool.query(`SELECT "id" from "Dates" where "date" = '${startDate}'`)
